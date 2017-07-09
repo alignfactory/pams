@@ -5,6 +5,7 @@ import java.util.Date;
 import myApp.frame.ui.AbstractDataModel;
 
 public class DailyAccountModel extends AbstractDataModel {
+	
 
 	private	Long	rowNo;	
 	private	Long	companyId;	
