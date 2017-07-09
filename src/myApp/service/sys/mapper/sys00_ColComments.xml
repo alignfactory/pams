@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys00_ColComments">
+
+<resultMap 	id="mapper" type="myApp.client.sys.model.ColCommentsModel" >
+	<id		column="sys00_ColumnId"			property="columnId"/>
+	<result	column="sys00_ColumnName"		property="columnName"/>
+	<result	column="sys00_DataType"			property="dataType"/>
+	<result	column="sys00_ColumnComment"	property="columnComment"/>
+	<result	column="sys00_NullAble"			property="nullAble"/>
+	<result	column="sys00_ColumnLength"		property="columnLength"/>
+</resultMap>
+	
+<select id="selectByTableName" resultMap="mapper" parameterType="String">
+	select	a.column_id									as	sys00_ColumnId
+		,	lower(a.column_name)						as	sys00_ColumnName
+		,	lower(a.data_type)							as	sys00_DataType
+		,	b.comments									as	sys00_ColumnComment
+		,	decode(nullable,'N','Not Null','')			as	sys00_NullAble
+		,	decode(data_type,'DATE','','LONG','','ROWID','','NUMBER',data_precision||decode(data_scale,0,'',','||data_scale),data_length)	as	sys00_ColumnLength
+	from	user_tab_columns	a
+		,	user_col_comments	b
+	where	a.table_name	=	b.table_name
+	and		a.column_name	=	b.column_name
+	and		a.table_name	=	upper(#{tableName})
+	order	by	a.column_id
+</select>
+
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys00_TabComments">
+
+<resultMap 	id="mapper" type="myApp.client.sys.model.TabCommentsModel" >
+	<id		column="sys00_table_id"			property="tableId"/>
+	<result	column="sys00_table_name"		property="tableName"/>
+	<result	column="sys00_comments"			property="comments"/>
+	<result	column="sys00_tablespace_name"	property="tablespaceName"/>
+	<result	column="sys00_pct_free"			property="pctFree"/>
+	<result	column="sys00_pct_used"			property="pctUsed"/>
+	<result	column="sys00_ini_trans"		property="iniTrans"/>
+	<result	column="sys00_max_trans"		property="maxTrans"/>
+	<result	column="sys00_pct_increase"		property="pctIncrease"/>
+	<result	column="sys00_freelists"		property="freeLists"/>
+	<result	column="sys00_num_rows"			property="numRows"/>
+	<result	column="sys00_blocks"			property="blocks"/>
+	<result	column="sys00_empty_blocks"		property="emptyBlocks"/>
+	<result	column="sys00_chain_cnt"		property="chainCnt"/>
+	<result	column="sys00_avg_row_len"		property="avgRowLen"/>
+	<result	column="sys00_initial_extent"	property="initialExtent"/>
+	<result	column="sys00_next_extent"		property="nextExtent"/>
+	<result	column="sys00_cache"			property="cache"/>
+	<result	column="sys00_table_lock"		property="tableLock"/>
+
+</resultMap>
+	
+<select id="selectByTableName" resultMap="mapper" parameterType="HashMap">
+	select	rownum 						as	sys00_table_id
+		,	b.table_name				as	sys00_table_name
+		,	a.comments					as	sys00_comments
+		,	b.tablespace_name			as	sys00_tablespace_name
+		,	b.pct_free					as	sys00_pct_free
+		,	b.pct_used					as	sys00_pct_used          
+		,	b.ini_trans					as	sys00_ini_trans         
+		,	b.max_trans					as	sys00_max_trans         
+		,	b.pct_increase				as	sys00_pct_increase      
+		,	b.freelists					as	sys00_freelists         
+		,	b.num_rows					as	sys00_num_rows          
+		,	b.blocks					as	sys00_blocks            
+		,	b.empty_blocks				as	sys00_empty_blocks      
+		,	b.chain_cnt					as	sys00_chain_cnt         
+		,	b.avg_row_len				as	sys00_avg_row_len       
+		,	decode(sign(1024-initial_extent/1024),1,to_char((round(initial_extent/1024)))||'K',to_char((round(initial_extent/(1024*1024))))||'M')
+										as	sys00_initial_extent
+		,	decode(sign(1024-next_extent/1024),1,to_char((round(next_extent/1024)))||'K',to_char((round(next_extent/(1024*1024))))||'M')
+										as	sys00_next_extent
+		,	b.cache						as	sys00_cache
+		,	b.table_lock				as	sys00_table_lock
+	FROM	user_tab_comments	a
+		,	user_tables			b
+	WHERE	b.table_name	=		a.table_name
+	and		a.table_name	like	#{tableName}
+	and		a.table_name	not	like	'W%'
+	order	by	b.table_name
+</select>
+
+</mapper>
