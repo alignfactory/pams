@@ -14,8 +14,12 @@ import myApp.frame.ui.builder.SearchBarBuilder;
 import myApp.frame.ui.field.LookupTriggerField;
 
 import java.text.ParseException;
+<<<<<<< Upstream, based on branch 'master' of https://github.com/alignfactory/pams.git
 import java.text.SimpleDateFormat;
 import java.util.Date;
+=======
+import java.util.Date;  
+>>>>>>> b1226b6 
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
