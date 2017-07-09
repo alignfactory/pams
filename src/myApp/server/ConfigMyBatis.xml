@@ -28,7 +28,6 @@
 </environments>
 
 <mappers>
-
 	<!-- database 공통 처리 -->
 	<mapper resource="myApp/server/data/DBConfig.xml"/>
 	
