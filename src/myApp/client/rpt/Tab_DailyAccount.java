@@ -14,12 +14,10 @@ import myApp.frame.ui.builder.SearchBarBuilder;
 import myApp.frame.ui.field.LookupTriggerField;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
