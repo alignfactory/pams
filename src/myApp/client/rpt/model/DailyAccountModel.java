@@ -99,7 +99,7 @@ public class DailyAccountModel extends AbstractDataModel {
 
 	public void setRowNo(Long rowNo) {
 		this.rowNo = rowNo;
-	}
+	}  
 
 }
 
