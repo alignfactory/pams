@@ -6,7 +6,13 @@ import myApp.frame.ui.AbstractDataModel;
 
 public class DailyAccountModel extends AbstractDataModel {
 	
+<<<<<<< HEAD
 
+=======
+	
+	// 다시보냅니다. 
+	
+>>>>>>> branch 'master' of https://github.com/alignfactory/pams
 	private	Long	rowNo;	
 	private	Long	companyId;	
 	private	String	yearMonth;	
