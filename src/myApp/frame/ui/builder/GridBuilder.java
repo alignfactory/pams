@@ -9,7 +9,9 @@ import java.util.Map;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.sencha.gxt.cell.core.client.NumberCell;
 import com.sencha.gxt.cell.core.client.form.CheckBoxCell;
 import com.sencha.gxt.core.client.IdentityValueProvider;
@@ -19,6 +21,7 @@ import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.TreeStore;
 import com.sencha.gxt.widget.core.client.event.BeforeStartEditEvent.BeforeStartEditHandler;
+import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.IsField;
 import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
@@ -30,6 +33,7 @@ import com.sencha.gxt.widget.core.client.grid.editing.GridEditing;
 import com.sencha.gxt.widget.core.client.grid.editing.GridInlineEditing;
 import com.sencha.gxt.widget.core.client.treegrid.TreeGrid;
 
+import myApp.client.rpt.model.DailyAccountModel;
 import myApp.frame.ui.img.ResourceIcon;
 
 public class GridBuilder<T> {
@@ -118,9 +122,43 @@ public class GridBuilder<T> {
 		selectionModel.setSelectionMode(selectionMode); // parameter
 		columnList.add(selectionModel.getColumn()); 
 	}
-	
+
+////////	addText	////////////////////////////////////////////
+	public ColumnConfig<T, String> addText(ValueProvider<T, String> valueProvider, int width, String header){
+		return this.addText(valueProvider, width, header, null); 
+	}
+
+//	public ColumnConfig<T, String> addText(ValueProvider<T, String> valueProvider, int width, String header, HorizontalAlignmentConstant align){
+//		return this.addText(valueProvider, width, header, align, null); 
+//	}
+
 	public ColumnConfig<T, String> addText(ValueProvider<T, String> valueProvider, int width, String header, IsField<?> field){
 		ColumnConfig<T, String> column = new ColumnConfig<T, String>(valueProvider, width, header) ;
+		columnList.add(column);
+		
+		if(field != null){
+			editorMap.put(column, field);
+		}
+		return column; 
+	}
+
+//	public ColumnConfig<T, String> addText(ValueProvider<T, String> valueProvider, int width, String header, HorizontalAlignmentConstant align){
+//		ColumnConfig<T, String> column = new ColumnConfig<T, String>(valueProvider, width, header) ;
+//
+//		if(align != null){
+//			column.setHorizontalAlignment(align);
+//		}
+//		columnList.add(column);
+//
+//		return column; 
+//	}
+
+	public ColumnConfig<T, String> addText(ValueProvider<T, String> valueProvider, int width, String header, HorizontalAlignmentConstant align, IsField<?> field){
+		ColumnConfig<T, String> column = new ColumnConfig<T, String>(valueProvider, width, header) ;
+
+		if(align != null){
+			column.setHorizontalAlignment(align);
+		}
 		columnList.add(column);
 
 		if(field != null){
@@ -128,8 +166,10 @@ public class GridBuilder<T> {
 		}
 		return column; 
 	}
-	public ColumnConfig<T, String> addText(ValueProvider<T, String> valueProvider, int width, String header){
-		return this.addText(valueProvider, width, header, null); 
+
+////////	addDouble	////////////////////////////////////////////
+	public ColumnConfig<T, Double> addDouble(ValueProvider<T, Double> valueProvider, int width, String header){
+		return this.addDouble(valueProvider, width, header, null); 
 	}
 
 	public ColumnConfig<T, Double> addDouble(ValueProvider<T, Double> valueProvider, int width, String header, IsField<?> field){
@@ -143,26 +183,71 @@ public class GridBuilder<T> {
 		}
 		return column; 
 	}
+
+//	public ColumnConfig<T, Double> addDouble(ValueProvider<T, Double> valueProvider, int width, String header, HorizontalAlignmentConstant align){
+//		ColumnConfig<T, Double> column = new ColumnConfig<T, Double>(valueProvider, width, header) ;
+//
+//		if(align != null){
+//			column.setHorizontalAlignment(align);
+//		}
+//		columnList.add(column);
+//		column.setCell(new NumberCell<Double>()); // number format setting
+//		
+//		return column; 
+//	}
+
+	public ColumnConfig<T, Double> addDouble(ValueProvider<T, Double> valueProvider, int width, String header, HorizontalAlignmentConstant align, IsField<?> field){
+		ColumnConfig<T, Double> column = new ColumnConfig<T, Double>(valueProvider, width, header) ;
+
+		if(align != null){
+			column.setHorizontalAlignment(align);
+		}
+		columnList.add(column);
+		column.setCell(new NumberCell<Double>()); // number format setting
+		
+		if(field != null){
+			editorMap.put(column, field);
+		}
+		return column; 
+	}
+
+////////	addLong	////////////////////////////////////////////
 	public ColumnConfig<T, Long> addLong(ValueProvider<T, Long> valueProvider, int width, String header){
 		return this.addLong(valueProvider, width, header, null); 
 	}
 
 	public ColumnConfig<T, Long> addLong(ValueProvider<T, Long> valueProvider, int width, String header, IsField<?> field){
 		ColumnConfig<T, Long> column = new ColumnConfig<T, Long>(valueProvider, width, header) ;
-		column.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT); // 숫자는 우측정렬 
-		columnList.add(column);
 
+		columnList.add(column);
+		column.setCell(new NumberCell<Long>()); // number format setting
+		
 		if(field != null){
 			editorMap.put(column, field);
-			column.setCell(new NumberCell<Long>()); // number format setting 
 		}
 		return column; 
 	}
-	public ColumnConfig<T, Double> addDouble(ValueProvider<T, Double> valueProvider, int width, String header){
-		return this.addDouble(valueProvider, width, header, null); 
+
+	public ColumnConfig<T, Long> addLong(ValueProvider<T, Long> valueProvider, int width, String header, HorizontalAlignmentConstant align, IsField<?> field){
+		ColumnConfig<T, Long> column = new ColumnConfig<T, Long>(valueProvider, width, header) ;
+
+		if(align != null){
+			column.setHorizontalAlignment(align);
+		}
+		columnList.add(column);
+		column.setCell(new NumberCell<Long>()); // number format setting
+		
+		if(field != null){
+			editorMap.put(column, field);
+		}
+		return column; 
 	}
 
-	
+////////	addDate	////////////////////////////////////////////
+	public ColumnConfig<T, Date> addDate(ValueProvider<T, Date> valueProvider, int width, String header){
+		return this.addDate(valueProvider, width, header, null); 
+	}
+
 	public ColumnConfig<T, Date> addDate(ValueProvider<T, Date> valueProvider, int width, String header, IsField<?> field){
 		ColumnConfig<T, Date> column = new ColumnConfig<T, Date>(valueProvider, width, header) ;
 		column.setCell(new DateCell(DateTimeFormat.getFormat("yyyy-MM-dd")));
@@ -174,10 +259,21 @@ public class GridBuilder<T> {
 		}
 		return column; 
 	}
-	public ColumnConfig<T, Date> addDate(ValueProvider<T, Date> valueProvider, int width, String header){
-		return this.addDate(valueProvider, width, header, null); 
-	}
 
+	public ColumnConfig<T, Date> addDate(ValueProvider<T, Date> valueProvider, int width, String header, HorizontalAlignmentConstant align, IsField<?> field){
+		ColumnConfig<T, Date> column = new ColumnConfig<T, Date>(valueProvider, width, header) ;
+		column.setCell(new DateCell(DateTimeFormat.getFormat("yyyy-MM-dd")));
+		columnList.add(column);
+		if(align != null){
+			column.setHorizontalAlignment(align); // 숫자는 우측정렬 
+		}
+		
+		if(field != null){
+			editorMap.put(column, field);
+		}
+		return column; 
+	}
+////////	addDateTime	////////////////////////////////////////////
 	public ColumnConfig<T, Date> addDateTime(ValueProvider<T, Date> valueProvider, int width, String header, IsField<?> field){
 		ColumnConfig<T, Date> column = new ColumnConfig<T, Date>(valueProvider, width, header) ;
 		column.setCell(new DateCell(DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss")));
@@ -190,6 +286,21 @@ public class GridBuilder<T> {
 		return column; 
 	}
 	
+	public ColumnConfig<T, Date> addDateTime(ValueProvider<T, Date> valueProvider, int width, String header, HorizontalAlignmentConstant align, IsField<?> field){
+		ColumnConfig<T, Date> column = new ColumnConfig<T, Date>(valueProvider, width, header) ;
+		column.setCell(new DateCell(DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss")));
+		columnList.add(column);
+		if(align != null){
+			column.setHorizontalAlignment(align); // 숫자는 우측정렬 
+		}
+		
+		if(field != null){
+			editorMap.put(column, field);
+		}
+		return column; 
+	}
+	
+////////	addBoolean	////////////////////////////////////////////
 	public ColumnConfig<T, Boolean> addBoolean(ValueProvider<T, Boolean> valueProvider, int width, String header){
 		ColumnConfig<T, Boolean> column = new ColumnConfig<T, Boolean>(valueProvider, width, header) ;
 		
@@ -209,6 +320,21 @@ public class GridBuilder<T> {
 		column.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		return column; 
 	}
+
+	public ColumnConfig<T, String> addCell(ValueProvider<T, String> valueProvider, int width, String header, HorizontalAlignmentConstant align, Cell<String> cell){
+		// String 컬럼을 기준으로 생성한다. 
+		ColumnConfig<T, String> column = new ColumnConfig<T, String>(valueProvider, width, header) ;
+		columnList.add(column);
+		if(align != null){
+			column.setHorizontalAlignment(align); // 숫자는 우측정렬 
+		}
+		
+		column.setCell(cell);
+		column.setCellPadding(false);
+//		column.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		return column; 
+	}
+////////	End		////////////////////////////////////////////
 
 	public void addGrouping(ColumnConfig<T, ?> groupingColumn){
 	      groupingView.setShowGroupedColumn(false);
@@ -244,4 +370,5 @@ public class GridBuilder<T> {
 		}
 		return treeGrid; 
 	}
+
 }
