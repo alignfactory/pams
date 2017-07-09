@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="rpt02_CashBook">
+
+<resultMap 	id="mapper" type="myApp.client.rpt.model.CashBookModel" >
+	<id		column="row_no"			property="rowNo"/>
+	<result	column="company_id"		property="companyId"/>
+	<result	column="year_month"		property="yearMonth"/>
+	<result	column="trans_date"		property="transDate"/>
+	<result	column="account_name"	property="accountName"/>
+	<result	column="trans_descript"	property="transDescript"/>
+	<result	column="in_amount"		property="inAmount"/>
+	<result	column="out_amount"		property="outAmonut"/>
+	<result	column="sum_amount"		property="sumAmount"/>
+</resultMap>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="HashMap">
+			select	rownum	as	row_no
+				,	a.company_id
+				,	a.year_month
+				,	a.trans_date
+				,	a.account_name
+				,	a.trans_descript
+				,	a.in_amount
+				,	a.out_amount
+				,	a.sum_amount
+			from	(
+					select	a.company_id
+						,	a.year_month
+						,	a.trans_date
+						,	a.account_name
+						,	a.trans_descript
+						,	sum(in_amount)	in_amount
+						,	sum(out_amount)	out_amount
+						,	sum(sum_amount)	sum_amount
+						,	a.ord_no
+					from	(
+							select	a.company_id
+								,	a.year_month
+								,	null													trans_date
+								,	'전일잔액'												account_name
+								,	''														trans_descript
+								,	0														in_amount
+								,	0														out_amount
+								,	decode(inexp_cd,'OUT',trans_amt*(-1),trans_amt)			sum_amount
+								,	0														ord_no
+							from	view_acc06_trans a
+							where	company_id	=	#{companyId}
+							and		trans_date	=	if_fr_dt(#{companyId},#{beginDate})
+							and		ord_no		=	0
+							union	all
+							select	a.company_id
+								,	a.year_month
+								,	null													trans_date
+								,	'전일잔액'												account_name
+								,	''														trans_descript
+								,	0														in_amount
+								,	0														out_amount
+								,	sum(decode(inexp_cd,'OUT',trans_amt*(-1),trans_amt))	sum_amount
+								,	0														ord_no
+							from	view_acc06_trans a
+							where	a.company_id	=	#{companyId}
+							and		a.trans_date	between	if_fr_dt(#{companyId},#{beginDate})	and	#{beginDate}  - 1
+							and		a.ord_no		=	1
+							group	by	a.company_id,a.year_month
+							) a
+					group	by	a.company_id,a.year_month,a.trans_date,a.account_name,a.trans_descript,a.ord_no
+					union	all
+					select	a.company_id
+						,	a.year_month
+						,	a.trans_date
+						,	a.account_name
+						,	a.trans_descript														trans_descript
+						,	a.trans_amt																in_amount
+						,	0																		out_amount
+						,	0																		sum_amount
+						,	3																		ord_no
+					from	view_acc06_trans a
+					where	a.company_id	=	#{companyId}
+					and		a.trans_date	between	#{beginDate}	and	#{endDate}
+					and		a.inexp_cd		=	'IN'
+					and		a.ord_no		=	1
+					union  all
+					select	a.company_id
+						,	a.year_month
+						,	a.trans_date
+						,	a.account_name
+						,	a.trans_descript														trans_descript
+						,	0																		in_amount
+						,	a.trans_amt																out_amount
+						,	0																		sum_amount
+						,	3																		ord_no
+					from	view_acc06_trans a
+					where	a.company_id	=	#{companyId}
+					and		a.trans_date	between	#{beginDate}	and	#{endDate}
+					and		a.inexp_cd		=	'OUT'
+					and		a.ord_no		=	1
+			) a
+</select>
+
+<!--resultMap=selectByCompanyId}
+		CALL sp_rpt_dailyaccount(
+			#{companyId},
+			#{fromDate},
+			#{toDate},
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=prt01_DailyAccount.mapper}
+	    )
+
+            #{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=rpt01_DailyAccount.mapper}
+
+-->
+
+</mapper>
+

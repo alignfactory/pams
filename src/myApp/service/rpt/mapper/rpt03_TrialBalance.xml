@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="rpt03_TrialBalance">
+
+<resultMap 	id="mapper" type="myApp.client.rpt.model.TrialBalanceModel" >
+	<id		column="row_no"					property="rowNo"/>
+	<result	column="in_balance_sum"			property="inBalanceSum"/>
+	<result	column="in_accumulated_sum"		property="inAccumulatedSum"/>
+	<result	column="in_amounts"				property="inAmounts"/>
+	<result	column="in_budget_amount"		property="inBudgetAmount"/>
+	<result	column="bold_gb"				property="boldGb"/>
+	<result	column="account_cd"				property="accountCd"/>
+	<result	column="sub_cd"					property="subCd"/>
+	<result	column="account_prt_nm"			property="accountPrtNm"/>
+	<result	column="out_budget_amount"		property="outBudgetAmount"/>
+	<result	column="out_amounts"			property="outAmonut"/>
+	<result	column="out_accumulated_sum"	property="outAccumulatedSum"/>
+	<result	column="out_balance_sum"		property="outAalanceSum"/>
+</resultMap>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="HashMap">
+	select	row_number() over (order by account_cd,sub_cd)							as	row_no
+		,	decode(a.sub_cd,'000',a.in_budget_amount - a.in_accumulated_sum2,0)		as	in_balance_sum
+		,	decode(a.sub_cd,'000',a.in_accumulated_sum2,a.in_accumulated_sum)		as	in_accumulated_sum
+		,	decode(a.sub_cd,'000',a.in_amounts2,a.in_amounts)						as	in_amounts
+		,	a.in_budget_amount														as	in_budget_amount
+		,	decode(a.sub_cd,'000','0','1')											as	bold_gb
+		,	a.account_cd															as	account_cd
+		,	a.sub_cd																as	sub_cd
+		,	if_account_nm(a.account_cd,a.sub_cd)									as	account_prt_nm
+		,	a.out_budget_amount														as	out_budget_amount
+		,	decode(a.sub_cd,'000',a.out_amounts2,a.out_amounts)						as	out_amounts
+		,	decode(a.sub_cd,'000',a.out_accumulated_sum2,a.out_accumulated_sum)		as	out_accumulated_sum
+		,	decode(a.sub_cd,'000',a.out_budget_amount - a.out_accumulated_sum2,0)	as	out_balance_sum
+	from	(
+			select	sum(in_balance_sum)			over	(partition	by	a.account_cd)			as	in_balance_sum
+				,	sum(in_accumulated_sum)		over	(partition	by	a.account_cd)			as	in_accumulated_sum2
+				,	sum(in_accumulated_sum)		over	(partition	by	a.account_cd,a.sub_cd)	as	in_accumulated_sum
+				,	sum(in_amount)				over	(partition	by	a.account_cd)			as	in_amounts2
+				,	sum(in_amount)				over	(partition	by	a.account_cd,a.sub_cd)	as	in_amounts
+				,	sum(in_budget_amount)		over	(partition	by	a.account_cd,a.sub_cd)	as	in_budget_amount
+				,	a.account_cd
+				,	a.sub_cd
+				,	sum(out_budget_amount)		over	(partition	by	a.account_cd,a.sub_cd)	as	out_budget_amount
+				,	sum(out_amount)				over	(partition	by	a.account_cd,a.sub_cd)	as	out_amounts
+				,	sum(out_amount)				over	(partition	by	a.account_cd)			as	out_amounts2
+				,	sum(out_accumulated_sum)	over	(partition	by	a.account_cd,a.sub_cd)	as	out_accumulated_sum
+				,	sum(out_accumulated_sum)	over	(partition	by	a.account_cd)			as	out_accumulated_sum2
+				,	sum(out_balance_sum)		over	(partition	by	a.account_cd)			as	out_balance_sum
+			from	(
+					select	0											in_balance_sum
+						,	0											in_accumulated_sum
+						,	0											in_amount
+						,	acc07_budget_amt							in_budget_amount
+						,	if_account_cd(acc07_account_id)				account_cd
+						,	'000'										sub_cd
+						,	0											out_budget_amount
+						,	0											out_amount
+						,	0											out_accumulated_sum
+						,	0											out_balance_sum
+					from	acc07_budget
+						,	acc02_account
+					where	acc07_season_id		=	if_season_id(#{companyId},#{beginDate})
+					and		acc07_account_id	=	acc02_account_id
+					and		acc02_gmok_cd		between	'001'	and	'499'
+					union
+					select	0											in_balance_sum
+						,	0											in_accumulated_sum
+						,	0											in_amount
+						,	0											in_budget_amount
+						,	if_account_cd(acc07_account_id)				account_cd
+						,	'000'										sub_cd
+						,	acc07_budget_amt							out_budget_amount
+						,	0											out_amount
+						,	0											out_accumulated_sum
+						,	0											out_balance_sum
+					from	acc07_budget
+						,	acc02_account
+					where	acc07_season_id		=	if_season_id(#{companyId},#{beginDate})
+					and		acc07_account_id	=	acc02_account_id
+					and		acc02_gmok_cd		between	'500'	and	'zzz'
+					union
+					SELECT	0											in_balance_sum
+						,	sum(in_accumulated_sum)						in_accumulated_sum
+						,	sum(in_amount)								in_amount
+						,	0											in_budget_amount
+						,	account_cd									account_cd
+						,	sub_cd										sub_cd
+						,	0											out_budget_amount
+						,	sum(out_amount)								out_amount
+						,	sum(out_accumulated_sum)					out_accumulated_sum
+						,	0											out_balance_sum
+					FROM	(
+							SELECT	acc06_company_id					company_id
+								,	TO_CHAR(acc06_trans_date,'yyyy.mm')	year_month
+								,	if_account_cd(acc06_account_id)		account_cd
+								,	if_account_sub_cd(acc06_account_id)	sub_cd
+								,	decode(TO_CHAR(acc06_trans_date,'yyyy.mm'),#{year_month},acc06_trans_amt,0)	in_amount
+								,	acc06_trans_amt						in_accumulated_sum
+								,	0									out_amount
+								,	0									out_accumulated_sum
+							FROM	acc06_trans
+							where	acc06_company_id	=	#{companyId}
+							and		acc06_trans_date	between	#{beginDate}	and	#{endDate}
+							and		acc06_inexp_cd		=	'IN'
+							UNION
+							SELECT	acc06_company_id					company_id
+								,	TO_CHAR(acc06_trans_date,'yyyy.mm')	year_month
+								,	if_account_cd(acc06_account_id)		account_cd
+								,	if_account_sub_cd(acc06_account_id)	sub_cd
+								,	0									in_amount
+								,	0									in_accumulated_sum
+								,	decode(TO_CHAR(acc06_trans_date,'yyyy.mm'),#{year_month},acc06_trans_amt,0)	out_amount
+								,	acc06_trans_amt						out_accumulated_sum
+							FROM	acc06_trans
+							where	acc06_company_id	=	#{companyId}
+							and		acc06_trans_date	between	#{beginDate}	and	#{endDate}
+							and		acc06_inexp_cd		=	'OUT'
+							)
+					group	by	company_id,year_month,account_cd,sub_cd
+                    ) a
+			order	by	a.account_cd,a.sub_cd
+	) a
+</select>
+
+<!--resultMap=selectByCompanyId}
+		CALL sp_rpt_dailyaccount(
+			#{companyId},
+			#{fromDate},
+			#{toDate},
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=prt01_DailyAccount.mapper}
+	    )
+
+            #{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=rpt01_DailyAccount.mapper}
+
+-->
+
+</mapper>
+
