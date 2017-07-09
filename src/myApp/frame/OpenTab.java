@@ -15,10 +15,25 @@ public class OpenTab {
         }
 
 		if("Tab_DailyAccount".equals(className)) {
-            return (Widget) GWT.create(myApp.client.rpt.Tab_DailyAccount.class) ;
-        }
-
+			return (Widget) GWT.create(myApp.client.rpt.Tab_DailyAccount.class) ;
+		}
 		
+		if("Tab_CashBook".equals(className)) {
+			return (Widget) GWT.create(myApp.client.rpt.Tab_CashBook.class) ;
+		}
+		
+		if("Tab_TrialBalance".equals(className)) {
+			return (Widget) GWT.create(myApp.client.rpt.Tab_TrialBalance.class) ;
+		}
+		
+		if("Tab_GeneralLedger".equals(className)) {
+			return (Widget) GWT.create(myApp.client.rpt.Tab_GeneralLedger.class) ;
+		}
+		
+		if("Tab_AdminTable".equals(className)) {
+			return (Widget) GWT.create(myApp.client.sys.Tab_TabComments.class) ;
+		}
+
 		if("Tab_Menu".equals(className)) {
 			return (Widget) GWT.create(myApp.client.sys.Tab_Menu.class) ;
 		}
@@ -90,7 +105,6 @@ public class OpenTab {
 			return (Widget) GWT.create(myApp.client.acc.Tab_BankUpload.class) ;
 		}
 
-		
 		if("Tab_Client.class".equals(className)) {
 			return (Widget) GWT.create(myApp.client.acc.Tab_Client.class) ;
 		}
