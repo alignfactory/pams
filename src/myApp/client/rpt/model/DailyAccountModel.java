@@ -6,7 +6,10 @@ import myApp.frame.ui.AbstractDataModel;
 
 public class DailyAccountModel extends AbstractDataModel {
 	
-// 다시보냅니다. 
+// 다시보냅니다. 1111
+	
+	
+	
 	private	Long	rowNo;	
 	private	Long	companyId;	
 	private	String	yearMonth;	
