@@ -6,7 +6,7 @@ import myApp.frame.ui.AbstractDataModel;
 
 public class DailyAccountModel extends AbstractDataModel {
 	
-// 다시보냅니다. 1111
+// 다시보냅니다. 22222222
 	
 	
 	
