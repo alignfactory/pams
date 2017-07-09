@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys03_company_user">
+
+<resultMap 	id="mapper" type="myApp.client.sys.model.CompanyUserModel" >
+	<id  	column="sys03_company_user_id"	property="companyUserId"/>
+	<result column="sys03_company_id" 	property="companyId"/>
+	<result column="sys03_user_id" 		property="userId"/>
+	<result column="sys03_note" 		property="note"/>
+
+	<association property="companyModel" javaType="myApp.client.sys.model.CompanyModel" 
+		resultMap="sys01_company.mapper"
+	/>
+	
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys03_company_user, 
+			sys01_company
+	where 	sys07_company_id = sys01_company_id
+	and	sys07_user_company_id = #{userCompanyId}
+</select>
+
+<select id="selectByUserId" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys03_company_user, 
+			sys01_company
+	where 	sys03_company_id = sys01_company_id
+	and		sys03_user_id = #{userId}
+</select>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys03_company_user, 
+			sys01_company
+	where 	sys03_company_id = sys01_company_id
+	and		sys03_company_id = #{companyId}
+</select>
+
+</mapper>

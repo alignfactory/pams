@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  When updating your version of GWT, you should also update this DTD reference,
+  so that your app can take advantage of the latest GWT module capabilities.
+-->
+
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.7.0//EN"
+  "http://gwtproject.org/doctype/2.7.0/gwt-module.dtd">
+
+<module rename-to='pams'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='com.sencha.gxt.ui.GXT' />
+
+   <!--  google 의 json을 기반으로 오브젝트를 자동생성하는 기능  -->
+   <inherits name="com.google.web.bindery.autobean.AutoBean"/>
+	
+   <stylesheet src="reset.css" />
+   <inherits name='com.sencha.gxt.theme.neptune.Theme' />
+
+   <!-- Specify the application entry point class. -->
+   <entry-point class='myApp.client.PAMS'/>
+
+   <source path='client' />
+   <source path='frame' />  <!-- UI공통모듈 : 사용하기 위해서는 여기 추가 해줘야 함. -->
+
+	<!-- allow Super Dev Mode -->
+	<add-linker name="xsiframe"/>
+	  
+ 	<collapse-all-properties />
+
+</module>
