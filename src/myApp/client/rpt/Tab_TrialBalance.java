@@ -1,7 +1,7 @@
 package myApp.client.rpt;
 
-import myApp.client.rpt.model.DailyAccountModel;
-import myApp.client.rpt.model.DailyAccountModelProperties;
+import myApp.client.rpt.model.TrialBalanceModel;
+import myApp.client.rpt.model.TrialBalanceModelProperties;
 import myApp.client.sys.Lookup_Company;
 import myApp.client.sys.model.CompanyModel;
 import myApp.frame.LoginUser;
@@ -23,24 +23,27 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
+import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Tab_DailyAccount extends VerticalLayoutContainer implements InterfaceGridOperate {
+public class Tab_TrialBalance extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
-	private DailyAccountModelProperties properties = GWT.create(DailyAccountModelProperties.class);
-	private Grid<DailyAccountModel> grid = this.buildGrid();
+	private TrialBalanceModelProperties properties = GWT.create(TrialBalanceModelProperties.class);
+	private Grid<TrialBalanceModel> grid = this.buildGrid();
 	
 	private CompanyModel companyModel = LoginUser.getLoginCompany();
 	private LookupTriggerField lookupCompanyField = this.getLookupCompanyField();
+	private TextField yearMonth = new TextField(); 
 	private DateField beginDate = new DateField(); 
 	private DateField endDate = new DateField(); 
 	
-	public Tab_DailyAccount() {
+	public Tab_TrialBalance() {
 		
 		this.setBorders(false); 
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원", 250, 50);
+		searchBarBuilder.addTextField(yearMonth, "해당월", 150, 80, true); 
 		searchBarBuilder.addDateField(beginDate, "From Date", 200, 80, true); 
 		searchBarBuilder.addDateField(endDate, "To Date", 200, 80, true); 
 		
@@ -49,9 +52,14 @@ public class Tab_DailyAccount extends VerticalLayoutContainer implements Interfa
 //		searchBarBuilder.addDeleteButton();
 
 		//	초기값 변경
-	    Date bDate =  DateTimeFormat.getFormat("yyyy-MM-dd").parse("2015-03-01");
+		Date today = new Date();
+		DateTimeFormat fmt = DateTimeFormat.getFormat("yyyy-MM");
+		yearMonth.setValue(fmt.format(today));
+		yearMonth.setValue("2015-03");
+
+		Date bDate =  DateTimeFormat.getFormat("yyyy-MM-dd").parse("2015-03-01");
 	    beginDate.setValue(bDate);
-		Date eDate =  DateTimeFormat.getFormat("yyyy-MM-dd").parse("2015-03-05");
+		Date eDate =  DateTimeFormat.getFormat("yyyy-MM-dd").parse("2015-03-31");
 		endDate.setValue(eDate);
 
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 40));
@@ -64,7 +72,7 @@ public class Tab_DailyAccount extends VerticalLayoutContainer implements Interfa
 		lookupCompany.setCallback(new InterfaceLookupResult(){
 			@Override
 			public void setLookupResult(Object result) {
-				companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
+				companyModel = (CompanyModel)result;
 				lookupCompanyField.setValue(companyModel.getCompanyName());
 			}
 		});
@@ -84,7 +92,7 @@ public class Tab_DailyAccount extends VerticalLayoutContainer implements Interfa
 	@Override
 	public void retrieve(){
 		
-		System.out.println("Tab_DailyAccount Strart 1 : " + companyModel ); 
+		System.out.println("Tab_TrialBalance Strart 1 : " + companyModel ); 
 
 		Long companyId = this.companyModel.getCompanyId();
 		if(companyId  == null){
@@ -92,11 +100,12 @@ public class Tab_DailyAccount extends VerticalLayoutContainer implements Interfa
 			return ; 
 		}
 		
-		GridRetrieveData<DailyAccountModel> service = new GridRetrieveData<DailyAccountModel>(grid.getStore());
+		GridRetrieveData<TrialBalanceModel> service = new GridRetrieveData<TrialBalanceModel>(grid.getStore());
 		service.addParam("companyId", companyId);
+		service.addParam("yearMonth", yearMonth.getValue());
 		service.addParam("beginDate", beginDate.getValue());
 		service.addParam("endDate", endDate.getValue());
-		service.retrieve("rpt.DailyAccount.selectByCompanyId");
+		service.retrieve("rpt.TrialBalance.selectByCompanyId");
 	}
 	
 	@Override
@@ -114,19 +123,24 @@ public class Tab_DailyAccount extends VerticalLayoutContainer implements Interfa
 		//
 	}
 	
-	public Grid<DailyAccountModel> buildGrid(){
+	public Grid<TrialBalanceModel> buildGrid(){
 			
-		GridBuilder<DailyAccountModel> gridBuilder = new GridBuilder<DailyAccountModel>(properties.keyId());  
+		GridBuilder<TrialBalanceModel> gridBuilder = new GridBuilder<TrialBalanceModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
-//		gridBuilder.addLong(properties.companyId()		,	100	,	"회사ID"		,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	new TextField());
-//		gridBuilder.addText(properties.yearMonth()		,	80	,	"해당월"		,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	); // not editable 
-		gridBuilder.addDate(properties.transDate()		,	100	,	"일자"			,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	new DateField()); 
-		gridBuilder.addText(properties.accountName()	,	300	,	"계정과목"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
-		gridBuilder.addLong(properties.inAmount()		,	120	,	"입금액"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
-		gridBuilder.addLong(properties.outAmonut()		,	120	,	"출금액"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
-		gridBuilder.addLong(properties.sumAmount()		,	120	,	"잔액"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
-//		gridBuilder.addLong(properties.ordNo()			,	80	,	"순서"			,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	new TextField()); 
+//		gridBuilder.addLong(properties.RowNo()				,	120	,	"잔액"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 	
+		gridBuilder.addLong(properties.inBalanceSum()		,	120	,	"잔액"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+		gridBuilder.addLong(properties.inAccumulatedSum()	,	120	,	"누계"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+		gridBuilder.addLong(properties.inAmounts()			,	120	,	"월계"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+		gridBuilder.addLong(properties.inBudgetAmount()		,	120	,	"예산"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+//		gridBuilder.addText(properties.boldGb()				,	120	,	"진하게"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+//		gridBuilder.addText(properties.accountCd()			,	120	,	"과목코드"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+//		gridBuilder.addText(properties.subCd()				,	120	,	"세목코드"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+		gridBuilder.addText(properties.accountPrtNm()		,	120	,	"계정과목"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
+		gridBuilder.addLong(properties.outBudgetAmount()	,	120	,	"예산"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+		gridBuilder.addLong(properties.outAmonut()			,	120	,	"월계"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+		gridBuilder.addLong(properties.outAccumulatedSum()	,	120	,	"누계"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
+		gridBuilder.addLong(properties.outAalanceSum()		,	120	,	"잔액"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
 
 		return gridBuilder.getGrid();  
 	}
