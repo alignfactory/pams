@@ -1,7 +1,7 @@
 package myApp.client.rpt;
 
-import myApp.client.rpt.model.DailyAccountModel;
-import myApp.client.rpt.model.DailyAccountModelProperties;
+import myApp.client.rpt.model.CashBookModel;
+import myApp.client.rpt.model.CashBookModelProperties;
 import myApp.client.sys.Lookup_Company;
 import myApp.client.sys.model.CompanyModel;
 import myApp.frame.LoginUser;
@@ -23,19 +23,20 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
+import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Tab_DailyAccount extends VerticalLayoutContainer implements InterfaceGridOperate {
+public class Tab_CashBook extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
-	private DailyAccountModelProperties properties = GWT.create(DailyAccountModelProperties.class);
-	private Grid<DailyAccountModel> grid = this.buildGrid();
+	private CashBookModelProperties properties = GWT.create(CashBookModelProperties.class);
+	private Grid<CashBookModel> grid = this.buildGrid();
 	
 	private CompanyModel companyModel = LoginUser.getLoginCompany();
 	private LookupTriggerField lookupCompanyField = this.getLookupCompanyField();
 	private DateField beginDate = new DateField(); 
 	private DateField endDate = new DateField(); 
 	
-	public Tab_DailyAccount() {
+	public Tab_CashBook() {
 		
 		this.setBorders(false); 
 
@@ -92,11 +93,11 @@ public class Tab_DailyAccount extends VerticalLayoutContainer implements Interfa
 			return ; 
 		}
 		
-		GridRetrieveData<DailyAccountModel> service = new GridRetrieveData<DailyAccountModel>(grid.getStore());
+		GridRetrieveData<CashBookModel> service = new GridRetrieveData<CashBookModel>(grid.getStore());
 		service.addParam("companyId", companyId);
 		service.addParam("beginDate", beginDate.getValue());
 		service.addParam("endDate", endDate.getValue());
-		service.retrieve("rpt.DailyAccount.selectByCompanyId");
+		service.retrieve("rpt.CashBook.selectByCompanyId");
 	}
 	
 	@Override
@@ -114,19 +115,19 @@ public class Tab_DailyAccount extends VerticalLayoutContainer implements Interfa
 		//
 	}
 	
-	public Grid<DailyAccountModel> buildGrid(){
+	public Grid<CashBookModel> buildGrid(){
 			
-		GridBuilder<DailyAccountModel> gridBuilder = new GridBuilder<DailyAccountModel>(properties.keyId());  
+		GridBuilder<CashBookModel> gridBuilder = new GridBuilder<CashBookModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
 //		gridBuilder.addLong(properties.companyId()		,	100	,	"회사ID"		,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	new TextField());
 //		gridBuilder.addText(properties.yearMonth()		,	80	,	"해당월"		,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	); // not editable 
-		gridBuilder.addDate(properties.transDate()		,	100	,	"일자"			,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	new DateField()); 
-		gridBuilder.addText(properties.accountName()	,	300	,	"계정과목"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
+		gridBuilder.addDate(properties.transDate()		,	100	,	"일자"			); 
+		gridBuilder.addText(properties.accountName()	,	200	,	"계정과목"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
+		gridBuilder.addText(properties.transDescript()	,	300	,	"적요사항"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
 		gridBuilder.addLong(properties.inAmount()		,	120	,	"입금액"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
 		gridBuilder.addLong(properties.outAmonut()		,	120	,	"출금액"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
 		gridBuilder.addLong(properties.sumAmount()		,	120	,	"잔액"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
-//		gridBuilder.addLong(properties.ordNo()			,	80	,	"순서"			,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	new TextField()); 
 
 		return gridBuilder.getGrid();  
 	}

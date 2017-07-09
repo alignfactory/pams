@@ -4,19 +4,19 @@ import java.util.Date;
 
 import myApp.frame.ui.AbstractDataModel;
 
-public class DailyAccountModel extends AbstractDataModel {
+public class CashBookModel extends AbstractDataModel {
 
 	private	Long	RowNo;	
 	private	Long	companyId;	
 	private	String	yearMonth;	
 	private	Date	transDate;	
 	private	String	accountName;	
+	private	String	transDescript;	
 	private	Long	inAmount;	
 	private	Long	outAmonut;	
 	private	Long	sumAmount;	
-	private	Long	ordNo;	
 
-	public DailyAccountModel(){
+	public CashBookModel(){
 	}
 
 	@Override
@@ -69,14 +69,6 @@ public class DailyAccountModel extends AbstractDataModel {
 		this.sumAmount = sumAmount;
 	}
 
-	public Long getOrdNo() {
-		return ordNo;
-	}
-
-	public void setOrdNo(Long ordNo) {
-		this.ordNo = ordNo;
-	}
-
 	public String getYearMonth() {
 		return yearMonth;
 	}
@@ -99,6 +91,14 @@ public class DailyAccountModel extends AbstractDataModel {
 
 	public void setRowNo(Long rowNo) {
 		RowNo = rowNo;
+	}
+
+	public String getTransDescript() {
+		return transDescript;
+	}
+
+	public void setTransDescript(String transDescript) {
+		this.transDescript = transDescript;
 	}
 
 }

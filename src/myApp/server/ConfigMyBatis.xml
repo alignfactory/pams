@@ -37,7 +37,12 @@
 	<!-- database 공통 처리 -->
 	<mapper resource="myApp/server/data/DBConfig.xml"/>
 	
-	<mapper resource="myApp/service/rpt/mapper/prt01_DailyAccount.xml"/>
+	<!-- Report 업무단 처리  -->
+	<mapper resource="myApp/service/rpt/mapper/rpt01_DailyAccount.xml"/>
+	<mapper resource="myApp/service/rpt/mapper/rpt02_CashBook.xml"/>
+	<mapper resource="myApp/service/rpt/mapper/rpt03_TrialBalance.xml"/>
+	<mapper resource="myApp/service/rpt/mapper/rpt04_GeneralLedger.xml"/>
+
 	
 	<!-- 개별 업무단 처리  -->
 	<mapper resource="myApp/service/sys/mapper/sys01_company.xml"/>
