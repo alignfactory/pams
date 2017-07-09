@@ -99,11 +99,7 @@ public class DailyAccountModel extends AbstractDataModel {
 
 	public void setRowNo(Long rowNo) {
 		this.rowNo = rowNo;
-<<<<<<< HEAD
 		////
-=======
-		///
->>>>>>> branch 'master' of https://github.com/alignfactory/pams
 	}
 
 }
