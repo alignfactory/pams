@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="acc03_bank_upload">
+
+<resultMap 	id="mapper" type="myApp.client.acc.model.BankUploadModel">
+	<id  	column="acc03_bank_upload_id"	property="bankUploadId"/>
+	<result column="acc03_company_id"	property="companyId"/>
+	<result column="acc03_inout_cd"		property="bankInOutCode"/>
+	<result column="acc03_inout_nm"		property="bankInOutName"/>
+	<result column="acc03_trans_no"		property="transNo"/>
+	<result column="acc03_trans_date"	property="transDate"/>
+	<result column="acc03_trans_time"	property="transTime"/>
+	<result column="acc03_trans_nm"		property="transName"/>
+	<result column="acc03_trans_amt"	property="transAmount"/>
+	<result column="acc03_balance"		property="balance"/>
+	<result column="acc03_bigo"			property="bigo"/>
+	<result column="acc03_memo"			property="memo"/>
+	<result column="acc03_note"			property="note"/>
+</resultMap>
+	
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, 
+			f_cdnm('BankInOutCode', acc03_inout_cd) acc03_inout_nm
+	from 	acc03_bank_upload a
+	where	acc03_bank_upload_id = #{bankUploadId} 
+</select>
+
+<select id="selectByBaseMonth" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			f_cdnm('BankInOutCode', acc03_inout_cd) acc03_inout_nm
+	from 	acc03_bank_upload a
+	where	acc03_company_id 	= #{companyId}
+	and		acc03_trans_date between to_date(#{baseMonth}, 'yyyy.mm') and last_day(to_date(#{baseMonth}, 'yyyy.mm')) 
+	and		acc03_inout_cd like #{bankInOutCode}
+	order 	by acc03_trans_no
+</select>
+
+</mapper>

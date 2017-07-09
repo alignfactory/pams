@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys07_role_menu">
+
+<resultMap 	id="mapper" type="myApp.client.sys.model.RoleMenuModel" >
+	<id  	column="sys06_menu_id"		property="menuId" />
+	<result column="sys06_parent_id"	property="parentId" />
+	<result column="sys06_menu_nm" 		property="menuName" />
+	<result column="sys06_class_nm"		property="className" />
+	<result column="sys06_seq" 			property="seq" />
+	<result column="sys06_hidden_yn"	property="hiddenYn" />
+	<result column="sys06_note"			property="note" />
+	<result column="sys07_role_menu_id"	property="roleMenuId" />
+	<result column="sys07_role_id"		property="roleId" />
+	<result column="sys07_use_yn"		property="useYn" />
+	
+</resultMap>
+
+<select id="selectByUserId" resultMap="mapper" parameterType="HashMap" >
+	select 	distinct 
+			sys06_menu_id, 
+			sys06_parent_id, 
+			sys06_menu_nm, 
+			sys06_class_nm, 
+			sys06_seq, 
+			sys06_hidden_yn, 
+			sys06_note, 
+			sys06_menu_id sys07_role_menu_id, 
+			#{userId} sys07_role_id, 
+			sys07_use_yn
+	from 	sys07_role_menu,
+				sys06_menu
+	where 	sys06_menu_id = sys07_menu_id
+	and		sys06_parent_id = #{parentId}
+	and		sys07_role_id in (
+		select sys05_role_id
+		from sys05_user_role
+		where sys05_user_id = #{userId})
+	and	sys07_use_yn = 'true'
+	order by sys06_seq
+</select>
+
+
+<select id="selectByCheckedRole" resultMap="mapper" parameterType="HashMap" >
+	select 	*
+	from 	sys06_menu,
+			sys07_role_menu
+	where	sys06_parent_id = #{parentId} 
+	and		sys06_menu_id = sys07_menu_id(+)
+	and		#{roleId} = sys07_role_id(+)
+	order 	by sys06_seq, sys06_menu_nm
+</select>	
+
+<select id="selectById" resultMap="mapper" parameterType="Long">
+	select 	*
+	from 	sys06_menu,
+			sys07_role_menu
+	where	sys06_menu_id = sys07_menu_id
+	and		sys07_role_menu_id = #{roleMenuId}
+</select>
+
+<insert id="insert" parameterType="HashMap">
+	insert 	into	sys07_role_menu
+		(	sys07_role_menu_id
+		, 	sys07_role_id
+		, 	sys07_menu_id
+		, 	sys07_use_yn
+		, 	sys07_note )
+	values 
+		(	#{roleMenuId}
+		, 	#{roleId}
+		, 	#{menuId}
+		, 	#{useYn}
+		, 	#{note} ) 
+</insert>
+
+<update id="update" parameterType="HashMap">
+	update 	sys07_role_menu
+	set		sys07_use_yn = #{useYn}
+	where	sys07_role_menu_id = #{roleMenuId}
+</update>
+
+
+</mapper>
