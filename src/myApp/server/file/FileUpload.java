@@ -21,6 +21,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -130,15 +131,15 @@ public class FileUpload implements javax.servlet.Servlet {
 			FileItem fileItem = serveltFileUpload.parseRequest(request).get(0); // 처음 하나의 파일만 가져온다.  
 
 			// 파일로 저장하지 않고 stream으로 파일을 읽는다. 저장할데가 없잖아.. 
-			InputStream inputStream = fileItem.getInputStream(); 
+			InputStream inputStream = fileItem.getInputStream();  
 			
 			@SuppressWarnings("resource")
-			XSSFWorkbook workbook = new XSSFWorkbook(inputStream);    
+			HSSFWorkbook workbook = new HSSFWorkbook(inputStream);    
 
 			//http://javaslave.tistory.com/78 에서 참조할 것. 
 			
-			XSSFSheet curSheet; 
-			XSSFRow curRow; 
+			HSSFSheet curSheet; 
+			HSSFRow curRow; 
 			// XSSFCell curCell; 
 			
 			for(int sheetIndex = 0; sheetIndex < workbook.getNumberOfSheets(); sheetIndex++){
@@ -155,6 +156,9 @@ public class FileUpload implements javax.servlet.Servlet {
 						
 						if(var != null){
 							System.out.println("sheet data is " + var); 
+						}
+						else {
+							break; 
 						}
 					}
 				}
