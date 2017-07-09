@@ -38,10 +38,7 @@
 	<mapper resource="myApp/service/rpt/mapper/rpt03_TrialBalance.xml"/>
 	<mapper resource="myApp/service/rpt/mapper/rpt04_GeneralLedger.xml"/>
 
-<<<<<<< HEAD
 	
-=======
->>>>>>> branch 'master' of https://github.com/alignfactory/pams
 	<!-- 개별 업무단 처리  -->
 	<mapper resource="myApp/service/sys/mapper/sys00_TabComments.xml"/>
 	<mapper resource="myApp/service/sys/mapper/sys00_ColComments.xml"/>
