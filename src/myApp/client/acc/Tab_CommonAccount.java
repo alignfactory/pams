@@ -54,8 +54,6 @@ public class Tab_CommonAccount extends VerticalLayoutContainer implements Interf
 		});
 	    searchBarBuilder.getSearchBar().add(retrievePDFButton); 
 		
-		
-		
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 40));
 		this.add(grid, new VerticalLayoutData(1, 1));
 		

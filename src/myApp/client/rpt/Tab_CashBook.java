@@ -5,6 +5,7 @@ import myApp.client.rpt.model.CashBookModelProperties;
 import myApp.client.sys.Lookup_Company;
 import myApp.client.sys.model.CompanyModel;
 import myApp.frame.LoginUser;
+import myApp.frame.PDFViewer;
 import myApp.frame.service.GridRetrieveData;
 import myApp.frame.ui.InterfaceLookupResult;
 import myApp.frame.ui.SimpleMessage;
@@ -19,8 +20,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.sencha.gxt.core.client.Style.SelectionMode;
+import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
@@ -54,6 +59,18 @@ public class Tab_CashBook extends VerticalLayoutContainer implements InterfaceGr
 	    beginDate.setValue(bDate);
 		Date eDate =  DateTimeFormat.getFormat("yyyy-MM-dd").parse("2015-03-05");
 		endDate.setValue(eDate);
+
+	    TextButton retrievePDFButton = new TextButton("PDF출력");
+	    retrievePDFButton.addSelectHandler(new SelectHandler() {
+			@Override
+			public void onSelect(SelectEvent event) {
+				PDFViewer viewer = new PDFViewer(); 
+				// 호출하려면 className과 기타 Parameter를 String으로 붙여서 넘겨주어야 한다. 
+				viewer.open("className=rpt.CashBookPDF");
+				
+			}
+		});
+	    searchBarBuilder.getSearchBar().add(retrievePDFButton); 
 
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 40));
 		this.add(grid, new VerticalLayoutData(1, 1));
