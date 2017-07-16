@@ -15,6 +15,31 @@
 	<result	column="sum_amount"		property="sumAmount"/>
 </resultMap>
 
+<parameterMap id="param" type="HashMap">
+	<parameter property="companyId" mode="IN" jdbcType="LONGVARCHAR" javaType="Long" /> 
+	<parameter property="beginDate" mode="IN" jdbcType="DATE" javaType="Date" /> 
+	<parameter property="endDate" mode="IN" jdbcType="DATE" javaType="Date" />
+	<parameter property="result" mode="OUT" jdbcType="CURSOR" resultMap= "rpt02_CashBook.mapper"/> 
+</parameterMap>
+
+
+<select id="selectByCompanyIdResult" parameterMap="param" statementType="CALLABLE"> 
+	{CALL sp_rpt_CashBook(?, ?, ?, ?) } 
+</select>
+
+
+<select id="selectByCompanyIdProc" parameterType="HashMap" statementType="CALLABLE"> 
+	CALL sp_rpt_CashBook(
+		#{companyId},
+		#{fromDate},
+		#{toDate}, 
+		#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=rpt02_CashBook.mapper}
+    )
+
+		#{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=rpt02_CashBook.mapper}
+</select>
+
+<!-- 
 <select id="selectByCompanyId" resultMap="mapper" parameterType="HashMap">
 			select	rownum	as	row_no
 				,	a.company_id
@@ -98,7 +123,7 @@
 					and		a.ord_no		=	1
 			) a
 </select>
-
+ -->
 <!--resultMap=selectByCompanyId}
 		CALL sp_rpt_dailyaccount(
 			#{companyId},

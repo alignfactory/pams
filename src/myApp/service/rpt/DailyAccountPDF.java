@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 
-import myApp.client.rpt.model.CashBookModel;
+import myApp.client.rpt.model.DailyAccountModel;
 import myApp.client.sys.model.ColCommentsModel;
 import myApp.client.sys.model.TabCommentsModel;
 import myApp.frame.service.GridRetrieveData;
@@ -35,9 +35,9 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class CashBookPDF {
+public class DailyAccountPDF {
  
-    private List<AbstractDataModel> getCashBookModel(HttpServletRequest request){
+    private List<AbstractDataModel> getDailyAccountModel(HttpServletRequest request){
         
     	String companyId = request.getParameter("companyId"); 
     	String beginDate = request.getParameter("beginDate"); 
@@ -59,7 +59,7 @@ public class CashBookPDF {
     	
     	SqlSession sqlSession = DatabaseFactory.openSession();
     	
-		List<AbstractDataModel> list = sqlSession.selectList( "rpt02_CashBook.selectByCompanyId", param) ;
+		List<AbstractDataModel> list = sqlSession.selectList( "rpt02_DailyAccount.selectByCompanyProc", param) ;
 		
 		
 		return list; 
@@ -68,12 +68,12 @@ public class CashBookPDF {
 
     public void getDocument(BufferedOutputStream bufferedOutputStream, HttpServletRequest request) throws DocumentException, IOException{
     	
-		List<AbstractDataModel> list = this.getCashBookModel(request);
+		List<AbstractDataModel> list = this.getDailyAccountModel(request);
 
     	BaseColor whiteOrange = new BaseColor(255,204,153);
 //		BaseColor whiteCyan = new BaseColor(204,255,255);
 
-//		GridRetrieveData<CashBookModel> service = new GridRetrieveData<CashBookModel>(grid.getStore());
+//		GridRetrieveData<DailyAccountModel> service = new GridRetrieveData<DailyAccountModel>(grid.getStore());
 //		service.addParam("companyId", companyId);
 //		service.addParam("beginDate", beginDate.getValue());
 //		service.addParam("endDate", endDate.getValue());
@@ -116,7 +116,7 @@ public class CashBookPDF {
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		table.addCell(cell);
 		
-//		cell = cellLayout.getTitle(cashBookModel.getTableName()+" ( "+cashBookModel.getComments()+" )", 16, "Symbol", Font.NORMAL, BaseColor.BLACK); 
+//		cell = cellLayout.getTitle(DailyAccountModel.getTableName()+" ( "+DailyAccountModel.getComments()+" )", 16, "Symbol", Font.NORMAL, BaseColor.BLACK); 
 
 		cell = cellLayout.getTitle("현금출납부"); 
 //		cell.setBackgroundColor(whiteOrange);
@@ -182,7 +182,7 @@ public class CashBookPDF {
 //	        PdfPCell cell = new PdfPCell(img, true);
 //	        cell.setPadding(3);
 //	        return cell;
-	    	CashBookModel columnModel = (CashBookModel)data; 
+	    	DailyAccountModel columnModel = (DailyAccountModel)data; 
 //	    	System.out.println(columnModel.getColumnName()); 
 	    	
 			cell = cellLayout.getCell(columnModel.getRowNo()+"", 10, Element.ALIGN_CENTER); 
@@ -197,9 +197,9 @@ public class CashBookPDF {
 			cell.setColspan(4);
 			table.addCell(cell);
 
-			cell = cellLayout.getCell(columnModel.getTransDescript(), 10, Element.ALIGN_CENTER); 
-			cell.setColspan(3);
-			table.addCell(cell);
+//			cell = cellLayout.getCell(columnModel.getTransDescript(), 10, Element.ALIGN_CENTER); 
+//			cell.setColspan(3);
+//			table.addCell(cell);
 
 //			cell = cellLayout.getCell(columnModel.getInAmount(), 10, Element.ALIGN_RIGHT); 
 //			cell.setColspan(4);

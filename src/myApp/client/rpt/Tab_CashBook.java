@@ -30,6 +30,7 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.info.Info;
 
 public class Tab_CashBook extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
@@ -66,7 +67,14 @@ public class Tab_CashBook extends VerticalLayoutContainer implements InterfaceGr
 			public void onSelect(SelectEvent event) {
 				PDFViewer viewer = new PDFViewer(); 
 				// 호출하려면 className과 기타 Parameter를 String으로 붙여서 넘겨주어야 한다. 
-				viewer.open("className=rpt.CashBookPDF");
+				String requestString = "className=rpt.CashBookPDF"; 
+				requestString = requestString + "&companyId=" + companyModel.getCompanyId(); 
+				requestString = requestString + "&beginDate=" + beginDate.getText(); 
+				requestString = requestString + "&endDate=" + endDate.getText();
+				
+				Info.display("param", requestString); 
+				
+				viewer.open(requestString);
 				
 			}
 		});

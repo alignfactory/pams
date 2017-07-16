@@ -15,6 +15,31 @@
 	<result	column="ord_no"			property="ordNo"/>
 </resultMap>
 
+<parameterMap id="param" type="HashMap">
+	<parameter property="companyId" mode="IN" jdbcType="VARCHAR" javaType="String" /> 
+	<parameter property="beginDate" mode="IN" jdbcType="DATE" javaType="Date" /> 
+	<parameter property="endDate" mode="IN" jdbcType="DATE" javaType="Date" />
+	<parameter property="result" mode="OUT" jdbcType="CURSOR" resultMap= "rpt01_DailyAccount.mapper"/> 
+</parameterMap>
+
+
+<select id="selectByCompanyIdResult" parameterMap="param" statementType="CALLABLE"> 
+	{CALL sp_rpt_dailyaccount(?, ?, ?, ?) } 
+</select>
+
+
+<select id="selectByCompanyIdProc" parameterType="HashMap" statementType="CALLABLE"> 
+	CALL sp_rpt_dailyaccount(
+		#{companyId},
+		#{fromDate},
+		#{toDate}, 
+		#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=rpt01_DailyAccount.mapper}
+    )
+
+<!--  #{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=rpt01_DailyAccount.mapper} -->
+</select>
+
+<!-- 
 <select id="selectByCompanyId" resultMap="mapper" parameterType="HashMap">
 	select	row_number() over (order by company_id,year_month,trans_date,account_name)	as	row_no
 		,	company_id
@@ -105,17 +130,6 @@
 			group	by	company_id,year_month,trans_date,ord_no,account_name
 	)
 </select>
-
-<!--resultMap=selectByCompanyId}
-		CALL sp_rpt_dailyaccount(
-			#{companyId},
-			#{fromDate},
-			#{toDate},
-			#{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=prt01_DailyAccount.mapper}
-	    )
-
-            #{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=rpt01_DailyAccount.mapper}
-
--->
-
+ -->
+	
 </mapper>
