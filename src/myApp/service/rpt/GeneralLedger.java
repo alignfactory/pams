@@ -27,7 +27,8 @@ public class GeneralLedger {
 		System.out.println("rpt04_GeneralLedger size: " + list.size() );
 		
 		result.setRetrieveResult(1, "select ok", list);
-}
+	}
+
 	public void selectByCompanyIdResult(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("companyId", request.getLong("companyId"));

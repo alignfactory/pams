@@ -131,7 +131,7 @@ public class Tab_TrialBalance extends VerticalLayoutContainer implements Interfa
 		service.addParam("yearMonth", yearMonth.getValue());
 		service.addParam("beginDate", beginDate.getValue());
 		service.addParam("endDate", endDate.getValue());
-		service.retrieve("rpt.TrialBalance.selectByCompanyId");
+		service.retrieve("rpt.TrialBalance.selectByCompanyIdResult");
 	}
 	
 	@Override

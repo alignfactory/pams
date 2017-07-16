@@ -16,7 +16,7 @@
 </resultMap>
 
 <parameterMap id="param" type="HashMap">
-	<parameter property="companyId" mode="IN" jdbcType="VARCHAR" javaType="String" /> 
+	<parameter property="companyId" mode="IN" jdbcType="LONGVARCHAR" javaType="Long" /> 
 	<parameter property="beginDate" mode="IN" jdbcType="DATE" javaType="Date" /> 
 	<parameter property="endDate" mode="IN" jdbcType="DATE" javaType="Date" />
 	<parameter property="result" mode="OUT" jdbcType="CURSOR" resultMap= "rpt01_DailyAccount.mapper"/> 

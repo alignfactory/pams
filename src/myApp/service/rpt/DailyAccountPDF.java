@@ -45,22 +45,38 @@ public class DailyAccountPDF {
 
     	System.out.println("companyId " + companyId);
     	System.out.println("beginDate is " + beginDate);
-    	
-    	
+
     	Map<String, Object> param = new HashMap<String, Object>(); 
     	
     	param.put("companyId", Long.parseLong(companyId));
-    	
-    	param.put("beginDate",   DateUtil.getDate(beginDate)); 
-    	
+    	param.put("beginDate", DateUtil.getDate(beginDate)); 
     	param.put("endDate", DateUtil.getDate(endDate)); 
-    	
-    	
     	
     	SqlSession sqlSession = DatabaseFactory.openSession();
     	
-		List<AbstractDataModel> list = sqlSession.selectList( "rpt02_DailyAccount.selectByCompanyProc", param) ;
-		
+//		List<AbstractDataModel> list = sqlSession.selectList( "rpt01_DailyAccount.selectByCompanyResult", param) ;
+//
+		sqlSession.selectList("rpt01_DailyAccount.selectByCompanyResult", param);
+
+		@SuppressWarnings("unchecked")
+		List<AbstractDataModel> list = (List<AbstractDataModel>)param.get("result"); 
+
+		System.out.println("rpt01_DailyAccount size list: " + list.size() );
+
+//		Map<String, Object> param = new HashMap<String, Object>();
+//		param.put("companyId", request.getLong("companyId"));
+//		param.put("beginDate", request.getDate("beginDate"));
+//		param.put("endDate", request.getDate("endDate"));
+//
+//		sqlSession.selectList(mapperName + ".selectByCompanyIdResult", param);
+//
+//		@SuppressWarnings("unchecked")
+//		List<AbstractDataModel> list = (List<AbstractDataModel>)param.get("result"); 
+//
+//		System.out.println("rpt01_DailyAccount size list: " + list.size() );
+//
+//		result.setRetrieveResult(1, "select ok", list);
+
 		
 		return list; 
     

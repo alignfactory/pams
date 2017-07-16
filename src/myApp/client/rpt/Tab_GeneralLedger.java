@@ -130,7 +130,7 @@ public class Tab_GeneralLedger extends VerticalLayoutContainer implements Interf
 		service.addParam("companyId", companyId);
 		service.addParam("beginDate", beginDate.getValue());
 		service.addParam("endDate", endDate.getValue());
-		service.retrieve("rpt.GeneralLedger.selectByCompanyId");
+		service.retrieve("rpt.GeneralLedger.selectByCompanyIdResult");
 	}
 	
 	@Override

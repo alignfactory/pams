@@ -24,11 +24,12 @@ public class CashBook {
 		param.put("endDate", request.getDate("endDate"));
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", param);
 
-		System.out.println("rpt02_CashBook param: " + param.values() ); 
+//		System.out.println("rpt02_CashBook param: " + param.values() ); 
 		System.out.println("rpt02_CashBook size: " + list.size() );
 		
 		result.setRetrieveResult(1, "select ok", list);
-}
+	}
+
 	public void selectByCompanyIdResult(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -46,4 +47,23 @@ public class CashBook {
 		result.setRetrieveResult(1, "select ok", list);
 
 	}
+
+	public void selectByCompanyIdProc(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("companyId", request.getLong("companyId"));
+		param.put("beginDate", request.getDate("beginDate"));
+		param.put("endDate", request.getDate("endDate"));
+
+		sqlSession.selectList(mapperName + ".selectByCompanyIdProc", param);
+
+		@SuppressWarnings("unchecked")
+		List<AbstractDataModel> list = (List<AbstractDataModel>)param.get("result"); 
+
+		System.out.println("rpt02_CashBook size list: " + list.size() );
+
+		result.setRetrieveResult(1, "select ok", list);
+
+	}
+
 }
