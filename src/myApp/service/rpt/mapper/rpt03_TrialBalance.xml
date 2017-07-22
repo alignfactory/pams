@@ -19,6 +19,7 @@
 	<result	column="out_balance_sum"		property="outAalanceSum"/>
 </resultMap>
 
+<!--
 <parameterMap id="param" type="HashMap">
 	<parameter property="companyId" mode="IN" jdbcType="LONGVARCHAR" javaType="Long" /> 
 	<parameter property="yearMonth" mode="IN" jdbcType="VARCHAR" javaType="String" /> 
@@ -31,17 +32,16 @@
 <select id="selectByCompanyIdResult" parameterMap="param" statementType="CALLABLE"> 
 	{CALL sp_rpt_TrialBalance(?, ?, ?, ?, ?) } 
 </select>
-
+-->
 
 <select id="selectByCompanyIdProc" parameterType="HashMap" statementType="CALLABLE"> 
-	CALL sp_rpt_CashBook(
+	CALL sp_rpt_TrialBalance(
 		#{companyId},
-		#{fromDate},
-		#{toDate}, 
-		#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=rpt02_CashBook.mapper}
+		#{yearMonth},
+		#{beginDate},
+		#{endDate}, 
+		#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=rpt03_TrialBalance.mapper}
     )
-
-		#{result, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=rpt02_CashBook.mapper}
 </select>
 
 <!-- 

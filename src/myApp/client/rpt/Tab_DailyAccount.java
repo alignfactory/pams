@@ -121,7 +121,7 @@ public class Tab_DailyAccount extends VerticalLayoutContainer implements Interfa
 		service.addParam("companyId", companyId);
 		service.addParam("beginDate", beginDate.getValue());
 		service.addParam("endDate", endDate.getValue());
-		service.retrieve("rpt.DailyAccount.selectByCompanyIdResult");
+		service.retrieve("rpt.DailyAccount.selectByCompanyIdProc");
 	}
 	
 	@Override

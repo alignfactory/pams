@@ -120,7 +120,7 @@ public class Tab_CashBook extends VerticalLayoutContainer implements InterfaceGr
 		service.addParam("companyId", companyId);
 		service.addParam("beginDate", beginDate.getValue());
 		service.addParam("endDate", endDate.getValue());
-		service.retrieve("rpt.CashBook.selectByCompanyIdResult");
+		service.retrieve("rpt.CashBook.selectByCompanyIdProc");
 	}
 	
 	@Override
