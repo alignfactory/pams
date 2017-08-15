@@ -43,25 +43,18 @@ public class CashBookPDF {
     	String beginDate = request.getParameter("beginDate"); 
     	String endDate = request.getParameter("endDate"); 
 
-    	System.out.println("companyId " + companyId);
-    	System.out.println("beginDate is " + beginDate);
-    	
-    	
+    	System.out.println("Param : <" + companyId + ">:<" + beginDate + ">:<" + endDate + ">");
+
     	Map<String, Object> param = new HashMap<String, Object>(); 
     	
     	param.put("companyId", Long.parseLong(companyId));
-    	
-    	param.put("beginDate",   DateUtil.getDate(beginDate)); 
-    	
+    	param.put("beginDate", DateUtil.getDate(beginDate)); 
     	param.put("endDate", DateUtil.getDate(endDate)); 
-    	
-    	
-    	
+
     	SqlSession sqlSession = DatabaseFactory.openSession();
     	
-		List<AbstractDataModel> list = sqlSession.selectList( "rpt02_CashBook.selectByCompanyId", param) ;
-		
-		
+		List<AbstractDataModel> list = sqlSession.selectList( "rpt02_CashBook.selectByCompanyIdProc", param) ;
+
 		return list; 
     
     }

@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,14 +38,36 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class DailyAccountPDF {
  
-    private List<AbstractDataModel> getDailyAccountModel(HttpServletRequest request){
-        
+//    private List<AbstractDataModel> getDailyAccountModel(HttpServletRequest request){
+//        
+//    	String companyId = request.getParameter("companyId"); 
+//    	String beginDate = request.getParameter("beginDate"); 
+//    	String endDate = request.getParameter("endDate"); 
+//
+//    	System.out.println("Param : <" + companyId + ">:<" + beginDate + ">:<" + endDate + ">");
+//
+//    	Map<String, Object> param = new HashMap<String, Object>(); 
+//    	
+//    	param.put("companyId", Long.parseLong(companyId));
+//    	param.put("beginDate", DateUtil.getDate(beginDate)); 
+//    	param.put("endDate", DateUtil.getDate(endDate)); 
+//    	
+//    	SqlSession sqlSession = DatabaseFactory.openSession();
+//    	
+//		List<AbstractDataModel> list = sqlSession.selectList( "rpt01_DailyAccount.selectByCompanyIdProc", param) ;
+//    	System.out.println("Here0" + list); 
+//
+//		return list; 
+//    
+//    }
+
+    public void getDocument(BufferedOutputStream bufferedOutputStream, HttpServletRequest request) throws DocumentException, IOException{
+    	
     	String companyId = request.getParameter("companyId"); 
     	String beginDate = request.getParameter("beginDate"); 
     	String endDate = request.getParameter("endDate"); 
 
-    	System.out.println("companyId " + companyId);
-    	System.out.println("beginDate is " + beginDate);
+    	System.out.println("Param : <" + companyId + ">:<" + beginDate + ">:<" + endDate + ">");
 
     	Map<String, Object> param = new HashMap<String, Object>(); 
     	
@@ -54,47 +77,23 @@ public class DailyAccountPDF {
     	
     	SqlSession sqlSession = DatabaseFactory.openSession();
     	
-//		List<AbstractDataModel> list = sqlSession.selectList( "rpt01_DailyAccount.selectByCompanyResult", param) ;
-//
-		sqlSession.selectList("rpt01_DailyAccount.selectByCompanyResult", param);
-
+//		List<AbstractDataModel> list = new ArrayList<AbstractDataModel>(); 
+		
+		sqlSession.selectList( "rpt01_DailyAccount.selectByCompanyIdProc", param) ;
+		
 		@SuppressWarnings("unchecked")
 		List<AbstractDataModel> list = (List<AbstractDataModel>)param.get("result"); 
-
-		System.out.println("rpt01_DailyAccount size list: " + list.size() );
-
-//		Map<String, Object> param = new HashMap<String, Object>();
-//		param.put("companyId", request.getLong("companyId"));
-//		param.put("beginDate", request.getDate("beginDate"));
-//		param.put("endDate", request.getDate("endDate"));
-//
-//		sqlSession.selectList(mapperName + ".selectByCompanyIdResult", param);
-//
-//		@SuppressWarnings("unchecked")
-//		List<AbstractDataModel> list = (List<AbstractDataModel>)param.get("result"); 
-//
-//		System.out.println("rpt01_DailyAccount size list: " + list.size() );
-//
-//		result.setRetrieveResult(1, "select ok", list);
-
 		
-		return list; 
-    
-    }
+		
+		System.out.println("count is " + list.size()); 
+		
+//		List<AbstractDataModel> list = this.getDailyAccountModel(request);
+    	System.out.println("Here" + list); 
 
-    public void getDocument(BufferedOutputStream bufferedOutputStream, HttpServletRequest request) throws DocumentException, IOException{
-    	
-		List<AbstractDataModel> list = this.getDailyAccountModel(request);
-
+    	BaseColor whiteBack = new BaseColor(255,255,255);
     	BaseColor whiteOrange = new BaseColor(255,204,153);
-//		BaseColor whiteCyan = new BaseColor(204,255,255);
+		BaseColor whiteCyan = new BaseColor(204,255,255);
 
-//		GridRetrieveData<DailyAccountModel> service = new GridRetrieveData<DailyAccountModel>(grid.getStore());
-//		service.addParam("companyId", companyId);
-//		service.addParam("beginDate", beginDate.getValue());
-//		service.addParam("endDate", endDate.getValue());
-
-	    
 		Document document = new Document(PageSize.A4, 0, 0, 50, 0);
         PdfWriter.getInstance(document, bufferedOutputStream);
 
@@ -123,118 +122,106 @@ public class DailyAccountPDF {
 //		table.addCell(cell);
 //		
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-		cell = cellLayout.getTitle("Table Name", 10, "맑은 고딕", Font.NORMAL, BaseColor.WHITE); 
-//		cell = cellLayout.getCell("Table Name",10); 
-		cell.setFixedHeight(24f);
-		cell.setColspan(6);
-        cell.setBackgroundColor(whiteOrange);
-		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		table.addCell(cell);
-		
 //		cell = cellLayout.getTitle(DailyAccountModel.getTableName()+" ( "+DailyAccountModel.getComments()+" )", 16, "Symbol", Font.NORMAL, BaseColor.BLACK); 
 
-		cell = cellLayout.getTitle("현금출납부"); 
-//		cell.setBackgroundColor(whiteOrange);
+		cell = cellLayout.getTitle("일 계 표"); 
+		cell.setFixedHeight(32f);
+		cell.setBackgroundColor(whiteBack);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//		cell.setFixedHeight(48f);
-		cell.setColspan(44);
+		cell.setColspan(50);
+//		cell.setBorder(0);
 		table.addCell(cell);
 		
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 		
-		cell = cellLayout.getHeader("No", 10, "맑은 고딕", Font.NORMAL, BaseColor.RED); 
-//		cell.setBackgroundColor(whiteCyan);
-//		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cell = cellLayout.getHeader("거래일자", 10);	//	, "맑은 고딕", Font.NORMAL, BaseColor.BLACK);
+		cell.setBackgroundColor(whiteCyan);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//		cell.setFixedHeight(24f);
-		cell.setColspan(2);
-		table.addCell(cell);
-		
-		cell = cellLayout.getHeader("Column ID",10); 
-//		cell.setBackgroundColor(whiteCyan);
-//		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//		cell.setFixedHeight(24f);
-		cell.setColspan(15);
-		table.addCell(cell);
-		
-		cell = cellLayout.getHeader("Type",10); 
-//		cell.setBackgroundColor(whiteCyan);
-//		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//		cell.setFixedHeight(24f);
-		cell.setColspan(4);
-		table.addCell(cell);
-		
-		cell = cellLayout.getHeader("Size",10); 
-//		cell.setBackgroundColor(whiteCyan);
-//		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//		cell.setFixedHeight(24f);
-		cell.setColspan(3);
-		table.addCell(cell);
-		
-		cell = cellLayout.getHeader("Null",10); 
-//		cell.setBackgroundColor(whiteCyan);
-//		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//		cell.setFixedHeight(24f);
-		cell.setColspan(4);
+		cell.setFixedHeight(18f);
+		cell.setColspan(8);
+//		cell.setBorderWidthTop(0);
+//		cell.setBorderWidthLeft(0);
+//		cell.setBorderWidthRight(0);
+//		cell.setBorderWidthBottom(1);
 		table.addCell(cell);
 
-		cell = cellLayout.getHeader("Column Comment",10); 
-//		cell.setBackgroundColor(whiteCyan);
-//		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cell = cellLayout.getHeader("계정과목",10); 
+		cell.setBackgroundColor(whiteCyan);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //		cell.setFixedHeight(24f);
-		cell.setColspan(22);
+		cell.setColspan(18);
+//		cell.setBorderWidthTop(0);
+//		cell.setBorderWidthLeft(0);
+//		cell.setBorderWidthRight(0);
+//		cell.setBorderWidthBottom(1);
 		table.addCell(cell);
 		
-	    for(AbstractDataModel data : list){
+		cell = cellLayout.getHeader("입금액",10); 
+		cell.setBackgroundColor(whiteCyan);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setColspan(8);
+//		cell.setBorderWidthTop(0);
+//		cell.setBorderWidthLeft(0);
+//		cell.setBorderWidthRight(0);
+//		cell.setBorderWidthBottom(1);
+		table.addCell(cell);
+		
+		cell = cellLayout.getHeader("출금액",10); 
+		cell.setBackgroundColor(whiteCyan);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setColspan(8);
+//		cell.setBorderWidthTop(0);
+//		cell.setBorderWidthLeft(0);
+//		cell.setBorderWidthRight(0);
+//		cell.setBorderWidthBottom(1);
+		table.addCell(cell);
+
+		cell = cellLayout.getHeader("잔액",10); 
+		cell.setBackgroundColor(whiteCyan);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setColspan(8);
+//		cell.setBorderWidthTop(0);
+//		cell.setBorderWidthLeft(0);
+//		cell.setBorderWidthRight(0);
+//		cell.setBorderWidthBottom(1);
+		table.addCell(cell);
+		
+    	System.out.println("Here"); 
+
+    	for(AbstractDataModel data : list){
 	    	
-//			Image img = Image.getInstance(imageFile);
-//	        PdfPCell cell = new PdfPCell(img, true);
-//	        cell.setPadding(3);
-//	        return cell;
 	    	DailyAccountModel columnModel = (DailyAccountModel)data; 
-//	    	System.out.println(columnModel.getColumnName()); 
+	    	System.out.println(columnModel.getAccountName()); 
 	    	
-			cell = cellLayout.getCell(columnModel.getRowNo()+"", 10, Element.ALIGN_CENTER); 
-			cell.setColspan(2);
+			cell = cellLayout.getCell(columnModel.getTransDate()+"", 10, Element.ALIGN_CENTER); 
+			cell.setColspan(8);
 			table.addCell(cell);
-			
-//			cell = cellLayout.getCell(columnModel.getTransDate(), 10, Element.ALIGN_CENTER); 
-//			cell.setColspan(15);
-//			table.addCell(cell);
-			
+
 			cell = cellLayout.getCell(columnModel.getAccountName(), 10, Element.ALIGN_LEFT); 
-			cell.setColspan(4);
+			cell.setColspan(18);
 			table.addCell(cell);
 
-//			cell = cellLayout.getCell(columnModel.getTransDescript(), 10, Element.ALIGN_CENTER); 
-//			cell.setColspan(3);
-//			table.addCell(cell);
+			cell = cellLayout.getCell(columnModel.getInAmount()+"", 10, Element.ALIGN_RIGHT); 
+			cell.setColspan(8);
+			table.addCell(cell);
 
-//			cell = cellLayout.getCell(columnModel.getInAmount(), 10, Element.ALIGN_RIGHT); 
-//			cell.setColspan(4);
-//			table.addCell(cell);
+			cell = cellLayout.getCell(columnModel.getOutAmonut()+"", 10, Element.ALIGN_RIGHT); 
+			cell.setColspan(8);
+			table.addCell(cell);
 
-//			cell = cellLayout.getCell(columnModel.getOuntAmount(), 10, Element.ALIGN_RIGHT); 
-//			cell.setColspan(3);
-//			table.addCell(cell);
-
-//			cell = cellLayout.getCell(columnModel.getsumAmount(), 10, Element.ALIGN_RIGHT); 
-//			cell.setColspan(3);
-//			table.addCell(cell);
+			cell = cellLayout.getCell(columnModel.getSumAmount()+"", 10, Element.ALIGN_RIGHT); 
+			cell.setColspan(8);
+			table.addCell(cell);
 			
-//			cell = cellLayout.getCell(columnModel.getColumnComment(), "맑은 고딕", 10, Font.NORMAL, BaseColor.RED); 
-//			cell = cellLayout.getCell(columnModel.getsumAmount(), 10, Element.ALIGN_RIGHT); 
-//			cell.setColspan(22);
-//			table.addCell(cell);
-			
+	    	System.out.println("Here2"); 
 	    }
+    	System.out.println("Here3"); 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 		cell = cellLayout.getCell(""); 
