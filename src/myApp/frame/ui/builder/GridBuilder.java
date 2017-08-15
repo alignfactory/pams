@@ -218,7 +218,7 @@ public class GridBuilder<T> {
 
 	public ColumnConfig<T, Long> addLong(ValueProvider<T, Long> valueProvider, int width, String header, IsField<?> field){
 		ColumnConfig<T, Long> column = new ColumnConfig<T, Long>(valueProvider, width, header) ;
-
+		column.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT); // 숫자는 우측정렬 
 		columnList.add(column);
 		column.setCell(new NumberCell<Long>()); // number format setting
 		
