@@ -61,7 +61,7 @@ public class Tab_BankUpload extends VerticalLayoutContainer implements Interface
 		searchBarBuilder.addDeleteButton();
 		
 		Date today = new Date();
-		DateTimeFormat fmt = DateTimeFormat.getFormat("yyyy.MM");
+		DateTimeFormat fmt = DateTimeFormat.getFormat("yyyy-MM");
 		baseMonth.setValue(fmt.format(today));
 		
 		final FileUploadField fileUploadFiled = new FileUploadField();
@@ -73,8 +73,16 @@ public class Tab_BankUpload extends VerticalLayoutContainer implements Interface
 		fileUploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler(){
 			@Override
 			public void onSubmitComplete(SubmitCompleteEvent event) {
-				Info.display("upload", event.getResults().toString());
-				// gridFileBuilder.retrieve(boardModel.getBoardId());
+				
+				
+				Info.display("upload", event.getResults().toString()); 
+				
+				if(event.getResults().indexOf("OK") < 0) { 
+					Info.display("upload", event.toDebugString()); //event.getResults());
+				}
+				else {
+					Info.display("upload", "정상적으로 업로드되었습니다."); 
+				}
 			}
 		});
 		fileUploadForm.setLabelWidth(40);
