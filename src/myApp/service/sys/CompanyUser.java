@@ -10,7 +10,7 @@ import myApp.frame.service.ServiceResult;
 import myApp.frame.ui.AbstractDataModel;
 import myApp.server.data.UpdateDataModel;
 
-public class UserCompany { 
+public class CompanyUser { 
 	
 	String mapperName = "sys03_company_user"; 
 	

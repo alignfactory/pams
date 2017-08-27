@@ -88,7 +88,7 @@ public class TabPage_AdminCompany extends ContentPanel implements InterfaceTabPa
 	@Override
 	public void update() {
 		GridUpdateData<CompanyUserModel> service = new GridUpdateData<CompanyUserModel>(); 
-		service.update(grid.getStore(), "sys.UserCompany.update"); 
+		service.update(grid.getStore(), "sys.CompanyUser.update"); 
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class TabPage_AdminCompany extends ContentPanel implements InterfaceTabPa
 	public void deleteRow() {
 		GridDeleteData<CompanyUserModel> service = new GridDeleteData<CompanyUserModel>();
 		List<CompanyUserModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
-		service.deleteRow(grid.getStore(), checkedList, "sys.UserCompany.delete");
+		service.deleteRow(grid.getStore(), checkedList, "sys.CompanyUser.delete");
 	}
 
 	@Override

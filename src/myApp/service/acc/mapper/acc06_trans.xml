@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="acc06_trans">
+
+<resultMap 	id="mapper" type="myApp.client.acc.model.TransModel">
+	<id  	column="acc06_trans_id"		property="transId"/>
+	<result column="acc06_company_id"	property="companyId"/>
+	<result column="acc06_inexp_cd"		property="inExpCode"/>
+	<result column="acc06_inexp_nm"		property="inExpName"/>
+	<result column="acc06_trans_date"	property="transDate"/>
+	<result column="acc06_trans_nm"		property="transName"/>
+	<result column="acc06_account_id"	property="accountId"/>
+	
+	<result column="acc06_gmok_cd"	property="gmokCode"/>
+	<result column="acc06_smok_cd"	property="smokCode"/>
+	<result column="acc06_account_nm"	property="accountName"/>
+	
+	<result column="acc06_client_id"	property="clientId"/>
+	<result column="acc06_biz_no"		property="bizNo"/>
+	<result column="acc06_client_nm"	property="clientName"/>
+	
+	
+	
+	<result column="acc06_trans_amt"	property="transAmount"/>
+	<result column="acc06_accout_date"	property="accountDate"/>
+	<result column="acc06_tax_apply_yn"	property="taxApplyYn"/>
+	<result column="acc06_supply_amt"	property="supplyAmount"/>
+	<result column="acc06_tax_amt"		property="taxAmount"/>
+	<result column="acc06_descript"		property="descript"/>
+	<result column="acc06_charge_date"	property="chargeDate"/>
+	<result column="acc06_note"			property="note"/>
+</resultMap>
+	
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*,
+			f_cdnm('inExpCode', acc06_inexp_cd) acc06_inexp_nm,
+			b.acc02_gmok_cd acc06_gmok_cd,
+			b.acc02_smok_cd acc06_smok_cd,
+			b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm ,
+			c.acc04_biz_no acc06_biz_no,
+			c.acc04_client_nm acc06_client_nm
+	from 	acc06_trans a,
+			acc02_account b,
+			acc04_client c
+	where	acc06_trans_id = #{transId}
+	and		a.acc06_account_id = b.acc02_account_id
+	and		a.acc06_client_id = c.acc04_client_id
+</select>
+
+<select id="selectByTransDate" resultMap="mapper" parameterType="HashMap">
+	select 	a.*,
+			f_cdnm('inExpCode', acc06_inexp_cd) acc06_inexp_nm,
+			b.acc02_gmok_cd acc06_gmok_cd,
+			b.acc02_smok_cd acc06_smok_cd,
+			b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm ,
+			c.acc04_biz_no acc06_biz_no,
+			c.acc04_client_nm acc06_client_nm
+	from 	acc06_trans a,
+			acc02_account b,
+			acc04_client c
+	where	a.acc06_account_id = b.acc02_account_id 
+	and		a.acc06_client_id = c.acc04_client_id
+	and		acc06_company_id = #{companyId}
+	and		acc06_trans_date between #{startDate} and #{endDate}
+	order by a.acc06_trans_date
+</select>
+
+
+
+
+</mapper>

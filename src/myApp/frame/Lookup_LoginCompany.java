@@ -48,7 +48,7 @@ public class Lookup_LoginCompany extends AbstractLookupWindow {
 		Long userId = LoginUser.getLoginUser().getUserId(); 
 		GridRetrieveData<CompanyUserModel> service = new GridRetrieveData<CompanyUserModel>(grid.getStore());
 		service.addParam("userId", userId);
-		service.retrieve("sys.UserCompany.selectByUserId");
+		service.retrieve("sys.CompanyUser.selectByUserId");
 	}
 	
 	@Override

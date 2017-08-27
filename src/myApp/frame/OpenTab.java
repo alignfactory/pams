@@ -10,6 +10,10 @@ public class OpenTab {
 
 	private Widget createTab(String className){
 
+		if("Tab_PaymentSlip".equals(className)) { // 출금항목등록
+            return (Widget) GWT.create(myApp.client.acc.Tab_PaymentSlip.class) ;
+        }
+		
 		if("Tab_Company".equals(className)) {
             return (Widget) GWT.create(myApp.client.sys.Tab_Company.class) ;
         }

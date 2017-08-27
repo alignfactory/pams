@@ -18,7 +18,7 @@
 		 	<!-- **max connection 이 늘어나면 속도가 빨라질까? --> 
 			<!-- oracle -->   
 			<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
-			<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+			<property name="url" value="jdbc:oracle:thin:@211.221.173.228:15210:XE" />
 			<property name="username" value="pams" />
 			<property name="password" value="pams" />
 			

@@ -17,7 +17,7 @@ public class Company {
 	private String mapperName = "sys01_company"; 
 	
 	public void selectByAll(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
-		List<AbstractDataModel> list = sqlSession.selectList("sys01_company.selectByAll");
+		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByAll");
 		result.setRetrieveResult(1, "select ok", list);
 	}
 
