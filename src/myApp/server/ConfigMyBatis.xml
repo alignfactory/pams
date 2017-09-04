@@ -73,8 +73,9 @@
 	<mapper resource="myApp/service/acc/mapper/acc03_bank_upload.xml"/>
 	
 	<mapper resource="myApp/service/acc/mapper/acc04_client.xml"/>
-	<mapper resource="myApp/service/acc/mapper/acc05_MemoCode.xml"/>
-	<mapper resource="myApp/service/acc/mapper/acc09_FillerString.xml"/>
+	<mapper resource="myApp/service/acc/mapper/acc05_memo_code.xml"/>
+	<mapper resource="myApp/service/acc/mapper/acc06_trans.xml"/>
+	<mapper resource="myApp/service/acc/mapper/acc09_filler_string.xml"/>
 		
 	<mapper resource="myApp/service/tmc/mapper/tmc01_patient.xml"/>
 	<mapper resource="myApp/service/tmc/mapper/tmc02_request.xml"/>
