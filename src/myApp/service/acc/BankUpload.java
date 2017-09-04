@@ -30,13 +30,7 @@ public class BankUpload {
 		if(bankInOutCode == null){
 			bankInOutCode = "%"; 
 		}
-		
 		param.put("bankInOutCode", bankInOutCode);
-	
-		System.out.println("company id is " + request.getLong("companyId")); 
-		System.out.println("base month is " + request.getString("baseMonth"));
-		System.out.println("code is " + bankInOutCode);
-		
 		
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByBaseMonth", param);
 		result.setRetrieveResult(1, "select ok", list);

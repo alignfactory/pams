@@ -20,8 +20,6 @@
 	<result column="acc06_biz_no"		property="bizNo"/>
 	<result column="acc06_client_nm"	property="clientName"/>
 	
-	
-	
 	<result column="acc06_trans_amt"	property="transAmount"/>
 	<result column="acc06_accout_date"	property="accountDate"/>
 	<result column="acc06_tax_apply_yn"	property="taxApplyYn"/>
@@ -34,7 +32,7 @@
 	
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
 	select 	a.*,
-			f_cdnm('inExpCode', acc06_inexp_cd) acc06_inexp_nm,
+			f_cdnm('InExpCode', acc06_inexp_cd) acc06_inexp_nm,
 			b.acc02_gmok_cd acc06_gmok_cd,
 			b.acc02_smok_cd acc06_smok_cd,
 			b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm ,
@@ -50,7 +48,7 @@
 
 <select id="selectByTransDate" resultMap="mapper" parameterType="HashMap">
 	select 	a.*,
-			f_cdnm('inExpCode', acc06_inexp_cd) acc06_inexp_nm,
+			f_cdnm('InExpCode', acc06_inexp_cd) acc06_inexp_nm,
 			b.acc02_gmok_cd acc06_gmok_cd,
 			b.acc02_smok_cd acc06_smok_cd,
 			b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm ,

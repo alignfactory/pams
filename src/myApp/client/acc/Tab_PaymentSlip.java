@@ -117,20 +117,21 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		gridBuilder.addText(properties.smokCode(),	80, "세목코드") ;
 		
 		gridBuilder.addText(properties.accountName(), 150, "계정명", new TextField()) ;
-		gridBuilder.addText(properties.note(), 200, "비고", new TextField());
+		
 		gridBuilder.addLong(properties.transAmount(), 120, "거래금액", new LongField()) ;
-
-		gridBuilder.addText(properties.bizNo(), 100, "사업자번호"); 
-		gridBuilder.addText(properties.bizNo(), 150, "거래처명", new TextField()) ;
+		gridBuilder.addText(properties.descript(), 500, "적요", new TextField());
 		
-		gridBuilder.addDate(properties.accountDate(), 80, "회계일자", new TextField()) ;
-		
-		gridBuilder.addText(properties.taxApplyYn(), 60, "부가세", new TextField()) ;
+		gridBuilder.addText(properties.bizNo(), 100, "거래처번호"); 
+		gridBuilder.addText(properties.clientName(), 150, "거래처명", new TextField()) ;
 		gridBuilder.addLong(properties.supplyAmount(), 100, "공급가액", new LongField()) ;
+		gridBuilder.addText(properties.taxApplyYn(), 60, "부가세", new TextField()) ;
 		gridBuilder.addLong(properties.taxAmount(), 100, "부가세액", new LongField()) ;
 		gridBuilder.addDate(properties.chargeDate(), 80, "청구일자", new DateField()) ;
 
-		gridBuilder.addText(properties.descript(), 500, "적요사항", new TextField());
+		gridBuilder.addDate(properties.accountDate(), 80, "회계일자", new TextField()) ;
+		
+
+		gridBuilder.addText(properties.note(), 200, "비고", new TextField());
 		
 		//gridBuilder.addText(properties.note(), 400, "비고", new TextField());
 
