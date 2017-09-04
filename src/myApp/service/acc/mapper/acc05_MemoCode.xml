@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="acc05_MemoCode">
+
+<resultMap 	id="mapper" type="myApp.client.acc.model.MemoCodeModel" >
+		<result	column="acc05_memo_id"		property="memoId"/>
+		<result	column="acc05_company_id"		property="companyId"/>
+		<result	column="acc05_memo_cd"		property="memoCode"/>
+		<result	column="acc05_acct_cd"		property="acctCode"/>
+		<result	column="acc05_sub_cd"		property="subCode"/>
+		<result	column="acc05_memo_dscr"		property="memoDscr"/>
+
+</resultMap>
+	
+<select id="selectByCompanyId" resultMap="mapper" parameterType="String">
+select	*
+from	acc05_memo_code
+where	acc05_company_id	=	#{companyId}
+</select>
+
+</mapper>
