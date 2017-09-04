@@ -6,6 +6,7 @@ import java.util.List;
 import myApp.client.acc.model.TransModel;
 import myApp.client.acc.model.TransModelProperties;
 import myApp.frame.LoginUser;
+import myApp.frame.service.CallBatch;
 import myApp.frame.service.GridDeleteData;
 import myApp.frame.service.GridInsertRow;
 import myApp.frame.service.GridRetrieveData;
@@ -61,12 +62,15 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		
 		TextButton importButton = new TextButton("불러오기");
 		importButton.setWidth(100);
-//		uploadButton.addSelectHandler(new SelectHandler() {
-//			@Override
-//			public void onSelect(SelectEvent event) {
-//			}
-//			}
-//		});
+		importButton.addSelectHandler(new SelectHandler() {
+			@Override
+			public void onSelect(SelectEvent event) {
+				CallBatch service = new CallBatch(); 
+				service.addParam("companyId", LoginUser.getLoginCompany().getCompanyId());
+				service.addParam("baseMonth", baseMonth.getText());
+				service.execute("acc.Trans.loadTrans");
+			}
+		});
 		searchBarBuilder.getSearchBar().add(importButton);
 		
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 40));
@@ -110,10 +114,10 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
 		gridBuilder.addText(properties.inExpName(), 60, "구분"); 
-		gridBuilder.addDate(properties.transDate(), 80, "거래일자", new DateField()) ;
-		gridBuilder.addText(properties.transName(), 120, "거래명", new TextField()) ;
+		gridBuilder.addDate(properties.transDate(), 100, "거래일자", new DateField()) ;
+		gridBuilder.addText(properties.transName(), 150, "거래명", new TextField()) ;
 		
-		gridBuilder.addText(properties.gmokCode(), 100, "목코드") ;
+		gridBuilder.addText(properties.gmokCode(), 80, "목코드") ;
 		gridBuilder.addText(properties.smokCode(),	80, "세목코드") ;
 		
 		gridBuilder.addText(properties.accountName(), 150, "계정명", new TextField()) ;

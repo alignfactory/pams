@@ -31,8 +31,6 @@ public class Trans {
 		String baseMonth = request.getString("baseMonth"); 
 		
 		baseMonth = baseMonth.replace("-", ""); 
-
-		
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date startDate = dateFormat.parse(baseMonth + "01"); 
@@ -59,7 +57,31 @@ public class Trans {
 		result.setRetrieveResult(1, "select ok", list);
 	}
 
-
+	
+	public void loadTrans(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		Long companyId = request.getLong("companyId");
+		String baseMonth = request.getString("baseMonth"); 
+		baseMonth = baseMonth.replace("-", ""); 
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("companyId", companyId);
+		param.put("baseMonth", baseMonth);
+		
+		sqlSession.selectOne(mapperName + ".loadTrans", param);
+		
+		System.out.println("return code is " + param.get("returnCode")); 
+		System.out.println("return code is " + param.get("returnMsg"));
+		
+		int returnCode = (int) param.get("returnCode");
+		result.setStatus(returnCode);
+		
+		String returnMsg = (String)param.get("returnMsg");
+		result.setMessage(returnMsg);
+		
+		
+	}
+	
 	public void update(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		UpdateDataModel<AccountModel> updateModel = new UpdateDataModel<AccountModel>(); 
 		updateModel.updateModel(sqlSession, request.getList(), mapperName, result);

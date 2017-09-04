@@ -35,7 +35,7 @@ public class CallBatch implements InterfaceServiceCall{
 	@Override
 	public void getServiceResult(ServiceResult result) {
 		if(result.getStatus() < 0){
-			Info.display("error", result.getMessage());
+			Info.display("error : " + result.getStatus(), result.getMessage());
 			return ; 
 		}
 		
