@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 
-<mapper namespace="acc05_MemoCode">
+<mapper namespace="acc05_memo_code">
 
 <resultMap 	id="mapper" type="myApp.client.acc.model.MemoCodeModel" >
 		<result	column="acc05_memo_id"		property="memoId"/>
@@ -13,7 +13,7 @@
 
 </resultMap>
 	
-<select id="selectByCompanyId" resultMap="mapper" parameterType="String">
+<select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
 select	*
 from	acc05_memo_code
 where	acc05_company_id	=	#{companyId}

@@ -4,18 +4,26 @@ import java.util.List;
 
 import myApp.client.acc.model.MemoCodeModel;
 import myApp.client.acc.model.MemoCodeModelProperties;
+import myApp.client.rpt.model.CashBookModel;
+import myApp.client.sys.Lookup_Company;
+import myApp.client.sys.model.CompanyModel;
 import myApp.frame.LoginUser;
 import myApp.frame.service.GridDeleteData;
 import myApp.frame.service.GridInsertRow;
 import myApp.frame.service.GridRetrieveData;
 import myApp.frame.service.GridUpdateData;
+import myApp.frame.ui.InterfaceLookupResult;
+import myApp.frame.ui.SimpleMessage;
 import myApp.frame.ui.builder.GridBuilder;
 import myApp.frame.ui.builder.InterfaceGridOperate;
 import myApp.frame.ui.builder.SearchBarBuilder;
+import myApp.frame.ui.field.LookupTriggerField;
 
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
+import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
@@ -23,14 +31,19 @@ public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGr
 	
 	private MemoCodeModelProperties properties = GWT.create(MemoCodeModelProperties.class);
 	private Grid<MemoCodeModel> grid = this.buildGrid();
-	private TextField className = new TextField();
+//	private TextField className = new TextField();
+	private CompanyModel companyModel = LoginUser.getLoginCompany();
+	private LookupTriggerField lookupCompanyField = this.getLookupCompanyField();
 	
 	public Tab_MemoCode() {
 		
 		this.setBorders(false); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addTextField(className, "유치원명", 250, 150, true); 
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원", 250, 50);
+
+//		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
+//		searchBarBuilder.addTextField(className, "유치원명", 250, 150, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();
@@ -40,15 +53,48 @@ public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGr
 		this.add(grid, new VerticalLayoutData(1, 1));
 	}
 	
+	private LookupTriggerField getLookupCompanyField(){
+		
+		final Lookup_Company lookupCompany = new Lookup_Company();
+		lookupCompany.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
+				lookupCompanyField.setValue(companyModel.getCompanyName());
+			}
+		});
+		
+		LookupTriggerField lookupCompanyField = new LookupTriggerField(); 
+		lookupCompanyField.setEditable(false);
+		lookupCompanyField.setText(this.companyModel.getCompanyName());
+		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
+   	 		@Override
+			public void onTriggerClick(TriggerClickEvent event) {
+   	 			lookupCompany.show();
+			}
+   	 	}); 
+		return lookupCompanyField; 
+	}
+	
 	@Override
 	public void retrieve(){
 		GridRetrieveData<MemoCodeModel> service = new GridRetrieveData<MemoCodeModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginUser().getCompanyModel().getCompanyId());
-
+	//	service.addParam("companyId", LoginUser.getLoginUser().getCompanyModel().getCompanyId());
+		
+		service.addParam("companyId", LoginUser.getLoginCompany().getCompanyId());
+		
 //		System.out.println("Login CompanyID : "+LoginUser.getLoginUser().getCompanyId());
 //		System.out.println("Login CompanyID : "+"******");
 
 //		Info.display("companyID","" + LoginUser.getLoginUser().getCompanyId());
+		
+		System.out.println("Tab_DailyAccount Strart 1 : " + companyModel ); 
+
+		Long companyId = this.companyModel.getCompanyId();
+		if(companyId  == null){
+			new SimpleMessage("조회할 유치원이 먼저 선택하여야 합니다.");
+			return ; 
+		}
 		
 		service.retrieve("acc.MemoCode.selectByCompanyId");
 	}
@@ -95,8 +141,8 @@ public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGr
 //		<result	column="acc05_memo_dscr"		property="memoDscr"/>
 //		gridBuilder.addText(properties.eduOfficeName(), 150, "교육청구분", eduOfficeComboBox) ;
 		
-		gridBuilder.addText(properties.acctCode(), 100, "순서", new TextField()) ;
-		gridBuilder.addText(properties.subCode(), 100, "순서", new TextField()) ;
+		gridBuilder.addText(properties.acctCode(), 100, "계정코드", new TextField()) ;
+		gridBuilder.addText(properties.subCode(), 100, "세목코드", new TextField()) ;
 		gridBuilder.addText(properties.memoDscr(), 400, "비고", new TextField());
 
 		return gridBuilder.getGrid(); 
