@@ -1,35 +1,34 @@
 package myApp.client.acc.model;
 
 import myApp.frame.ui.AbstractDataModel;
-import java.util.Date;
 
-public class FillerStringModel extends AbstractDataModel {
+public class FilterModel extends AbstractDataModel {
 
-		private	Long		fillerId;
+		private	Long		filterId;
 		private	Long		companyId;
 		private	String		replaceDscr;
 		private	String		seqOrder;
 
 
-	public FillerStringModel(){
+	public FilterModel(){
 	}
 
 	@Override
 	public void setKeyId(Long id) {
-		this.setFillerId(id);
+		this.setFilterId(id);
 	}
 
 	@Override
 	public Long getKeyId() {
-		return this.getFillerId(); 
+		return this.getFilterId(); 
 	}
 
-	public	Long getFillerId() {
-		return	fillerId;
+	public	Long getFilterId() {
+		return	filterId;
 	}
 
-	public void setFillerId(Long fillerId) {
-		this.fillerId = fillerId;
+	public void setFilterId(Long filterId) {
+		this.filterId = filterId;
 	}
 
 	public	Long getCompanyId() {

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="acc09_filter">
+
+<resultMap 	id="mapper" type="myApp.client.acc.model.FilterModel" >
+		<result	column="acc09_filter_id"		property="filterId"/>
+		<result	column="acc09_company_id"		property="companyId"/>
+		<result	column="acc09_replace_dscr"		property="replaceDscr"/>
+		<result	column="acc09_seq_order"		property="seqOrder"/>
+
+</resultMap>
+	
+<select id="selectById" resultMap="mapper" parameterType="Long">
+select	*
+from	acc09_filter
+where	acc09_filter_id	=	#{filterId}
+</select>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
+select	*
+from	acc09_filter
+where	acc09_company_id	=	#{companyId}
+order	by	acc09_seq_order, acc09_replace_dscr
+</select>
+
+</mapper>

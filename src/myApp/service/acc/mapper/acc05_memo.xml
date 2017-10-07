@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 
-<mapper namespace="acc05_memo_code">
+<mapper namespace="acc05_memo">
 
 <resultMap 	id="mapper" type="myApp.client.acc.model.MemoCodeModel" >
 		<result	column="acc05_memo_id"		property="memoId"/>
@@ -10,13 +10,23 @@
 		<result	column="acc05_acct_cd"		property="acctCode"/>
 		<result	column="acc05_sub_cd"		property="subCode"/>
 		<result	column="acc05_memo_dscr"		property="memoDscr"/>
+		<result	column="acct_nm"		property="acctName"/>
 
 </resultMap>
 	
+<select id="selectById" resultMap="mapper" parameterType="Long">
+select	acc05_memo.*
+	,	if_account_nm(acc05_acct_cd,acc05_sub_cd)	acct_nm
+from	acc05_memo
+where	acc05_memo_id	=	#{memoId}
+</select>
+
 <select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
-select	*
-from	acc05_memo_code
+select	acc05_memo.*
+	,	if_account_nm(acc05_acct_cd,acc05_sub_cd)	acct_nm
+from	acc05_memo
 where	acc05_company_id	=	#{companyId}
+order	by	acc05_acct_cd,acc05_sub_cd
 </select>
 
 </mapper>

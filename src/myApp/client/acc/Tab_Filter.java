@@ -2,8 +2,9 @@ package myApp.client.acc;
 
 import java.util.List;
 
-import myApp.client.acc.model.FillerStringModel;
-import myApp.client.acc.model.FillerStringModelProperties;
+import myApp.client.acc.model.FilterModel;
+import myApp.client.acc.model.FilterModelProperties;
+import myApp.client.acc.model.MemoCodeModel;
 import myApp.client.sys.Lookup_Company;
 import myApp.client.sys.model.CompanyModel;
 import myApp.frame.LoginUser;
@@ -12,6 +13,7 @@ import myApp.frame.service.GridInsertRow;
 import myApp.frame.service.GridRetrieveData;
 import myApp.frame.service.GridUpdateData;
 import myApp.frame.ui.InterfaceLookupResult;
+import myApp.frame.ui.SimpleMessage;
 import myApp.frame.ui.builder.GridBuilder;
 import myApp.frame.ui.builder.InterfaceGridOperate;
 import myApp.frame.ui.builder.SearchBarBuilder;
@@ -25,15 +27,15 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Tab_FillerString extends VerticalLayoutContainer implements InterfaceGridOperate {
+public class Tab_Filter extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
-	private FillerStringModelProperties properties = GWT.create(FillerStringModelProperties.class);
-	private Grid<FillerStringModel> grid = this.buildGrid();
+	private FilterModelProperties properties = GWT.create(FilterModelProperties.class);
+	private Grid<FilterModel> grid = this.buildGrid();
 //	private TextField className = new TextField();
 	private CompanyModel companyModel = LoginUser.getLoginCompany();
 	private LookupTriggerField lookupCompanyField = this.getLookupCompanyField();
 	
-	public Tab_FillerString() {
+	public Tab_Filter() {
 		
 		this.setBorders(false); 
 		
@@ -76,41 +78,50 @@ public class Tab_FillerString extends VerticalLayoutContainer implements Interfa
 	
 	@Override
 	public void retrieve(){
-		GridRetrieveData<FillerStringModel> service = new GridRetrieveData<FillerStringModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginUser().getCompanyModel().getCompanyId());
-
+		GridRetrieveData<FilterModel> service = new GridRetrieveData<FilterModel>(grid.getStore());
+	//	service.addParam("companyId", LoginUser.getLoginUser().getCompanyModel().getCompanyId());
+		
+		service.addParam("companyId", LoginUser.getLoginCompany().getCompanyId());
 //		System.out.println("Login CompanyID : "+LoginUser.getLoginUser().getCompanyId());
 //		System.out.println("Login CompanyID : "+"******");
 
 //		Info.display("companyID","" + LoginUser.getLoginUser().getCompanyId());
 		
-		service.retrieve("acc.FillerString.selectByCompanyId");
+		System.out.println("Tab_Filter Strart 1 : " + companyModel ); 
+
+		Long companyId = this.companyModel.getCompanyId();
+		if(companyId  == null){
+			new SimpleMessage("조회할 유치원이 먼저 선택하여야 합니다.");
+			return ; 
+		}
+		
+		service.retrieve("acc.Filter.selectByCompanyId");
 	}
 	
 	@Override
 	public void update(){
-		GridUpdateData<FillerStringModel> service = new GridUpdateData<FillerStringModel>(); 
-		service.update(grid.getStore(), "acc.FillerString.update"); 
+		GridUpdateData<FilterModel> service = new GridUpdateData<FilterModel>(); 
+		service.update(grid.getStore(), "acc.Filter.update"); 
 	}
 	
 	@Override
 	public void insertRow(){
-		GridInsertRow<FillerStringModel> service = new GridInsertRow<FillerStringModel>(); 
-		FillerStringModel FillerStringModel = new FillerStringModel();
-		FillerStringModel.setCompanyId(LoginUser.getLoginUser().getCompanyId());
+		GridInsertRow<FilterModel> service = new GridInsertRow<FilterModel>(); 
+		FilterModel FillerStringModel = new FilterModel();
+		FillerStringModel.setCompanyId(LoginUser.getLoginCompany().getCompanyId());	//	LoginUser.getLoginUser().getCompanyId());
 		service.insertRow(grid, FillerStringModel);
 	}
 	
 	@Override
 	public void deleteRow(){
-		GridDeleteData<FillerStringModel> service = new GridDeleteData<FillerStringModel>();
-		List<FillerStringModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
-		service.deleteRow(grid.getStore(), checkedList, "acc.FillerString.delete");
+		GridDeleteData<FilterModel> service = new GridDeleteData<FilterModel>();
+		List<FilterModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
+		service.deleteRow(grid.getStore(), checkedList, "acc.Filter.delete");
 	}
 	
-	public Grid<FillerStringModel> buildGrid(){
+	public Grid<FilterModel> buildGrid(){
 			
-		GridBuilder<FillerStringModel> gridBuilder = new GridBuilder<FillerStringModel>(properties.keyId());  
+		GridBuilder<FilterModel> gridBuilder = new GridBuilder<FilterModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
 //		final ComboBoxField eduOfficeComboBox = new ComboBoxField("EduOfficeCode");  

@@ -46,12 +46,12 @@ public class OpenTab {
 			return (Widget) GWT.create(myApp.client.sys.Tab_RoleMenu.class) ;
 		}
 
-		if("Tab_MemoCode".equals(className)) {
-			return (Widget) GWT.create(myApp.client.acc.Tab_MemoCode.class) ;
+		if("Tab_Memo".equals(className)) {
+			return (Widget) GWT.create(myApp.client.acc.Tab_Memo.class) ;
 		}
 
-		if("Tab_FillerString".equals(className)) {
-			return (Widget) GWT.create(myApp.client.acc.Tab_FillerString.class) ;
+		if("Tab_Filter".equals(className)) {
+			return (Widget) GWT.create(myApp.client.acc.Tab_Filter.class) ;
 		}
 
 		// 검사결과 등록 

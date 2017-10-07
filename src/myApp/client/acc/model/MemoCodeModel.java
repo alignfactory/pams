@@ -11,6 +11,7 @@ public class MemoCodeModel extends AbstractDataModel {
 		private	String		acctCode;
 		private	String		subCode;
 		private	String		memoDscr;
+		private	String		acctName;
 
 
 	public MemoCodeModel(){
@@ -72,6 +73,14 @@ public class MemoCodeModel extends AbstractDataModel {
 
 	public void setMemoDscr(String memoDscr) {
 		this.memoDscr = memoDscr;
+	}
+
+	public String getAcctName() {
+		return acctName;
+	}
+
+	public void setAcctName(String acctName) {
+		this.acctName = acctName;
 	}
 
 

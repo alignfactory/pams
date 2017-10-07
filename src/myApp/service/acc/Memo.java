@@ -8,10 +8,16 @@ import myApp.frame.service.ServiceResult;
 import myApp.frame.ui.AbstractDataModel;
 import myApp.server.data.UpdateDataModel;
 
-public class FillerString {
+public class Memo {
 
-	private String mapperName  = "acc09_filler_string"; 
+	private String mapperName  = "acc05_memo"; 
 	
+	public void selectById(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		Long memoId = request.getLong("memoId"); 
+		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectById", memoId);
+		result.setRetrieveResult(1, "select ok", list);
+	}
+
 	public void selectByCompanyId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Long companyId = request.getLong("companyId"); 
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", companyId);

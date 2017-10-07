@@ -14,6 +14,5 @@ public interface MemoCodeModelProperties extends PropertyAccess<MemoCodeModel> {
 		ValueProvider<MemoCodeModel, String>		acctCode();
 		ValueProvider<MemoCodeModel, String>		subCode();
 		ValueProvider<MemoCodeModel, String>		memoDscr();
-
-
+		ValueProvider<MemoCodeModel, String>		acctName();
 }

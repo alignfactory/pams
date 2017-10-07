@@ -27,7 +27,7 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGridOperate {
+public class Tab_Memo extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
 	private MemoCodeModelProperties properties = GWT.create(MemoCodeModelProperties.class);
 	private Grid<MemoCodeModel> grid = this.buildGrid();
@@ -35,7 +35,7 @@ public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGr
 	private CompanyModel companyModel = LoginUser.getLoginCompany();
 	private LookupTriggerField lookupCompanyField = this.getLookupCompanyField();
 	
-	public Tab_MemoCode() {
+	public Tab_Memo() {
 		
 		this.setBorders(false); 
 		
@@ -88,7 +88,7 @@ public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGr
 
 //		Info.display("companyID","" + LoginUser.getLoginUser().getCompanyId());
 		
-		System.out.println("Tab_DailyAccount Strart 1 : " + companyModel ); 
+		System.out.println("Tab_Memo Strart 1 : " + companyModel ); 
 
 		Long companyId = this.companyModel.getCompanyId();
 		if(companyId  == null){
@@ -96,20 +96,20 @@ public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGr
 			return ; 
 		}
 		
-		service.retrieve("acc.MemoCode.selectByCompanyId");
+		service.retrieve("acc.Memo.selectByCompanyId");
 	}
 	
 	@Override
 	public void update(){
 		GridUpdateData<MemoCodeModel> service = new GridUpdateData<MemoCodeModel>(); 
-		service.update(grid.getStore(), "acc.MemoCode.update"); 
+		service.update(grid.getStore(), "acc.Memo.update"); 
 	}
 	
 	@Override
 	public void insertRow(){
 		GridInsertRow<MemoCodeModel> service = new GridInsertRow<MemoCodeModel>(); 
 		MemoCodeModel MemoCodeModel = new MemoCodeModel();
-		MemoCodeModel.setCompanyId(LoginUser.getLoginUser().getCompanyId());
+		MemoCodeModel.setCompanyId(LoginUser.getLoginCompany().getCompanyId());	//	LoginUser.getLoginUser().getCompanyId());
 		service.insertRow(grid, MemoCodeModel);
 	}
 	
@@ -117,7 +117,7 @@ public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGr
 	public void deleteRow(){
 		GridDeleteData<MemoCodeModel> service = new GridDeleteData<MemoCodeModel>();
 		List<MemoCodeModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
-		service.deleteRow(grid.getStore(), checkedList, "acc.MemoCode.delete");
+		service.deleteRow(grid.getStore(), checkedList, "acc.Memo.delete");
 	}
 	
 	public Grid<MemoCodeModel> buildGrid(){
@@ -141,9 +141,11 @@ public class Tab_MemoCode extends VerticalLayoutContainer implements InterfaceGr
 //		<result	column="acc05_memo_dscr"		property="memoDscr"/>
 //		gridBuilder.addText(properties.eduOfficeName(), 150, "교육청구분", eduOfficeComboBox) ;
 		
+		gridBuilder.addText(properties.memoCode(), 300, "메모명", new TextField()) ;
 		gridBuilder.addText(properties.acctCode(), 100, "계정코드", new TextField()) ;
 		gridBuilder.addText(properties.subCode(), 100, "세목코드", new TextField()) ;
-		gridBuilder.addText(properties.memoDscr(), 400, "비고", new TextField());
+		gridBuilder.addText(properties.acctName(), 300, "계정명" );
+		gridBuilder.addText(properties.memoDscr(), 500, "비고", new TextField());
 
 		return gridBuilder.getGrid(); 
 	}
