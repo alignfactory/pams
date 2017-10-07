@@ -22,6 +22,8 @@ import myApp.frame.ui.builder.SearchBarBuilder;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent;
@@ -40,10 +42,11 @@ import com.sencha.gxt.widget.core.client.info.Info;
 
 public class Tab_PaymentSlip extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
+	private static AccountComboBoxField accountComboBox = new AccountComboBoxField();
+	private TextField baseMonth= new TextField();
 	private TransModelProperties properties = GWT.create(TransModelProperties.class);
 	private Grid<TransModel> grid = this.buildGrid();
-	private TextField baseMonth= new TextField();
-	
+
 	public Tab_PaymentSlip() {
 		
 		this.setBorders(false); 
@@ -59,6 +62,17 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		Date today = new Date();
 		DateTimeFormat fmt = DateTimeFormat.getFormat("yyyy-MM");
 		baseMonth.setValue(fmt.format(today));
+		baseMonth.addChangeHandler(new ChangeHandler(){
+			@Override
+			public void onChange(ChangeEvent arg0) {
+				// 해당월이 바뀌면 계정콤보박스도 변경해야 한다. 
+				Info.display("ch", baseMonth.getText());
+				// TODO Auto-generated method stub
+				accountComboBox.reset();
+				accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText());
+			}
+		});
+		
 		
 		TextButton importButton = new TextButton("불러오기");
 		importButton.setWidth(100);
@@ -127,31 +141,43 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		
 		//gridBuilder.addText(properties.gmokCode(), 80, "목코드") ;
 		//gridBuilder.addText(properties.smokCode(),	80, "세목코드") ;
-		final AccountComboBoxField accountComboBox 
-			= new AccountComboBoxField();
-		accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId()); 
-		accountComboBox.addCollapseHandler(new CollapseHandler(){
+		accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText()); 
+		
+		accountComboBox.addValueChangeHandler(new ValueChangeHandler<String>(){
+
 			@Override
-			public void onCollapse(CollapseEvent event) {
+			public void onValueChange(ValueChangeEvent<String> arg0) {
 				TransModel data = grid.getSelectionModel().getSelectedItem(); 
-				
 				Long accountId = accountComboBox.getCode();
 				if(accountId == null){
 					new SimpleMessage("해당 계정코드를 찾을 수 없습니다.");
-					grid.getStore().getRecord(data).addChange(properties.accountName(), "");
+					//grid.getStore().getRecord(data).addChange(properties.accountName(), "");
 				}
-
 				grid.getStore().getRecord(data).addChange(properties.accountId(), accountId);
+				
 			}
-		}); 
+			
+		});
 		
+		
+//		accountComboBox.addCollapseHandler(new CollapseHandler(){
+//			@Override
+//			public void onCollapse(CollapseEvent event) {
+//				TransModel data = grid.getSelectionModel().getSelectedItem(); 
+//				Long accountId = accountComboBox.getCode();
+////				if(accountId == null){
+////					new SimpleMessage("해당 계정코드를 찾을 수 없습니다.");
+////					grid.getStore().getRecord(data).addChange(properties.accountName(), "");
+////				}
+//				grid.getStore().getRecord(data).addChange(properties.accountId(), accountId);
+//			}
+//		}); 
+
 		gridBuilder.addText(properties.accountName(), 200, "계정명", accountComboBox) ;
-		
 		gridBuilder.addLong(properties.accountId(), 150, "accountId") ;
 		
 		gridBuilder.addLong(properties.transAmount(), 120, "거래금액", new LongField()) ;
 		gridBuilder.addText(properties.descript(), 500, "적요", new TextField());
-		
 		gridBuilder.addText(properties.bizNo(), 100, "거래처번호"); 
 		gridBuilder.addText(properties.clientName(), 150, "거래처명", new TextField()) ;
 		gridBuilder.addLong(properties.supplyAmount(), 100, "공급가액", new LongField()) ;
@@ -169,4 +195,10 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		return gridBuilder.getGrid(); 
 	}
 
+//	private void getComboBox(){
+//		
+//
+//		//return accountComboBox; 
+//	}
+	
 }

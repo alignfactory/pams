@@ -10,7 +10,8 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import myApp.client.acc.model.AccountModel;
+import myApp.client.acc.model.TransModel;
+//import myApp.client.acc.model.AccountModel;
 import myApp.frame.service.ServiceRequest;
 import myApp.frame.service.ServiceResult;
 import myApp.frame.ui.AbstractDataModel;
@@ -79,17 +80,15 @@ public class Trans {
 		
 		String returnMsg = (String)param.get("returnMsg");
 		result.setMessage(returnMsg);
-		
-		
 	}
 	
 	public void update(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
-		UpdateDataModel<AccountModel> updateModel = new UpdateDataModel<AccountModel>(); 
+		UpdateDataModel<TransModel> updateModel = new UpdateDataModel<TransModel>(); 
 		updateModel.updateModel(sqlSession, request.getList(), mapperName, result);
 	}
 
 	public void delete(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
-		UpdateDataModel<AccountModel> updateModel = new UpdateDataModel<AccountModel>(); 
+		UpdateDataModel<TransModel> updateModel = new UpdateDataModel<TransModel>(); 
 		updateModel.deleteModel(sqlSession, request.getList(), mapperName, result);
 	}
 }

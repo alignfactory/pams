@@ -42,8 +42,8 @@
 			acc02_account b,
 			acc04_client c
 	where	acc06_trans_id = #{transId}
-	and		a.acc06_account_id = b.acc02_account_id
-	and		a.acc06_client_id = c.acc04_client_id
+	and		a.acc06_account_id = b.acc02_account_id(+)
+	and		a.acc06_client_id = c.acc04_client_id(+)
 </select>
 
 <select id="selectByTransDate" resultMap="mapper" parameterType="HashMap">
