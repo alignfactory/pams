@@ -23,7 +23,13 @@ public class Client {
 
 	public void selectByCompanyId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Long companyId = request.getLong("companyId"); 
+		
+		System.out.println("company id is " + companyId);
+		
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", companyId);
+		
+		System.out.println("client count is  " + list.size());
+		
 		result.setRetrieveResult(1, "select ok", list);
 	}
 

@@ -84,7 +84,6 @@ public class DailyAccountPDF {
 		@SuppressWarnings("unchecked")
 		List<AbstractDataModel> list = (List<AbstractDataModel>)param.get("result"); 
 		
-		
 		System.out.println("count is " + list.size()); 
 		
 //		List<AbstractDataModel> list = this.getDailyAccountModel(request);
