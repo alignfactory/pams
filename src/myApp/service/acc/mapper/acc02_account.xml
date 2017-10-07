@@ -27,6 +27,9 @@
 	<result column="acc02_budget_yn"	property="budgetYn"/> 
 	<result column="acc02_use_yn"		property="useYn"/>
 	<result column="acc02_note"			property="note"/>	
+	
+	<!--  combobox용 컬럼 selectByComboBox 에서만 사용함.  -->
+	<result column="acc02_account_nm"			property="accountName"/> 
 </resultMap>
 
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
@@ -60,5 +63,19 @@
 
 </select>
 
+<select id="selectByComboBox" resultMap="mapper" parameterType="HashMap">
+	select 	acc02_account_id,
+			acc02_gmok_nm || '-' || acc02_smok_nm acc02_account_nm 
+	from 	acc02_account a
+	where	acc02_company_id in (0, #{companyId} )
+	and		acc02_gmok_nm is not null
+	and		acc02_edu_office_cd
+			= ( select 	acc01_edu_office_cd
+				from 	acc01_season
+				where 	acc01_company_id = acc02_company_id
+				and		to_date(#{baseMonth}, 'yyyymm') between acc01_start_date and acc01_close_date) 
+	order by acc02_gwon_cd, acc02_hang_cd, acc02_gmok_cd, acc02_smok_cd
+	
+</select>
 
 </mapper>

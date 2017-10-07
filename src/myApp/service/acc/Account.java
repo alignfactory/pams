@@ -28,7 +28,6 @@ public class Account {
 		result.setRetrieveResult(1, "select ok", list);
 	}
 	
-	
 	public void selectByCompanyId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Map<String, Object> param = new HashMap<String, Object>(); 
 		param.put("companyId", request.getLong("companyId")); 
@@ -38,6 +37,22 @@ public class Account {
 		result.setRetrieveResult(1, "select ok", list);
 	}
 
+	public void selectByComboBox(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		Long companyId = request.getLong("companyId");
+		String baseMonth = request.getString("baseMonth"); 
+
+		Map<String, Object> param = new HashMap<String, Object>(); 
+		param.put("companyId", companyId);
+		param.put("baseMonth", baseMonth);
+		
+		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByComboBox", param);
+		
+		System.out.println("combo count is " + list.size()); 
+		
+		result.setRetrieveResult(1, "select ok", list);
+	}
+
+	
 	public void update(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		UpdateDataModel<AccountModel> updateModel = new UpdateDataModel<AccountModel>(); 
 		updateModel.updateModel(sqlSession, request.getList(), mapperName, result);

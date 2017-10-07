@@ -41,6 +41,5 @@ public interface AccountModelProperties extends PropertyAccess<AccountModel> {
 	ValueProvider<AccountModel, String> note() ;
 	
 	ValueProvider<AccountModel, String> accountType() ;
-	
-	
+	ValueProvider<AccountModel, String> accountName() ;
 }

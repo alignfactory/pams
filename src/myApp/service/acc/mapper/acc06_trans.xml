@@ -6,7 +6,7 @@
 <resultMap 	id="mapper" type="myApp.client.acc.model.TransModel">
 	<id  	column="acc06_trans_id"		property="transId"/>
 	<result column="acc06_company_id"	property="companyId"/>
-	<result column="acc06_inexp_cd"		property="inExpCode"/>
+	<result column="acc06_inout_cd"		property="inExpCode"/>
 	<result column="acc06_inexp_nm"		property="inExpName"/>
 	<result column="acc06_trans_date"	property="transDate"/>
 	<result column="acc06_trans_nm"		property="transName"/>
@@ -32,7 +32,7 @@
 	
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
 	select 	a.*,
-			f_cdnm('InExpCode', acc06_inexp_cd) acc06_inexp_nm,
+			f_cdnm('InExpCode', acc06_inout_cd) acc06_inexp_nm,
 			b.acc02_gmok_cd acc06_gmok_cd,
 			b.acc02_smok_cd acc06_smok_cd,
 			b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm ,
@@ -48,7 +48,7 @@
 
 <select id="selectByTransDate" resultMap="mapper" parameterType="HashMap">
 	select 	a.*,
-			f_cdnm('InExpCode', acc06_inexp_cd) acc06_inexp_nm,
+			f_cdnm('InExpCode', acc06_inout_cd) acc06_inexp_nm,
 			b.acc02_gmok_cd acc06_gmok_cd,
 			b.acc02_smok_cd acc06_smok_cd,
 			b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm ,
@@ -61,7 +61,7 @@
 	and		a.acc06_client_id = c.acc04_client_id(+)
 	and		acc06_company_id = #{companyId}
 	and		acc06_trans_date between #{startDate} and #{endDate}
-	and		acc06_inexp_cd = 'OUT'
+	and		acc06_inout_cd = 'OUT'
 	order by a.acc06_trans_date
 </select>
 
@@ -70,6 +70,7 @@
 	CALL sp_load_trans(
 		#{companyId},
 		#{baseMonth},
+		#{inOutCode},
 		#{returnCode, mode=OUT, jdbcType=INTEGER}, 
 		#{returnMsg, mode=OUT, jdbcType=VARCHAR}
     )

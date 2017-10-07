@@ -67,6 +67,7 @@ public class Trans {
 		
 		param.put("companyId", companyId);
 		param.put("baseMonth", baseMonth);
+		param.put("inOutCode", "OUT");
 		
 		sqlSession.selectOne(mapperName + ".loadTrans", param);
 		

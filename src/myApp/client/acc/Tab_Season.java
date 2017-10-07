@@ -47,13 +47,7 @@ public class Tab_Season extends VerticalLayoutContainer implements InterfaceGrid
 	@Override
 	public void retrieve(){
 		GridRetrieveData<SeasonModel> service = new GridRetrieveData<SeasonModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginUser().getCompanyModel().getCompanyId());
-
-//		System.out.println("Login CompanyID : "+LoginUser.getLoginUser().getCompanyId());
-//		System.out.println("Login CompanyID : "+"******");
-
-//		Info.display("companyID","" + LoginUser.getLoginUser().getCompanyId());
-		
+		service.addParam("companyId", LoginUser.getLoginCompany().getCompanyId());
 		service.retrieve("acc.Season.selectByCompanyId");
 	}
 	
@@ -67,7 +61,7 @@ public class Tab_Season extends VerticalLayoutContainer implements InterfaceGrid
 	public void insertRow(){
 		GridInsertRow<SeasonModel> service = new GridInsertRow<SeasonModel>(); 
 		SeasonModel seasonModel = new SeasonModel();
-		seasonModel.setCompanyId(LoginUser.getLoginUser().getCompanyId());
+		seasonModel.setCompanyId(LoginUser.getLoginCompany().getCompanyId());
 		service.insertRow(grid, seasonModel);
 	}
 	

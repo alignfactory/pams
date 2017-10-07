@@ -29,6 +29,8 @@ public class AccountModel extends AbstractDataModel {
 	private String useYn ;
 	private String note ;
 	
+	private String accountName; 
+	
 	@Override
 	public void setKeyId(Long id) {
 		this.setAccountId(id);
@@ -211,6 +213,12 @@ public class AccountModel extends AbstractDataModel {
 	}
 	public void setResolutionYn(Boolean resolutionYnFlag) {
 		this.resolutionYn = resolutionYnFlag.toString();
+	}
+	public String getAccountName() {
+		return accountName;
+	}
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
 	}
 	
 }
