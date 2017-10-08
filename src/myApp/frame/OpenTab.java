@@ -54,6 +54,10 @@ public class OpenTab {
 			return (Widget) GWT.create(myApp.client.acc.Tab_Filter.class) ;
 		}
 
+		if("Tab_In_Expense".equals(className)) {
+			return (Widget) GWT.create(myApp.client.acc.Tab_In_Expense.class) ;
+		}
+
 		// 검사결과 등록 
 		if("Tab_Checkup".equals(className)) {
 			return (Widget) GWT.create(myApp.client.tmc.Tab_Checkup.class) ;
