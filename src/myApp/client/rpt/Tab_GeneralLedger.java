@@ -51,8 +51,8 @@ public class Tab_GeneralLedger extends VerticalLayoutContainer implements Interf
 		yearMonth.setValue("2015-03");
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원", 250, 50);
-		searchBarBuilder.addTextField(yearMonth, "해당월", 160, 80, true);
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원 ", 250, 50);
+		searchBarBuilder.addTextField(yearMonth, "해당월 ", 130, 50, true); 
 
 		searchBarBuilder.addRetrieveButton(); 
 //		searchBarBuilder.addUpdateButton();
@@ -156,10 +156,10 @@ public class Tab_GeneralLedger extends VerticalLayoutContainer implements Interf
 //		gridBuilder.addLong(properties.companyId()		,	100	,	"회사ID"	,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	new TextField());
 //		gridBuilder.addText(properties.yearMonth()		,	80	,	"해당월"	,	HasHorizontalAlignment.ALIGN_CENTER	,	null);	//	); // not editable 
 //		gridBuilder.addDate(properties.transDate()		,	100	,	"일자"		); 
-		gridBuilder.addText(properties.gwonName()		,	130	,	"관리명"	,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
-		gridBuilder.addText(properties.hangName()		,	130	,	"항목명"	,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
-		gridBuilder.addText(properties.gmokName()		,	200	,	"계정명"	,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
-		gridBuilder.addText(properties.yearMonth()		,	90	,	"년월"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
+		gridBuilder.addText(properties.gwonName()		,	150	,	"관리명"	,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
+		gridBuilder.addText(properties.hangName()		,	150	,	"항목명"	,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
+		gridBuilder.addText(properties.gmokName()		,	300	,	"계정명"	,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
+//		gridBuilder.addText(properties.yearMonth()		,	90	,	"년월"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
 		gridBuilder.addLong(properties.transAmount()	,	120	,	"금액"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
 
 		return gridBuilder.getGrid();  

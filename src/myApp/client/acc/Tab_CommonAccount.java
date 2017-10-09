@@ -42,18 +42,6 @@ public class Tab_CommonAccount extends VerticalLayoutContainer implements Interf
 		searchBarBuilder.addInsertButton();
 		searchBarBuilder.addDeleteButton();
 		
-	    TextButton retrievePDFButton = new TextButton("PDF출력");
-	    retrievePDFButton.addSelectHandler(new SelectHandler() {
-			@Override
-			public void onSelect(SelectEvent event) {
-				PDFViewer viewer = new PDFViewer(); 
-				// 호출하려면 className과 기타 Parameter를 String으로 붙여서 넘겨주어야 한다. 
-				viewer.open("className=acc.AccountPDF");
-				
-			}
-		});
-	    searchBarBuilder.getSearchBar().add(retrievePDFButton); 
-		
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 40));
 		this.add(grid, new VerticalLayoutData(1, 1));
 		

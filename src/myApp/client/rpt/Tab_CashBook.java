@@ -45,9 +45,9 @@ public class Tab_CashBook extends VerticalLayoutContainer implements InterfaceGr
 		this.setBorders(false); 
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원", 250, 50);
-		searchBarBuilder.addDateField(beginDate, "From Date", 200, 80, true); 
-		searchBarBuilder.addDateField(endDate, "To Date", 200, 80, true); 
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원 ", 250, 50);
+		searchBarBuilder.addDateField(beginDate, "시작일자 ", 165, 60, true); 
+		searchBarBuilder.addDateField(endDate, "종료일자 ", 165, 60, true); 
 		
 		searchBarBuilder.addRetrieveButton(); 
 //		searchBarBuilder.addUpdateButton();

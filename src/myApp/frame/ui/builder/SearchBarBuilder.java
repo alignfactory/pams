@@ -11,6 +11,7 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.FormPanel.LabelAlign;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
 import myApp.frame.ui.field.LookupTriggerField;
@@ -36,6 +37,7 @@ public class SearchBarBuilder {
 		triggerField.setHeight(26); // 고정높이 버튼과 높이를 맞춘다. 
 		triggerField.setWidth(width);
 		triggerField.setLabelWidth(labelWidth);
+		triggerField.setLabelAlign(LabelAlign.LEFT);
 		triggerField.setLayoutData(new Margins(0, 100, 0, 0));
 		triggerField.setLabelPad(0);
 		
@@ -53,6 +55,7 @@ public class SearchBarBuilder {
 		fieldLabel.setHeight(26); // 고정높이 버튼과 높이를 맞춘다. 
 		fieldLabel.setWidth(width);
 		fieldLabel.setLabelWidth(labelWidth);
+		fieldLabel.setLabelAlign(LabelAlign.LEFT);
 		fieldLabel.setLayoutData(new Margins(0, 10, 0, 0));
 		searchBar.add(fieldLabel);
 		
@@ -66,6 +69,7 @@ public class SearchBarBuilder {
 		fieldLabel.setHeight(26); // 고정높이 버튼과 높이를 맞춘다. 
 		fieldLabel.setWidth(width);
 		fieldLabel.setLabelWidth(labelWidth);
+		fieldLabel.setLabelAlign(LabelAlign.LEFT);
 		
 		if(useEnterKey){
 			field.addKeyDownHandler(new KeyDownHandler(){
@@ -93,6 +97,7 @@ public class SearchBarBuilder {
 		fieldLabel.setHeight(26); // 고정높이 버튼과 높이를 맞춘다. 
 		fieldLabel.setWidth(width);
 		fieldLabel.setLabelWidth(labelWidth);
+		fieldLabel.setLabelAlign(LabelAlign.LEFT);
 		
 		if(useEnterKey){
 			field.addKeyDownHandler(new KeyDownHandler(){

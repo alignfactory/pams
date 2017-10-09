@@ -48,10 +48,10 @@ public class Tab_TrialBalance extends VerticalLayoutContainer implements Interfa
 		this.setBorders(false); 
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원", 250, 50);
-		searchBarBuilder.addTextField(yearMonth, "해당월", 150, 80, true); 
-		searchBarBuilder.addDateField(beginDate, "From Date", 200, 80, true); 
-		searchBarBuilder.addDateField(endDate, "To Date", 200, 80, true); 
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원 ", 250, 50);
+		searchBarBuilder.addTextField(yearMonth, "해당월 ", 130, 50, true); 
+		searchBarBuilder.addDateField(beginDate, "시작일자 ", 165, 60, true); 
+		searchBarBuilder.addDateField(endDate, "종료일자 ", 165, 60, true); 
 		
 		searchBarBuilder.addRetrieveButton(); 
 //		searchBarBuilder.addUpdateButton();
@@ -162,7 +162,7 @@ public class Tab_TrialBalance extends VerticalLayoutContainer implements Interfa
 //		gridBuilder.addText(properties.boldGb()				,	120	,	"진하게"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
 //		gridBuilder.addText(properties.accountCd()			,	120	,	"과목코드"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
 //		gridBuilder.addText(properties.subCd()				,	120	,	"세목코드"		,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
-		gridBuilder.addText(properties.accountPrtNm()		,	120	,	"계정과목"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
+		gridBuilder.addText(properties.accountPrtNm()		,	300	,	"계정과목"		,	HasHorizontalAlignment.ALIGN_LEFT	,	null);	//	new TextField()); 
 		gridBuilder.addLong(properties.outBudgetAmount()	,	120	,	"예산"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
 		gridBuilder.addLong(properties.outAmonut()			,	120	,	"월계"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
 		gridBuilder.addLong(properties.outAccumulatedSum()	,	120	,	"누계"			,	HasHorizontalAlignment.ALIGN_RIGHT	,	null);	//	new TextField()); 
