@@ -73,7 +73,7 @@
 	and		acc02_edu_office_cd
 			= ( select 	acc01_edu_office_cd
 				from 	acc01_season
-				where 	acc01_company_id = acc02_company_id
+				where 	acc02_company_id in (acc01_company_id, 0)
 				and		to_date(#{baseMonth}, 'yyyymm') between acc01_start_date and acc01_close_date) 
 	order by acc02_gwon_cd, acc02_hang_cd, acc02_gmok_cd, acc02_smok_cd
 	

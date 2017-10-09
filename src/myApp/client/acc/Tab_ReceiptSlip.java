@@ -36,17 +36,17 @@ import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 /*
- * 출금전표 초리
+ * 입금전표 처리 : inOutCode = IN 
  */
 
-public class Tab_PaymentSlip extends VerticalLayoutContainer implements InterfaceGridOperate {
+public class Tab_ReceiptSlip extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
 	private static AccountComboBoxField accountComboBox = new AccountComboBoxField();
 	private TextField baseMonth= new TextField();
 	private TransModelProperties properties = GWT.create(TransModelProperties.class);
 	private Grid<TransModel> grid = this.buildGrid();
 
-	public Tab_PaymentSlip() {
+	public Tab_ReceiptSlip() {
 		
 		this.setBorders(false); 
 		
@@ -67,12 +67,12 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 				// 해당월이 바뀌면 계정콤보박스도 변경해야 한다. 
 				//Info.display("ch", baseMonth.getText());
 				accountComboBox.reset();
-				accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText(), "OUT");
+				accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText(), "IN");
 			}
 		});
 		
-		TextButton importButton = new TextButton("출금 불러오기");
-		importButton.setWidth(80);
+		TextButton importButton = new TextButton("입금 불러오기");
+		importButton.setWidth(100);
 		importButton.addSelectHandler(new SelectHandler() {
 			@Override
 			public void onSelect(SelectEvent event) {
@@ -81,13 +81,13 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 
 					@Override
 					public void callback() {
-						Info.display("불러오기 완료", "출금내역을 재조회합니다.");
+						Info.display("불러오기 완료", "입금내역을 재조회합니다.");
 						retrieve(); 
 					}
 				});
 				service.addParam("companyId", LoginUser.getLoginCompany().getCompanyId());
 				service.addParam("baseMonth", baseMonth.getText());
-				service.addParam("inOutCode", "OUT"); // 출금만 불러오기 한다. 
+				service.addParam("inOutCode", "IN");
 				
 				service.execute("acc.Trans.loadTrans");
 			}
@@ -103,7 +103,7 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		GridRetrieveData<TransModel> service = new GridRetrieveData<TransModel>(grid.getStore());
 		service.addParam("companyId", LoginUser.getLoginCompany().getCompanyId());
 		service.addParam("baseMonth", baseMonth.getText());
-		service.addParam("inOutCode", "OUT");
+		service.addParam("inOutCode", "IN");
 		service.retrieve("acc.Trans.selectByTransDate");
 	}
 	
@@ -118,8 +118,8 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		GridInsertRow<TransModel> service = new GridInsertRow<TransModel>(); 
 		TransModel transModel = new TransModel();
 		transModel.setCompanyId(LoginUser.getLoginCompany().getCompanyId());
-		transModel.setInExpCode("OUT"); // 무조건 출금으로 설정된다. 
-		transModel.setInExpName("출금");
+		transModel.setInExpCode("IN"); // 무조건 출금으로 설정된다. 
+		transModel.setInExpName("입금");
 		service.insertRow(grid, transModel);
 	}
 	
@@ -136,12 +136,10 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
 		gridBuilder.addText(properties.inExpName(), 60, "구분"); 
-		gridBuilder.addDate(properties.transDate(), 100, "거래일자", new DateField()) ;
+		gridBuilder.addDate(properties.transDate(), 100, "입금일자", new DateField()) ;
 		gridBuilder.addText(properties.transName(), 150, "거래명", new TextField()) ;
 		
-		//gridBuilder.addText(properties.gmokCode(), 80, "목코드") ;
-		//gridBuilder.addText(properties.smokCode(),	80, "세목코드") ;
-		accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText(), "OUT"); 
+		accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText(), "IN"); 
 		
 		accountComboBox.addValueChangeHandler(new ValueChangeHandler<String>(){
 			@Override
@@ -173,31 +171,31 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		gridBuilder.addText(properties.accountName(), 200, "계정명", accountComboBox) ;
 		//gridBuilder.addLong(properties.accountId(), 150, "accountId") ;
 		
-		gridBuilder.addLong(properties.transAmount(), 120, "거래금액", new LongField()) ;
+		gridBuilder.addLong(properties.transAmount(), 120, "입금금액", new LongField()) ;
 		gridBuilder.addText(properties.descript(), 300, "적요", new TextField());
-		gridBuilder.addText(properties.bizNo(), 100, "거래처번호"); 
-		
-		final ClientComboBoxField clientComboBox = new ClientComboBoxField();
-		clientComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId()); 
-		clientComboBox.addValueChangeHandler(new ValueChangeHandler<String>(){
-			@Override
-			public void onValueChange(ValueChangeEvent<String> arg0) {
-				TransModel data = grid.getSelectionModel().getSelectedItem(); 
-				ClientModel client = clientComboBox.getClient();
-				if(client == null){
-					new SimpleMessage("해당 거래처 코드를 찾을 수 없습니다.");
-					//grid.getStore().getRecord(data).addChange(properties.accountName(), "");
-				}
-				grid.getStore().getRecord(data).addChange(properties.clientId(), client.getClientId());
-				grid.getStore().getRecord(data).addChange(properties.bizNo(), client.getBizNo());
-			}
-		});
-		gridBuilder.addText(properties.clientName(), 150, "거래처명", clientComboBox) ;
-		gridBuilder.addLong(properties.supplyAmount(), 100, "공급가액", new LongField()) ;
-		gridBuilder.addText(properties.taxApplyYn(), 60, "부가세", new TextField()) ;
-		gridBuilder.addLong(properties.taxAmount(), 100, "부가세액", new LongField()) ;
-		gridBuilder.addDate(properties.chargeDate(), 100, "청구일자", new DateField()) ;
-		gridBuilder.addDate(properties.accountDate(), 100, "회계일자", new TextField()) ;
+//		gridBuilder.addText(properties.bizNo(), 100, "거래처번호"); 
+//		
+//		final ClientComboBoxField clientComboBox = new ClientComboBoxField();
+//		clientComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId()); 
+//		clientComboBox.addValueChangeHandler(new ValueChangeHandler<String>(){
+//			@Override
+//			public void onValueChange(ValueChangeEvent<String> arg0) {
+//				TransModel data = grid.getSelectionModel().getSelectedItem(); 
+//				ClientModel client = clientComboBox.getClient();
+//				if(client == null){
+//					new SimpleMessage("해당 거래처 코드를 찾을 수 없습니다.");
+//					//grid.getStore().getRecord(data).addChange(properties.accountName(), "");
+//				}
+//				grid.getStore().getRecord(data).addChange(properties.clientId(), client.getClientId());
+//				grid.getStore().getRecord(data).addChange(properties.bizNo(), client.getBizNo());
+//			}
+//		});
+//		gridBuilder.addText(properties.clientName(), 150, "거래처명", clientComboBox) ;
+//		gridBuilder.addLong(properties.supplyAmount(), 100, "공급가액", new LongField()) ;
+//		gridBuilder.addText(properties.taxApplyYn(), 60, "부가세", new TextField()) ;
+//		gridBuilder.addLong(properties.taxAmount(), 100, "부가세액", new LongField()) ;
+//		gridBuilder.addDate(properties.chargeDate(), 100, "청구일자", new DateField()) ;
+//		gridBuilder.addDate(properties.accountDate(), 100, "회계일자", new TextField()) ;
 		gridBuilder.addText(properties.note(), 200, "비고", new TextField());
 		return gridBuilder.getGrid(); 
 	}

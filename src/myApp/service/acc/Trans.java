@@ -60,12 +60,15 @@ public class Trans {
 		Long companyId = request.getLong("companyId");
 		String baseMonth = request.getString("baseMonth"); 
 		baseMonth = baseMonth.replace("-", ""); 
+		String inOutCode = request.getString("inOutCode"); 
 		
 		Map<String, Object> param = new HashMap<String, Object>();
 		
 		param.put("companyId", companyId);
 		param.put("baseMonth", baseMonth);
-		param.put("inOutCode", "OUT");
+		param.put("inOutCode", inOutCode);
+		System.out.println("inoutcode is " + inOutCode); 
+		
 		
 		sqlSession.selectOne(mapperName + ".loadTrans", param);
 		

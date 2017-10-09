@@ -9,7 +9,12 @@ import com.sencha.gxt.widget.core.client.info.Info;
 public class OpenTab {
 
 	private Widget createTab(String className){
-
+		
+		if("Tab_ReceiptSlip".equals(className)) { // 입금항목등록
+            return (Widget) GWT.create(myApp.client.acc.Tab_ReceiptSlip.class) ;
+        }
+		
+		
 		if("Tab_PaymentSlip".equals(className)) { // 출금항목등록
             return (Widget) GWT.create(myApp.client.acc.Tab_PaymentSlip.class) ;
         }
