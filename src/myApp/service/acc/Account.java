@@ -44,6 +44,7 @@ public class Account {
 		Map<String, Object> param = new HashMap<String, Object>(); 
 		param.put("companyId", companyId);
 		param.put("baseMonth", baseMonth);
+		param.put("inOutCode", request.getString("inOutCode"));
 		
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByComboBox", param);
 		

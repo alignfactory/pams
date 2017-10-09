@@ -67,10 +67,9 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 			@Override
 			public void onChange(ChangeEvent arg0) {
 				// 해당월이 바뀌면 계정콤보박스도 변경해야 한다. 
-				Info.display("ch", baseMonth.getText());
-				// TODO Auto-generated method stub
+				//Info.display("ch", baseMonth.getText());
 				accountComboBox.reset();
-				accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText());
+				accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText(), "OUT");
 			}
 		});
 		
@@ -104,6 +103,7 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		GridRetrieveData<TransModel> service = new GridRetrieveData<TransModel>(grid.getStore());
 		service.addParam("companyId", LoginUser.getLoginCompany().getCompanyId());
 		service.addParam("baseMonth", baseMonth.getText());
+		service.addParam("inOutCode", "OUT");
 		service.retrieve("acc.Trans.selectByTransDate");
 	}
 	
@@ -141,7 +141,7 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		
 		//gridBuilder.addText(properties.gmokCode(), 80, "목코드") ;
 		//gridBuilder.addText(properties.smokCode(),	80, "세목코드") ;
-		accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText()); 
+		accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText(), "OUT"); 
 		
 		accountComboBox.addValueChangeHandler(new ValueChangeHandler<String>(){
 			@Override

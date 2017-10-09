@@ -18,7 +18,7 @@ public class AccountComboBoxField extends StringComboBox implements InterfaceSer
 
 	private Map<String, AccountModel> codeList = new HashMap<String, AccountModel>();
 	
-	public void setComboBoxField(Long companyId, String baseMonth){
+	public void setComboBoxField(Long companyId, String baseMonth, String inOutCode){
 		
 		for(String key : codeList.keySet()){
 			this.remove(key);
@@ -29,6 +29,7 @@ public class AccountComboBoxField extends StringComboBox implements InterfaceSer
 		
 		String month = baseMonth.replace("-", ""); 
 		request.add("baseMonth", month);
+		request.add("inOutCode", inOutCode);
 		
 		ServiceCall service = new ServiceCall();
 		service.execute(request, this);

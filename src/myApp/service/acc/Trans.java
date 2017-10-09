@@ -41,18 +41,15 @@ public class Trans {
 
 		Date endDate = dateFormat.parse(baseMonth + cal.getActualMaximum(Calendar.DAY_OF_MONTH));
 		
-		
-		System.out.println("companyId is " + companyId);
-		System.out.println("baseMonth is " + baseMonth);
-		System.out.println("start date is " + startDate); 
-		System.out.println("end date is " + endDate);
-		
-		
 		Map<String, Object> param = new HashMap<String, Object>();
 		
 		param.put("companyId", companyId);
 		param.put("startDate", startDate);
 		param.put("endDate", endDate);
+		
+		System.out.println("inOutCode is " + request.getString("inOutCode")); 
+		param.put("inOutCode", request.getString("inOutCode")); 
+		
 		
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByTransDate", param);
 		result.setRetrieveResult(1, "select ok", list);

@@ -58,10 +58,11 @@
 			acc02_account b,
 			acc04_client c
 	where	a.acc06_account_id = b.acc02_account_id(+)
+	and		a.acc06_inout_cd = b.acc02_inexp_cd(+)
 	and		a.acc06_client_id = c.acc04_client_id(+)
 	and		acc06_company_id = #{companyId}
 	and		acc06_trans_date between #{startDate} and #{endDate}
-	and		acc06_inout_cd = 'OUT'
+	and		acc06_inout_cd = #{inOutCode}
 	order by a.acc06_trans_date
 </select>
 
