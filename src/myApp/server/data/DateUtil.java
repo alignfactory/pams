@@ -24,6 +24,13 @@ public class DateUtil {
 		return date; 
 	}
 	
+	public static String getDate(Date date, String dateFormat){
+		
+    	SimpleDateFormat transFormat = new SimpleDateFormat(dateFormat);
+    	String returnString = transFormat.format(date); 
+		return returnString; 
+	}
+
 	
 	public static Date getDate(String dateString){
 		return getDate(dateString, "yyyy-MM-dd"); 
