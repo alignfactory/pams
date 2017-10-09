@@ -93,6 +93,7 @@ public class ExpensePDF {
     
 	private void printPDF(Document document, TransModel transModel) throws DocumentException, IOException{
 		
+		document.newPage();
 //      Font paragrapthFont = Font.FontFactory. .valueOf("굴림체"); // Factory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
         CellLayout cellLayout = new CellLayout(10);
          
