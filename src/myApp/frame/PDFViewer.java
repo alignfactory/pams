@@ -25,7 +25,7 @@ public class PDFViewer extends Window  {
 
 	public PDFViewer(){
 		this.setResizable(false);
-		this.setHeading("원생카드 출력");
+		this.setHeading("PDF Viewer");
 		this.setModal(true);
 		this.setPixelSize(1024, 768); // popup size(1024, 768) 
 		this.setLayoutData(new MarginData(0));
@@ -45,7 +45,7 @@ public class PDFViewer extends Window  {
 		panel.add(htmlLayoutContainer, new MarginData(0));
 		this.add(htmlLayoutContainer);
 		
-		TextButton downButton = new TextButton("출력?");
+		TextButton downButton = new TextButton("Print");
 		downButton.setWidth(50);
 		downButton.addSelectHandler(new SelectHandler() {
 			@Override
@@ -55,7 +55,7 @@ public class PDFViewer extends Window  {
 		});
 		this.addButton(downButton);
 		
-		TextButton cancelButton = new TextButton("닫기");
+		TextButton cancelButton = new TextButton("Close");
 		cancelButton.setWidth(50);
 		cancelButton.addSelectHandler(new SelectHandler() {
 			@Override

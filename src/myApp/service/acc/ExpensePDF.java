@@ -18,10 +18,12 @@ import myApp.client.acc.model.TransModel;
 import myApp.server.DatabaseFactory;
 import myApp.server.data.DateUtil;
 import myApp.server.pdf.CellLayout;
- 
+
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -104,62 +106,49 @@ public class ExpensePDF {
  
         PdfPCell cell;
          
-//      cell = cellLayout.getCell("지출결의서");
-//      cell.setColspan(17);
-//      cell.setRowspan(2);
-//      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-//      cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-//      table.addCell(cell);
- 
-/*
-        cell = new PdfPCell();
-        cell.addElement(new Paragraph("T_ 지출결의서 _O:"));
-//      cell.setRowspan(2);
-        Paragraph p = new Paragraph("T- 지출결의서 -O:");
-        p.setAlignment(Element.ALIGN_RIGHT);
-//      p.setIndentationRight(10);
-        cell.addElement(p);
-        cell.setColspan(17);
-        table.addCell(cell);
-*/
- 
         cell = cellLayout.getCell("지출결의서");
-        cell.setFixedHeight(40f);
-        cell.setColspan(17);
-//      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
-        cell.setRowspan(2);
-        table.addCell(cell);
+        cell.setFixedHeight(60f);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setColspan(17);
+		cell.setRowspan(2);
+		table.addCell(cell);
+
+//		cell = cellLayout.getTitle("지출결의서", 18, "맑은 고딕", Font.NORMAL, BaseColor.BLACK); 
+//		cell.setFixedHeight(60f);
+//		cell.setColspan(17);
+//		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		cell.setRowspan(2);
+//		table.addCell(cell);
  
         cell = cellLayout.getCell("계"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 
-
-        cell.setFixedHeight(24f);
+        cell.setFixedHeight(30f);
         cell.setColspan(2);
         table.addCell(cell);
-        
-//        Paragraph p = new Paragraph("Name");
-//        //p.setIndentationLeft(10);
-//        p.setAlignment(Element.ALIGN_RIGHT);
-//        cell.addElement(p);
         
         cell = cellLayout.getCell("원감"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
-        
         table.addCell(cell);
         
-        PdfPCell cell2  = new PdfPCell(); 
-        cell2 = cellLayout.getCell("원장", Element.ALIGN_MIDDLE); 
+        cell = cellLayout.getCell("원장"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell2.setColspan(2);
-        table.addCell(cell2);
+        cell.setColspan(2);
+        table.addCell(cell);
         
-        
-        cell = cellLayout.getCell("2017 학년도 세출\n선호유치원 회계"); 
+//		PdfPCell cell2  = new PdfPCell(); 
+//		cell2 = cellLayout.getCell("원장", Element.ALIGN_MIDDLE); 
+//		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		cell2.setColspan(2);
+//		table.addCell(cell2);
+
+        cell = cellLayout.getCell("2017 학년도 세출\n\n선호유치원 회계"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(5);
@@ -182,7 +171,7 @@ public class ExpensePDF {
         table.addCell(cell);
  
         cell = cellLayout.getCell(""); 
-        cell.setFixedHeight(48f);
+        cell.setFixedHeight(60f);
         cell.setColspan(2);
         table.addCell(cell);
         cell = cellLayout.getCell(""); 
@@ -212,78 +201,111 @@ public class ExpensePDF {
 //      table.addCell(cellLayout.getCell(""));
 //      table.addCell(cellLayout.getCell(""));
  
+        String transDate = DateUtil.getDate(transModel.getTransDate(), "yyyy년MM월dd일"); 
+//		System.out.println("transDate is " + transDate); 
+
         cell = cellLayout.getCell("발의"); 
-        cell.setFixedHeight(28f);
+        cell.setFixedHeight(30f);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("2017년01월01일"); 
+//		table.addCell(cellLayout.getCell(transDate));
+        cell = cellLayout.getCell(transDate); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
         table.addCell(cell);
         cell = cellLayout.getCell("인"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
         cell = cellLayout.getCell("관"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
         cell = cellLayout.getCell("관리운영비"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell("발의"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
-        table.addCell(cell);
- 
-        
-        String transDate = DateUtil.getDate(transModel.getTransDate(), "yyyy년 MM월 dd일"); 
-        System.out.println("transDate is " + transDate); 
-        
-        table.addCell(cellLayout.getCell(transDate)); 
-        
+		table.addCell(cell);
+//		table.addCell(cellLayout.getCell(transDate)); 
 		cell = cellLayout.getCell(transDate); 
-        
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
         table.addCell(cell);
         cell = cellLayout.getCell("인"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
  
         cell = cellLayout.getCell("지출원인\n행위부등기"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(28f);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setFixedHeight(30f);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("2017년01월01일"); 
+        cell = cellLayout.getCell(transDate); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
         table.addCell(cell);
         cell = cellLayout.getCell("인"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
         cell = cellLayout.getCell("항"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
 //      cell.setColspan(1);
         table.addCell(cell);
         cell = cellLayout.getCell("학교운영비"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell("지급명령\n발행부등기"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("2017년01월01일"); 
+        cell = cellLayout.getCell(transDate); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
         table.addCell(cell);
         cell = cellLayout.getCell("인"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
  
         cell = cellLayout.getCell("계약"); 
-        cell.setFixedHeight(28f);
+        cell.setFixedHeight(30f);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("2017년01월01일"); 
+        cell = cellLayout.getCell(transDate); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
         table.addCell(cell);
         cell = cellLayout.getCell("인"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
 //      cell = cellLayout.getCell("항"); 
@@ -293,50 +315,74 @@ public class ExpensePDF {
 //      cell.setColspan(4);
 //      table.addCell(cell);
         cell = cellLayout.getCell("지출부등기"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("2017년01월01일"); 
+        cell = cellLayout.getCell(transDate); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
         table.addCell(cell);
         cell = cellLayout.getCell("인"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
  
         cell = cellLayout.getCell("검사"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(28f);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setFixedHeight(30f);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("2017년01월01일"); 
+        cell = cellLayout.getCell(transDate); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
         table.addCell(cell);
         cell = cellLayout.getCell("인"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
         cell = cellLayout.getCell("목"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
 //      cell.setColspan(1);
         table.addCell(cell);
         cell = cellLayout.getCell("공통운영비"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell("지급명령\n법    호"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
         cell = cellLayout.getCell("제        호"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
         table.addCell(cell);
  
         cell = cellLayout.getCell("출납부등기"); 
-        cell.setFixedHeight(28f);
+        cell.setFixedHeight(30f);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("2017년01월01일"); 
+        cell = cellLayout.getCell(transDate); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
         table.addCell(cell);
         cell = cellLayout.getCell("인"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
 //      cell = cellLayout.getCell("항"); 
@@ -346,18 +392,25 @@ public class ExpensePDF {
 //      cell.setColspan(4);
 //      table.addCell(cell);
         cell = cellLayout.getCell("부가가치세"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("0"); 
+        cell = cellLayout.getCell("￦"+transModel.getTaxAmount()); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
         table.addCell(cell);
  
         cell = cellLayout.getCell("적    요"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(28f);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setFixedHeight(30f);
         cell.setColspan(5);
         table.addCell(cell);
         cell = cellLayout.getCell("채    주"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(6);
         table.addCell(cell);
         cell = cellLayout.getCell(""); 
@@ -366,17 +419,21 @@ public class ExpensePDF {
         cell = cellLayout.getCell(""); 
         cell.setColspan(4);
         table.addCell(cell);
- 
-        cell = cellLayout.getCell("차량연료"); 
+        cell = cellLayout.getCell(transModel.getDescript()); 
         cell.setVerticalAlignment(Element.ALIGN_LEFT);
-        cell.setFixedHeight(28f);
+        cell.setFixedHeight(30f);
         cell.setRowspan(6);
         cell.setColspan(5);
         table.addCell(cell);
         cell = cellLayout.getCell("상    호"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setFixedHeight(30f);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("본동문화주유소"); 
+        cell = cellLayout.getCell(transModel.getClientName()); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell(""); 
@@ -388,14 +445,18 @@ public class ExpensePDF {
  
 //      cell = cellLayout.getCell("차량연료"); 
 //      cell.setVerticalAlignment(Element.ALIGN_LEFT);
-//      cell.setFixedHeight(28f);
+//      cell.setFixedHeight(30f);
 //      cell.setColspan(5);
 //      table.addCell(cell);
         cell = cellLayout.getCell("주    소"); 
-        cell.setFixedHeight(48f);
+        cell.setFixedHeight(60f);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("대구시 달서구 본동 1113-3외 5필"); 
+        cell = cellLayout.getCell(" "); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell(""); 
@@ -407,14 +468,18 @@ public class ExpensePDF {
  
 //      cell = cellLayout.getCell("차량연료"); 
 //      cell.setVerticalAlignment(Element.ALIGN_LEFT);
-//      cell.setFixedHeight(24f);
+//      cell.setFixedHeight(30f);
 //      cell.setColspan(5);
 //      table.addCell(cell);
         cell = cellLayout.getCell("법인(주민)\n번호"); 
-        cell.setFixedHeight(28f);
+        cell.setFixedHeight(45f);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("514-13-90896"); 
+        cell = cellLayout.getCell(transModel.getBizNo()); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell(""); 
@@ -426,14 +491,18 @@ public class ExpensePDF {
  
 //      cell = cellLayout.getCell("차량연료"); 
 //      cell.setVerticalAlignment(Element.ALIGN_LEFT);
-//      cell.setFixedHeight(24f);
+//      cell.setFixedHeight(30f);
 //      cell.setColspan(5);
 //      table.addCell(cell);
         cell = cellLayout.getCell("계좌번호"); 
-        cell.setFixedHeight(28f);
+        cell.setFixedHeight(30f);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("11111-314-01-92516"); 
+        cell = cellLayout.getCell(" "); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell(""); 
@@ -445,41 +514,56 @@ public class ExpensePDF {
  
 //      cell = cellLayout.getCell("차량연료"); 
 //      cell.setVerticalAlignment(Element.ALIGN_LEFT);
-//      cell.setFixedHeight(24f);
+//      cell.setFixedHeight(30f);
 //      cell.setColspan(5);
 //      table.addCell(cell);
         cell = cellLayout.getCell("성    명"); 
-        cell.setFixedHeight(28f);
+        cell.setFixedHeight(30f);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("황순이"); 
+        cell = cellLayout.getCell(transModel.getClientName()); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell("공급가액"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("91,000"); 
+        cell = cellLayout.getCell("￦"+transModel.getSupplyAmount()); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
         table.addCell(cell);
  
 //      cell = cellLayout.getCell("차량연료"); 
 //      cell.setVerticalAlignment(Element.ALIGN_LEFT);
-//      cell.setFixedHeight(24f);
+//      cell.setFixedHeight(30f);
 //      cell.setColspan(5);
 //      table.addCell(cell);
-        cell = cellLayout.getCell("오른쪽금액을 영수함.\n2017년 03월 17일"); 
-        cell.setFixedHeight(48f);
+        cell = cellLayout.getCell("오른쪽금액을 영수함.\n\n"+transDate);  
+        cell.setFixedHeight(72f);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(6);
         table.addCell(cell);
         cell = cellLayout.getCell("합    계"); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("91,000"); 
+        cell = cellLayout.getCell("￦"+transModel.getTransAmount()); 
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
         table.addCell(cell);
- 
- 
-        //      cell = cellLayout.getCell("아주좋음"); 
+
+        document.add(table);
+
+//      cell = cellLayout.getCell("아주좋음"); 
 //      cell.setColspan(3);
 //
 //      table.addCell(cellLayout.getCell("지출결의서"));
@@ -537,7 +621,7 @@ public class ExpensePDF {
 //      table.addCell(cellLayout.getCell(""));
 //      
 //      cell = cellLayout.getCell("좋아하는\r음식"); 
-//      cell.setFixedHeight(28f);
+//      cell.setFixedHeight(30f);
 //      table.addCell(cell); 
 //      table.addCell(cellLayout.getCell(""));
 //
@@ -551,17 +635,17 @@ public class ExpensePDF {
 //      cell = cellLayout.getCell(""); 
 //      cell.setColspan(3);
 //      table.addCell(cell);
-         
-        cell = cellLayout.getCell("특기사항"); 
-        cell.setFixedHeight(42f);
-        table.addCell(cell);
-         
-         
-        cell = cellLayout.getCell("");
-        cell.setColspan(6);
-        table.addCell(cell);
-         
-        document.add(table);
+//         
+//        cell = cellLayout.getCell("특기사항"); 
+//        cell.setFixedHeight(45f);
+//        table.addCell(cell);
+//         
+//         
+//        cell = cellLayout.getCell("");
+//        cell.setColspan(6);
+//        table.addCell(cell);
+//         
+//        document.add(table);
 //
 //        
 //        Paragraph p = new Paragraph(" ");
@@ -652,7 +736,7 @@ public class ExpensePDF {
 //          table.addCell(cellLayout.getCell(""));
 //          
 //          cell = cellLayout.getCell("좋아하는\r음식"); 
-//          cell.setFixedHeight(28f);
+//          cell.setFixedHeight(30f);
 //          table.addCell(cell); 
 //          table.addCell(cellLayout.getCell(""));
 //  
@@ -668,7 +752,7 @@ public class ExpensePDF {
 //          table.addCell(cell);
 //          
 //          cell = cellLayout.getCell("특기사항"); 
-//          cell.setFixedHeight(42f);
+//          cell.setFixedHeight(45f);
 //          table.addCell(cell);
 //          
 //          
