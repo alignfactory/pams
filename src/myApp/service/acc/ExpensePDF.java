@@ -71,9 +71,10 @@ public class ExpensePDF {
     	
     	if(list .size() > 0 ){
     	
-	        Document document = new Document(PageSize.A4, 0, 0, 50, 0);
+	        Document document = new Document(PageSize.A4, 0, 0, 100, 0);
 	        PdfWriter.getInstance(document, bufferedOutputStream);
 	        
+//	        document.setMargins(20, 20, 100, 20);
 	        document.open();
 	
 //	        TransModel transModel = list.get(0); 
@@ -106,7 +107,7 @@ public class ExpensePDF {
  
         PdfPCell cell;
          
-        cell = cellLayout.getCell("지출결의서");
+        cell = cellLayout.getCell("지출결의서");//, "맑은 고딕", 18, Font.NORMAL, BaseColor.BLACK);
         cell.setFixedHeight(60f);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -544,6 +545,7 @@ public class ExpensePDF {
 //      cell.setFixedHeight(30f);
 //      cell.setColspan(5);
 //      table.addCell(cell);
+        transDate = DateUtil.getDate(transModel.getTransDate(), "yyyy년 MM월 dd일");
         cell = cellLayout.getCell("오른쪽금액을 영수함.\n\n"+transDate);  
         cell.setFixedHeight(72f);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
