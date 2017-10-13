@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import myApp.server.DatabaseFactory;
 import myApp.server.data.DateUtil;
 import myApp.server.pdf.CellLayout;
 
+import com.ibm.icu.text.NumberFormat;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -97,7 +99,8 @@ public class ExpensePDF {
 	private void printPDF(Document document, TransModel transModel) throws DocumentException, IOException{
 		
 		document.newPage();
-//      Font paragrapthFont = Font.FontFactory. .valueOf("굴림체"); // Factory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
+//      Font paragrapthFont = Font.FontFactory. .valueOf("굴림체");
+//		Factory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
         CellLayout cellLayout = new CellLayout(10);
          
         PdfPTable table = new PdfPTable(17); // column count 
@@ -107,8 +110,19 @@ public class ExpensePDF {
  
         PdfPCell cell;
          
-        cell = cellLayout.getCell("지출결의서");//, "맑은 고딕", 18, Font.NORMAL, BaseColor.BLACK);
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.KOREA);	//	Number를 Currency로 바꿈
+        String	taxAmount = format.format(transModel.getTaxAmount());
+        String	transAmount = format.format(transModel.getTransAmount());
+        String	supplyAmount = format.format(transModel.getSupplyAmount()); 
+        
+//		String	transDate = format.format(transModel.getTransDate());
+        String transDate = DateUtil.getDate(transModel.getTransDate(), "yyyy년MM월dd일"); 
+//		System.out.println("transDate is " + transDate); 
+
+
+        cell = cellLayout.getHeader("지출결의서",18);//, "맑은 고딕", 18, Font.NORMAL, BaseColor.BLACK);
         cell.setFixedHeight(60f);
+        cell.setBackgroundColor(BaseColor.WHITE);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setColspan(17);
@@ -202,9 +216,6 @@ public class ExpensePDF {
 //      table.addCell(cellLayout.getCell(""));
 //      table.addCell(cellLayout.getCell(""));
  
-        String transDate = DateUtil.getDate(transModel.getTransDate(), "yyyy년MM월dd일"); 
-//		System.out.println("transDate is " + transDate); 
-
         cell = cellLayout.getCell("발의"); 
         cell.setFixedHeight(30f);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -397,7 +408,11 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("￦"+transModel.getTaxAmount()); 
+
+//		cell = cellLayout.getCell("￦"+transModel.getTaxAmount()); 
+//        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.KOREA);//	.getCurrencyInstance(Locale.KOREAN);
+//        String	taxAmount = format.format(transModel.getTaxAmount());
+		cell = cellLayout.getCell(taxAmount); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
@@ -534,7 +549,7 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("￦"+transModel.getSupplyAmount()); 
+        cell = cellLayout.getCell(supplyAmount); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
@@ -557,7 +572,7 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell("￦"+transModel.getTransAmount()); 
+        cell = cellLayout.getCell(transAmount); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
