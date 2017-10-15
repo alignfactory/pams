@@ -6,7 +6,6 @@ import java.util.List;
 import myApp.client.acc.model.ClientModel;
 import myApp.client.acc.model.TransModel;
 import myApp.client.acc.model.TransModelProperties;
-import myApp.client.psc.TabPage_Student;
 import myApp.frame.LoginUser;
 import myApp.frame.PDFViewer;
 import myApp.frame.service.CallBatch;
@@ -27,11 +26,8 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.sencha.gxt.core.client.Style.SelectionMode;
-import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
@@ -39,6 +35,8 @@ import com.sencha.gxt.widget.core.client.form.LongField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
+import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
+import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 
 /*
  * 출금전표 초리
@@ -50,7 +48,8 @@ public class Tab_PaymentSlip extends BorderLayoutContainer implements InterfaceG
 	private TextField baseMonth= new TextField();
 	private TransModelProperties properties = GWT.create(TransModelProperties.class);
 	private Grid<TransModel> grid = this.buildGrid();
-
+	private Edit_PaymentSlip editPaymentSlip = new Edit_PaymentSlip(this.grid); 
+	
 	public Tab_PaymentSlip() {
 		
 		//this.setBorders(false); 
@@ -121,8 +120,22 @@ public class Tab_PaymentSlip extends BorderLayoutContainer implements InterfaceG
 		this.setNorthWidget(searchBarBuilder.getSearchBar(), new BorderLayoutData(40));
 		this.setCenterWidget(grid);
 		
-		this.setSouthWidget(new TabPage_Student(null), new BorderLayoutData(100));
+		this.setSouthWidget(this.editPaymentSlip, new BorderLayoutData(300));
 		//this.add(grid, new VerticalLayoutData(1, 1));
+		
+		
+		this.grid.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<TransModel>(){
+			@Override
+			public void onSelectionChanged(SelectionChangedEvent<TransModel> event) {
+				if(event.getSelection().size() > 0){
+					TransModel transModel = grid.getSelectionModel().getSelectedItem();
+					editPaymentSlip.edit(transModel);
+					//retrieveTabpage(); 
+				}
+			} 
+		}); 
+		
+		
 	}
 	
 	@Override
@@ -156,6 +169,7 @@ public class Tab_PaymentSlip extends BorderLayoutContainer implements InterfaceG
 		List<TransModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
 		service.deleteRow(grid.getStore(), checkedList, "acc.Trans.delete");
 	}
+	
 	
 	public Grid<TransModel> buildGrid(){
 			
