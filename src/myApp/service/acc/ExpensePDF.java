@@ -81,7 +81,7 @@ public class ExpensePDF {
     	
     	if(list .size() > 0 ){
     	
-	        Document document = new Document(PageSize.A4, 15, 15, 100, 0);
+	        Document document = new Document(PageSize.A4, 15, 15, 100, 20);
 	        PdfWriter.getInstance(document, bufferedOutputStream);
 	        
 //	        document.setMargins(20, 20, 100, 20);
@@ -106,7 +106,7 @@ public class ExpensePDF {
     
 	private void printPDF(Document document, TransModel transModel) throws DocumentException, IOException{
 		
-		document.newPage();
+    	document.newPage();
 //      Font paragrapthFont = Font.FontFactory. .valueOf("굴림체");
 //		Factory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
         CellLayout cellLayout = new CellLayout(10);
@@ -128,7 +128,8 @@ public class ExpensePDF {
 //		System.out.println("transDate is " + transDate); 
 
 
-        cell = cellLayout.getHeader("지출결의서",18);//, "맑은 고딕", 18, Font.NORMAL, BaseColor.BLACK);
+		cell = cellLayout.getTitle("지출결의서", 18); 
+//        cell = cellLayout.getHeader("지출결의서",18);//, "맑은 고딕", 18, Font.NORMAL, BaseColor.BLACK);
         cell.setFixedHeight(60f);
         cell.setBackgroundColor(BaseColor.WHITE);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

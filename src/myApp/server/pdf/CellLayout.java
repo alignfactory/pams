@@ -14,13 +14,15 @@ import com.itextpdf.text.pdf.PdfPCell;
 
 public class CellLayout {
 //						  0			   1			 2			  3			   4			  			5			   6			7			   8			  9
+	BaseColor whiteBack = new BaseColor(255,255,255);
 	BaseColor whiteOrange = new BaseColor(255,204,153);
 	BaseColor whiteCyan = new BaseColor(204,255,255);
 	
 //	String[] fontName = {"malgun.ttf","malgunbd.ttf","HY견명조.ttf","Gulim.ttf","Gungsuh.ttf","NanumGothicCoding.ttf","Dotum.ttf","Batang.ttf","HMFMOLD.ttf","D2Coding.ttf"};
 
 	// font 위치 확인 필요. 
-	BaseFont objTitleFont = BaseFont.createFont("D://WebFiles//font//HMFMOLD.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+//	BaseFont objTitleFont = BaseFont.createFont("D://WebFiles//font//HMFMOLD.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+	BaseFont objTitleFont = BaseFont.createFont("D://WebFiles//font//malgun.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 	Font objTitle = new Font(objTitleFont, 14);
 
 	BaseFont objHeaderFont = BaseFont.createFont("D://WebFiles//font//malgun.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -43,16 +45,15 @@ public class CellLayout {
 	public PdfPCell getTitle(String text){
 		objFont.setSize(10);
 //		return this.getCell(text, Element.ALIGN_MIDDLE);
-		//Phrase p = new Phrase(text, objFont); 
+//		Phrase p = new Phrase(text, objFont); 
 		Paragraph p = new Paragraph(text, objTitle);
 //		p.setAlignment(textAlignment);
 		p.setFont(objTitle);
 		
 		PdfPCell cell = new PdfPCell(p);  
 //		cell.setFixedHeight(20f);
-        cell.setBackgroundColor(whiteOrange);
-		
-		//cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		cell.setBackgroundColor(whiteOrange);
+//		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
 		return cell; 
 	}
@@ -65,7 +66,7 @@ public class CellLayout {
 //		cell.setFixedHeight(16f);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setBackgroundColor(whiteOrange);
+//		cell.setBackgroundColor(whiteOrange);
 //		//Phrase p = new Phrase(text, objFont); 
 //		Paragraph p = new Paragraph(text, objTitle);
 //		p.setAlignment(Element.ALIGN_MIDDLE);
