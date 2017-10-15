@@ -79,7 +79,8 @@ public class Tab_In_Expense extends VerticalLayoutContainer implements Interface
 			public void onSelect(SelectEvent event) {
 				PDFViewer viewer = new PDFViewer(); 
 				// 호출하려면 className과 기타 Parameter를 String으로 붙여서 넘겨주어야 한다. 
-				viewer.open("className=acc.ExpensePDF&companyId=" + LoginUser.getLoginCompany().getCompanyId() + "&baseMonth=" + baseMonth.getText());
+				viewer.open("className=acc.ExpensePDF&companyId=" + LoginUser.getLoginCompany().getCompanyId()
+						+ "&baseMonth=" + baseMonth.getText() + "&companyName=" + LoginUser.getLoginCompany().getCompanyName());
 				
 			}
 		});

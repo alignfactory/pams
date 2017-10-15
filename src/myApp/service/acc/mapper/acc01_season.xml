@@ -32,4 +32,12 @@
 	order 	by acc01_start_date
 </select>
 
+<select id="selectByBaseDate" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			f_cdnm('EduOfficeCode', acc01_edu_office_cd) acc01_edu_office_nm 
+	from 	acc01_season a
+	where	acc01_company_id = #{companyId} 
+	and		#{startDate}	between	acc01_start_date and acc01_close_date  
+</select>
+
 </mapper>

@@ -30,5 +30,11 @@ public interface TransModelProperties extends PropertyAccess<TransModel> {
 	ValueProvider<TransModel, String> descript();
 	ValueProvider<TransModel, Date> chargeDate();
 	ValueProvider<TransModel, String> note();
+	ValueProvider<TransModel, String> ceoName();
+	ValueProvider<TransModel, String> gwanName();
+	ValueProvider<TransModel, String> hangName();
+	ValueProvider<TransModel, String> gmokName();
+	ValueProvider<TransModel, String> accountNo();
+	ValueProvider<TransModel, String> zipAddr();
 	
 }

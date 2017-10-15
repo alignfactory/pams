@@ -28,6 +28,14 @@
 	<result column="acc06_descript"		property="descript"/>
 	<result column="acc06_charge_date"	property="chargeDate"/>
 	<result column="acc06_note"			property="note"/>
+
+	<result column="acc06_gwon_nm"		property="gwanName"/>
+	<result column="acc06_hang_nm"		property="hangName"/>
+	<result column="acc06_gmok_nm"		property="gmokName"/>
+	<result column="acc06_ceo_nm"		property="ceoName"/>
+	<result column="acc06_account_no"	property="accountNo"/>
+	<result column="acc06_zip_addr"		property="zipAddr"/>
+
 </resultMap>
 	
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
@@ -38,6 +46,12 @@
 			b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm ,
 			c.acc04_biz_no acc06_biz_no,
 			c.acc04_client_nm acc06_client_nm
+		,	b.acc02_gwon_nm acc06_gwon_nm
+		,	b.acc02_hang_nm acc06_hang_nm
+		,	b.acc02_gmok_nm acc06_gmok_nm
+		,	c.acc04_ceo_nm acc06_ceo_nm
+		,	c.acc04_account_no	acc06_account_no
+		,	'(' || c.acc04_zip_cd || ') \n' || acc04_zip_addr || ' \n' || acc04_zip_detail acc06_zip_addr
 	from 	acc06_trans a,
 			acc02_account b,
 			acc04_client c
@@ -54,6 +68,12 @@
 			b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm ,
 			c.acc04_biz_no acc06_biz_no,
 			c.acc04_client_nm acc06_client_nm
+		,	b.acc02_gwon_nm acc06_gwon_nm
+		,	b.acc02_hang_nm acc06_hang_nm
+		,	b.acc02_gmok_nm acc06_gmok_nm
+		,	c.acc04_ceo_nm acc06_ceo_nm
+		,	c.acc04_account_no	acc06_account_no
+		,	'(' || c.acc04_zip_cd || ') ' || acc04_zip_addr || ' ' || acc04_zip_detail acc06_zip_addr
 	from 	acc06_trans a,
 			acc02_account b,
 			acc04_client c

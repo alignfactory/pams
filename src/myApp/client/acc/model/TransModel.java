@@ -31,6 +31,12 @@ public class TransModel extends AbstractDataModel {
 	private Date chargeDate;
 	private String note;
 	
+	private String gwanName;
+	private String hangName;
+	private String gmokName;
+	private String ceoName;
+	private String accountNo;
+	private String zipAddr;
 	
 	@Override
 	public void setKeyId(Long id) {
@@ -167,8 +173,41 @@ public class TransModel extends AbstractDataModel {
 	public void setNote(String note) {
 		this.note = note;
 	}
-
-	
-	
+	public String getCeoName() {
+		return ceoName;
+	}
+	public void setCeoName(String ceoName) {
+		this.ceoName = ceoName;
+	}
+	public String getAccountNo() {
+		return accountNo;
+	}
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
+	}
+	public String getZipAddr() {
+		return zipAddr;
+	}
+	public void setZipAddr(String zipAddr) {
+		this.zipAddr = zipAddr;
+	}
+	public String getHangName() {
+		return hangName;
+	}
+	public void setHangName(String hangName) {
+		this.hangName = hangName;
+	}
+	public String getGmokName() {
+		return gmokName;
+	}
+	public void setGmokName(String gmokName) {
+		this.gmokName = gmokName;
+	}
+	public String getGwanName() {
+		return gwanName;
+	}
+	public void setGwanName(String gwanName) {
+		this.gwanName = gwanName;
+	}
 	
 }

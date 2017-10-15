@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 
+import myApp.client.acc.model.SeasonModel;
 import myApp.client.acc.model.TransModel;
+import myApp.frame.LoginUser;
 import myApp.server.DatabaseFactory;
 import myApp.server.data.DateUtil;
 import myApp.server.pdf.CellLayout;
@@ -33,14 +35,18 @@ import com.itextpdf.text.pdf.PdfWriter;
  
 public class ExpensePDF {
  
+	String companyName = null;
+	String seasonSeq = null;
+	
 	private List<TransModel> getTransModel(HttpServletRequest request) throws ParseException{
 
     	String companyId = request.getParameter("companyId"); 
     	String baseMonth = request.getParameter("baseMonth"); 
-    	
     	baseMonth = baseMonth.replace("-",  ""); 
     	
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    	this.companyName = request.getParameter("companyName");
+
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date startDate = dateFormat.parse(baseMonth + "01"); 
 		
 		Calendar cal = Calendar.getInstance(); 
@@ -59,9 +65,11 @@ public class ExpensePDF {
 		System.out.println("startDate is " + startDate);
 		System.out.println("endDate is " + endDate);
 		
-
-		
 		SqlSession sqlSession = DatabaseFactory.openSession();
+		
+		SeasonModel season = sqlSession.selectOne("acc01_season.selectByBaseDate", param); 
+		this.seasonSeq = season.getSeq(); 
+		
 		List<TransModel> list = sqlSession.selectList("acc06_trans.selectByTransDate", param) ;
 
 	    return list; 
@@ -73,7 +81,7 @@ public class ExpensePDF {
     	
     	if(list .size() > 0 ){
     	
-	        Document document = new Document(PageSize.A4, 0, 0, 100, 0);
+	        Document document = new Document(PageSize.A4, 15, 15, 100, 0);
 	        PdfWriter.getInstance(document, bufferedOutputStream);
 	        
 //	        document.setMargins(20, 20, 100, 20);
@@ -163,7 +171,7 @@ public class ExpensePDF {
 //		cell2.setColspan(2);
 //		table.addCell(cell2);
 
-        cell = cellLayout.getCell("2017 학년도 세출\n\n선호유치원 회계"); 
+        cell = cellLayout.getCell(this.seasonSeq + " 학년도 세출\n\n" + this.companyName +" 회계"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(5);
@@ -216,7 +224,7 @@ public class ExpensePDF {
 //      table.addCell(cellLayout.getCell(""));
 //      table.addCell(cellLayout.getCell(""));
  
-        cell = cellLayout.getCell("발의"); 
+        cell = cellLayout.getCell("발의");
         cell.setFixedHeight(30f);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -238,7 +246,7 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
         table.addCell(cell);
-        cell = cellLayout.getCell("관리운영비"); 
+        cell = cellLayout.getCell(transModel.getGwanName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
@@ -282,7 +290,7 @@ public class ExpensePDF {
         cell.setRowspan(2);
 //      cell.setColspan(1);
         table.addCell(cell);
-        cell = cellLayout.getCell("학교운영비"); 
+        cell = cellLayout.getCell(transModel.getHangName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
@@ -364,7 +372,7 @@ public class ExpensePDF {
         cell.setRowspan(2);
 //      cell.setColspan(1);
         table.addCell(cell);
-        cell = cellLayout.getCell("공통운영비"); 
+        cell = cellLayout.getCell(transModel.getGmokName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
@@ -461,12 +469,12 @@ public class ExpensePDF {
         table.addCell(cell);
  
         cell = cellLayout.getCell("주    소"); 
-        cell.setFixedHeight(75f);
+        cell.setFixedHeight(90f);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell(" "); 
+        cell = cellLayout.getCell(transModel.getZipAddr()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
@@ -502,7 +510,7 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell(" "); 
+        cell = cellLayout.getCell(transModel.getAccountNo()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
@@ -520,7 +528,7 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell(transModel.getClientName()); 
+        cell = cellLayout.getCell(transModel.getCeoName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
