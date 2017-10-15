@@ -6,7 +6,9 @@ import java.util.List;
 import myApp.client.acc.model.ClientModel;
 import myApp.client.acc.model.TransModel;
 import myApp.client.acc.model.TransModelProperties;
+import myApp.client.psc.TabPage_Student;
 import myApp.frame.LoginUser;
+import myApp.frame.PDFViewer;
 import myApp.frame.service.CallBatch;
 import myApp.frame.service.GridDeleteData;
 import myApp.frame.service.GridInsertRow;
@@ -25,8 +27,11 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.sencha.gxt.core.client.Style.SelectionMode;
+import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
@@ -39,7 +44,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
  * 출금전표 초리
  */
 
-public class Tab_PaymentSlip extends VerticalLayoutContainer implements InterfaceGridOperate {
+public class Tab_PaymentSlip extends BorderLayoutContainer implements InterfaceGridOperate {
 	
 	private static AccountComboBoxField accountComboBox = new AccountComboBoxField();
 	private TextField baseMonth= new TextField();
@@ -48,7 +53,7 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 
 	public Tab_PaymentSlip() {
 		
-		this.setBorders(false); 
+		//this.setBorders(false); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addTextField(baseMonth, "기준월", 130, 50, true);
@@ -72,7 +77,7 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		});
 		
 		TextButton importButton = new TextButton("출금 불러오기");
-		importButton.setWidth(80);
+		importButton.setWidth(90);
 		importButton.addSelectHandler(new SelectHandler() {
 			@Override
 			public void onSelect(SelectEvent event) {
@@ -94,8 +99,30 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		});
 		searchBarBuilder.getSearchBar().add(importButton);
 		
-		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 40));
-		this.add(grid, new VerticalLayoutData(1, 1));
+		TextButton retrievePDFButton = new TextButton("지출결의서 출력");
+	    retrievePDFButton.addSelectHandler(new SelectHandler() {
+			@Override
+			public void onSelect(SelectEvent event) {
+				PDFViewer viewer = new PDFViewer(); 
+				// 호출하려면 className과 기타 Parameter를 String으로 붙여서 넘겨주어야 한다. 
+				viewer.open("className=acc.ExpensePDF&companyId=" + LoginUser.getLoginCompany().getCompanyId()
+						+ "&baseMonth=" + baseMonth.getText() + "&companyName=" + LoginUser.getLoginCompany().getCompanyName());
+				
+			}
+		});
+	    
+	    searchBarBuilder.getSearchBar().add(retrievePDFButton);
+//		BorderLayoutData northLayoutData = new BorderLayoutData(100);
+//		northLayoutData.setMargins(new Margins(0, 2, 0, 0)); 
+//		northLayoutData.setSplit(false);
+//		northLayoutData.setMaxSize(1000);  
+		
+		
+		this.setNorthWidget(searchBarBuilder.getSearchBar(), new BorderLayoutData(40));
+		this.setCenterWidget(grid);
+		
+		this.setSouthWidget(new TabPage_Student(null), new BorderLayoutData(100));
+		//this.add(grid, new VerticalLayoutData(1, 1));
 	}
 	
 	@Override
@@ -142,7 +169,6 @@ public class Tab_PaymentSlip extends VerticalLayoutContainer implements Interfac
 		//gridBuilder.addText(properties.gmokCode(), 80, "목코드") ;
 		//gridBuilder.addText(properties.smokCode(),	80, "세목코드") ;
 		accountComboBox.setComboBoxField(LoginUser.getLoginCompany().getCompanyId(), baseMonth.getText(), "OUT"); 
-		
 		accountComboBox.addValueChangeHandler(new ValueChangeHandler<String>(){
 			@Override
 			public void onValueChange(ValueChangeEvent<String> arg0) {

@@ -70,6 +70,7 @@
 	where	acc02_company_id in (0, #{companyId} )
 	and		acc02_gmok_nm is not null
 	and		acc02_inexp_cd = #{inOutCode}
+	and		acc02_use_yn = 'true'
 	and		acc02_edu_office_cd
 			= ( select 	acc01_edu_office_cd
 				from 	acc01_season
