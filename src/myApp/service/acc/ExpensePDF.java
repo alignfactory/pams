@@ -479,10 +479,10 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
         table.addCell(cell);
-        cell = cellLayout.getCell(""); 
+        cell = cellLayout.getCell(" "); 
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell(""); 
+        cell = cellLayout.getCell(" "); 
         cell.setColspan(4);
         table.addCell(cell);
  
