@@ -12,15 +12,18 @@
 	<result column="acc06_trans_nm"		property="transName"/>
 	<result column="acc06_account_id"	property="accountId"/>
 	
-	<result column="acc06_gmok_cd"	property="gmokCode"/>
-	<result column="acc06_smok_cd"	property="smokCode"/>
+	<result column="acc06_gmok_cd"		property="gmokCode"/>
+	<result column="acc06_smok_cd"		property="smokCode"/>
 	<result column="acc06_account_nm"	property="accountName"/>
 	
 	<result column="acc06_client_id"	property="clientId"/>
 	<result column="acc06_biz_no"		property="bizNo"/>
 	<result column="acc06_client_nm"	property="clientName"/>
-	
 	<result column="acc06_trans_amt"	property="transAmount"/>
+	<result column="acc06_bank_cd"		property="bankCode"/>
+	<result column="acc06_account_no"	property="accountNo"/>
+	<result column="acc06_account_owner"	property="accountOwner"/>
+
 	<result column="acc06_accout_date"	property="accountDate"/>
 	<result column="acc06_tax_apply_yn"	property="taxApplyYn"/>
 	<result column="acc06_supply_amt"	property="supplyAmount"/>
@@ -33,12 +36,14 @@
 	<result column="acc06_hang_nm"		property="hangName"/>
 	<result column="acc06_gmok_nm"		property="gmokName"/>
 	<result column="acc06_ceo_nm"		property="ceoName"/>
-	<result column="acc06_account_no"	property="accountNo"/>
+
+	<result column="acc06_zip_cd"		property="zipCode"/>
 	<result column="acc06_zip_addr"		property="zipAddr"/>
+	<result column="acc06_zip_detail"	property="zipDetail"/>
 
 </resultMap>
 	
-<select id="selectById" resultMap="mapper" parameterType="Long" > 
+<select id="selectById1" resultMap="mapper" parameterType="Long" > 
 	select 	a.*,
 			f_cdnm('InExpCode', acc06_inout_cd) acc06_inexp_nm,
 			b.acc02_gmok_cd acc06_gmok_cd,
@@ -51,7 +56,49 @@
 		,	b.acc02_gmok_nm acc06_gmok_nm
 		,	c.acc04_ceo_nm acc06_ceo_nm
 		,	c.acc04_account_no	acc06_account_no
-		,	'(' || c.acc04_zip_cd || ') \n' || acc04_zip_addr || ' \n' || acc04_zip_detail acc06_zip_addr
+		,	decode(c.acc04_zip_cd,'',null,'( '|| c.acc04_zip_cd || ' )') acc06_zip_cd
+		,	c.acc04_zip_addr acc06_zip_addr
+		,	c.acc04_zip_detail acc06_zip_detail
+	from 	acc06_trans a,
+			acc02_account b,
+			acc04_client c
+	where	acc06_trans_id = #{transId}
+	and		a.acc06_account_id = b.acc02_account_id(+)
+	and		a.acc06_client_id = c.acc04_client_id(+)
+</select>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.acc06_trans_id
+		,	a.acc06_company_id
+		,	a.acc06_inout_cd
+		,	a.acc06_trans_date
+		,	a.acc06_trans_nm
+		,	a.acc06_account_id
+		,	a.acc06_client_id
+		,	a.acc06_trans_amt
+		,	nvl(a.acc06_bank_cd,c.acc04_bank_cd)	acc06_bank_cd
+		,	nvl(a.acc06_account_no,c.acc04_account_no)	acc06_account_no
+		,	nvl(a.acc06_account_owner,c.acc04_account_owner)	acc06_account_owner
+		,	a.acc06_account_date
+		,	a.acc06_tax_apply_yn
+		,	a.acc06_supply_amt
+		,	a.acc06_tax_amt
+		,	a.acc06_descript
+		,	a.acc06_charge_date
+		,	a.acc06_note 
+		,	f_cdnm('InExpCode',acc06_inout_cd) acc06_inexp_nm
+		,	b.acc02_gmok_cd acc06_gmok_cd
+		,	b.acc02_smok_cd acc06_smok_cd
+		,	b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm
+		,	c.acc04_biz_no acc06_biz_no
+		,	c.acc04_client_nm acc06_client_nm
+		,	b.acc02_gwon_nm acc06_gwon_nm
+		,	b.acc02_hang_nm acc06_hang_nm
+		,	b.acc02_gmok_nm acc06_gmok_nm
+		,	c.acc04_ceo_nm acc06_ceo_nm
+		,	decode(c.acc04_zip_cd,'',null,'( '|| c.acc04_zip_cd || ' )') acc06_zip_cd
+		,	c.acc04_zip_addr acc06_zip_addr
+		,	c.acc04_zip_detail acc06_zip_detail
 	from 	acc06_trans a,
 			acc02_account b,
 			acc04_client c
@@ -61,6 +108,52 @@
 </select>
 
 <select id="selectByTransDate" resultMap="mapper" parameterType="HashMap">
+	select 	a.acc06_trans_id
+		,	a.acc06_company_id
+		,	a.acc06_inout_cd
+		,	a.acc06_trans_date
+		,	a.acc06_trans_nm
+		,	a.acc06_account_id
+		,	a.acc06_client_id
+		,	a.acc06_trans_amt
+		,	nvl(a.acc06_bank_cd,c.acc04_bank_cd)	acc06_bank_cd
+		,	nvl(a.acc06_account_no,c.acc04_account_no)	acc06_account_no
+		,	nvl(a.acc06_account_owner,c.acc04_account_owner)	acc06_account_owner
+		,	a.acc06_account_date
+		,	a.acc06_tax_apply_yn
+		,	a.acc06_supply_amt
+		,	a.acc06_tax_amt
+		,	a.acc06_descript
+		,	a.acc06_charge_date
+		,	a.acc06_note 
+		,	f_cdnm('InExpCode',acc06_inout_cd) acc06_inexp_nm
+		,	b.acc02_gmok_cd acc06_gmok_cd
+		,	b.acc02_smok_cd acc06_smok_cd
+		,	b.acc02_gmok_nm || '-' || b.acc02_smok_nm acc06_account_nm
+		,	c.acc04_biz_no acc06_biz_no
+		,	c.acc04_client_nm acc06_client_nm
+		,	b.acc02_gwon_nm acc06_gwon_nm
+		,	b.acc02_hang_nm acc06_hang_nm
+		,	b.acc02_gmok_nm acc06_gmok_nm
+		,	c.acc04_ceo_nm acc06_ceo_nm
+		,	decode(c.acc04_zip_cd,'',null,'( '|| c.acc04_zip_cd || ' )') acc06_zip_cd
+		,	c.acc04_zip_addr acc06_zip_addr
+		,	c.acc04_zip_detail acc06_zip_detail
+	from 	acc06_trans a,
+			acc02_account b,
+			acc04_client c
+	where	decode(a.acc06_company_id,0,#{companyId},a.acc06_company_id) = b.acc02_company_id(+)
+	and		a.acc06_account_id = b.acc02_account_id(+)
+	and		a.acc06_inout_cd = b.acc02_inexp_cd(+)
+	and		a.acc06_company_id = c.acc04_company_id(+)
+	and		a.acc06_client_id = c.acc04_client_id(+)
+	and		acc06_company_id = #{companyId}
+	and		acc06_trans_date between #{startDate} and #{endDate}
+	and		acc06_inout_cd = #{inOutCode}
+	order by a.acc06_trans_date
+</select>
+
+<select id="selectByTransDate1" resultMap="mapper" parameterType="HashMap">
 	select 	a.*,
 			f_cdnm('InExpCode', acc06_inout_cd) acc06_inexp_nm,
 			b.acc02_gmok_cd acc06_gmok_cd,
@@ -73,12 +166,16 @@
 		,	b.acc02_gmok_nm acc06_gmok_nm
 		,	c.acc04_ceo_nm acc06_ceo_nm
 		,	c.acc04_account_no	acc06_account_no
-		,	'(' || c.acc04_zip_cd || ') ' || acc04_zip_addr || ' ' || acc04_zip_detail acc06_zip_addr
+		,	decode(c.acc04_zip_cd,'',null,'( '|| c.acc04_zip_cd || ' )') acc06_zip_cd
+		,	c.acc04_zip_addr acc06_zip_addr
+		,	c.acc04_zip_detail acc06_zip_detail
 	from 	acc06_trans a,
 			acc02_account b,
 			acc04_client c
-	where	a.acc06_account_id = b.acc02_account_id(+)
+	where	decode(a.acc06_company_id,0,#{companyId},a.acc06_company_id) = b.acc02_company_id(+)
+	and		a.acc06_account_id = b.acc02_account_id(+)
 	and		a.acc06_inout_cd = b.acc02_inexp_cd(+)
+	and		a.acc06_company_id = c.acc04_company_id(+)
 	and		a.acc06_client_id = c.acc04_client_id(+)
 	and		acc06_company_id = #{companyId}
 	and		acc06_trans_date between #{startDate} and #{endDate}

@@ -475,9 +475,9 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
         table.addCell(cell);
-        cell = cellLayout.getCell(transModel.getZipAddr()); 
+        cell = cellLayout.getCell(transModel.getZipCode()+ "\n\n" + transModel.getZipAddr() + "  " + transModel.getZipDetail()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell.setColspan(4);
         table.addCell(cell);
         cell = cellLayout.getCell(" "); 

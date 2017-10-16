@@ -21,8 +21,11 @@ public class TransModel extends AbstractDataModel {
 	private Long clientId; // 거래처 정보 
 	private String bizNo;
 	private String clientName;
-	
 	private Long transAmount;
+	private String bankCode;
+	private String accountNo;
+	private String accountOwner;
+
 	private Date accountDate;
 	private String taxApplyYn;
 	private Long supplyAmount;
@@ -35,8 +38,10 @@ public class TransModel extends AbstractDataModel {
 	private String hangName;
 	private String gmokName;
 	private String ceoName;
-	private String accountNo;
+
+	private String zipCode;
 	private String zipAddr;
+	private String zipDetail;
 	
 	@Override
 	public void setKeyId(Long id) {
@@ -185,12 +190,6 @@ public class TransModel extends AbstractDataModel {
 	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
-	public String getZipAddr() {
-		return zipAddr;
-	}
-	public void setZipAddr(String zipAddr) {
-		this.zipAddr = zipAddr;
-	}
 	public String getHangName() {
 		return hangName;
 	}
@@ -209,5 +208,23 @@ public class TransModel extends AbstractDataModel {
 	public void setGwanName(String gwanName) {
 		this.gwanName = gwanName;
 	}
-	
+	public String getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+	public String getZipAddr() {
+		return zipAddr;
+	}
+	public void setZipAddr(String zipAddr) {
+		this.zipAddr = zipAddr;
+	}
+	public String getZipDetail() {
+		return zipDetail;
+	}
+	public void setZipDetail(String zipDetail) {
+		this.zipDetail = zipDetail;
+	}
+
 }

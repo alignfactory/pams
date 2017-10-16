@@ -23,6 +23,9 @@ public interface TransModelProperties extends PropertyAccess<TransModel> {
 	ValueProvider<TransModel, String> bizNo();
 	ValueProvider<TransModel, String> clientName();
 	ValueProvider<TransModel, Long> transAmount();
+	ValueProvider<TransModel, String> bankCode();
+	ValueProvider<TransModel, String> accountNo();
+	ValueProvider<TransModel, String> accountOwner();
 	ValueProvider<TransModel, Date> accountDate();
 	ValueProvider<TransModel, String> taxApplyYn();
 	ValueProvider<TransModel, Long> supplyAmount();
@@ -34,7 +37,8 @@ public interface TransModelProperties extends PropertyAccess<TransModel> {
 	ValueProvider<TransModel, String> gwanName();
 	ValueProvider<TransModel, String> hangName();
 	ValueProvider<TransModel, String> gmokName();
-	ValueProvider<TransModel, String> accountNo();
+	ValueProvider<TransModel, String> zipCode();
 	ValueProvider<TransModel, String> zipAddr();
+	ValueProvider<TransModel, String> zipDetail();
 	
 }
