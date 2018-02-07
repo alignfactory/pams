@@ -115,7 +115,7 @@ public class ExpensePDF {
         table.setWidthPercentage(90);
         table.setWidths(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
 //      2       3           1   1   4               2       3           1
- 
+
         PdfPCell cell;
          
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.KOREA);	//	Number를 Currency로 바꿈
@@ -136,6 +136,12 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setColspan(17);
 		cell.setRowspan(2);
+
+//		cell.setBorderColor(BaseColor.RED);
+//		cell.setBorderColor(borderColor);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
+		
 		table.addCell(cell);
 
 //		cell = cellLayout.getTitle("지출결의서", 18, "맑은 고딕", Font.NORMAL, BaseColor.BLACK); 
@@ -152,18 +158,24 @@ public class ExpensePDF {
 
         cell.setFixedHeight(30f);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
         
         cell = cellLayout.getCell("원감"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
         
         cell = cellLayout.getCell("원장"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
         
 //		PdfPCell cell2  = new PdfPCell(); 
@@ -177,96 +189,140 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(5);
         cell.setRowspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("계"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("원감"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("원장"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         cell = cellLayout.getCell(""); 
         cell.setFixedHeight(60f);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
 //      cell = cellLayout.getCell(""); 
 //      cell.setColspan(5);
 //      table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
- 
-//      table.addCell(cellLayout.getCell(""));
-//      table.addCell(cellLayout.getCell(""));
-//      table.addCell(cellLayout.getCell(""));
-//      table.addCell(cellLayout.getCell(""));
-//      table.addCell(cellLayout.getCell(""));
-//      table.addCell(cellLayout.getCell(""));
-//      table.addCell(cellLayout.getCell(""));
  
         cell = cellLayout.getCell("발의");
         cell.setFixedHeight(30f);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
 //		table.addCell(cellLayout.getCell(transDate));
+
         cell = cellLayout.getCell(transDate); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("인"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("관"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transModel.getGwanName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("발의"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
 		table.addCell(cell);
 //		table.addCell(cellLayout.getCell(transDate)); 
+
 		cell = cellLayout.getCell(transDate); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("인"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         cell = cellLayout.getCell("지출원인\n행위부등기"); 
@@ -274,43 +330,66 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setFixedHeight(30f);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transDate); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("인"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("항"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transModel.getHangName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("지급명령\n발행부등기"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transDate); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
-        table.addCell(cell);
-        cell = cellLayout.getCell("인"); 
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
+		table.addCell(cell);
+
+		cell = cellLayout.getCell("인"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         cell = cellLayout.getCell("계약"); 
@@ -318,37 +397,60 @@ public class ExpensePDF {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transDate); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("인"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
 //      cell = cellLayout.getCell("항"); 
 //      cell.setColspan(1);
+//		cell.setBorderWidth(0.25f);
+//		cell.setBorderColor(new BaseColor(160,160,160));
 //      table.addCell(cell);
+
 //      cell = cellLayout.getCell("학교운영비"); 
 //      cell.setColspan(4);
+//		cell.setBorderWidth(0.25f);
+//		cell.setBorderColor(new BaseColor(160,160,160));
 //      table.addCell(cell);
+
         cell = cellLayout.getCell("지출부등기"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transDate); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("인"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         cell = cellLayout.getCell("검사"); 
@@ -356,38 +458,58 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setFixedHeight(30f);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transDate); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("인"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("목"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transModel.getGmokName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setRowspan(2);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("지급명령\n법    호"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("제        호"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         cell = cellLayout.getCell("출납부등기"); 
@@ -395,36 +517,51 @@ public class ExpensePDF {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transDate); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(3);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("인"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //      cell.setColspan(1);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
 //      cell = cellLayout.getCell("항"); 
 //      cell.setColspan(1);
 //      table.addCell(cell);
 //      cell = cellLayout.getCell("학교운영비"); 
 //      cell.setColspan(4);
 //      table.addCell(cell);
+
         cell = cellLayout.getCell("부가가치세"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
 
 //		cell = cellLayout.getCell("￦"+transModel.getTaxAmount()); 
-//        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.KOREA);//	.getCurrencyInstance(Locale.KOREAN);
-//        String	taxAmount = format.format(transModel.getTaxAmount());
-		cell = cellLayout.getCell(taxAmount); 
+//      NumberFormat format = NumberFormat.getCurrencyInstance(Locale.KOREA);//	.getCurrencyInstance(Locale.KOREAN);
+//      String	taxAmount = format.format(transModel.getTaxAmount());
+
+        cell = cellLayout.getCell(taxAmount); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         cell = cellLayout.getCell("적    요"); 
@@ -432,17 +569,28 @@ public class ExpensePDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setFixedHeight(30f);
         cell.setColspan(5);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("채    주"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(6);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
 
         cell = cellLayout.getCell(transModel.getDescript()); 
@@ -450,23 +598,37 @@ public class ExpensePDF {
 //		cell.setFixedHeight(30f);
         cell.setRowspan(6);
         cell.setColspan(5);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("상    호"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setFixedHeight(45f);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transModel.getClientName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         cell = cellLayout.getCell("주    소"); 
@@ -474,17 +636,28 @@ public class ExpensePDF {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transModel.getZipCode()+ "\n\n" + transModel.getZipAddr() + "  " + transModel.getZipDetail()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(" "); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(" "); 
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         cell = cellLayout.getCell("법인(주민)\n번호"); 
@@ -492,17 +665,28 @@ public class ExpensePDF {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transModel.getBizNo()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
 
         cell = cellLayout.getCell("계좌번호"); 
@@ -510,17 +694,28 @@ public class ExpensePDF {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transModel.getAccountNo()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(""); 
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
 
         cell = cellLayout.getCell("성    명"); 
@@ -528,21 +723,32 @@ public class ExpensePDF {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transModel.getCeoName()); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("공급가액"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(supplyAmount); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
  
         transDate = DateUtil.getDate(transModel.getTransDate(), "yyyy년 MM월 dd일");
@@ -551,16 +757,24 @@ public class ExpensePDF {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(6);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell("합    계"); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(2);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(new BaseColor(160,160,160));
         table.addCell(cell);
+
         cell = cellLayout.getCell(transAmount); 
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell.setColspan(4);
+		cell.setBorderWidth(0.25f);
+		cell.setBorderColor(BaseColor.DARK_GRAY);
         table.addCell(cell);
 
         document.add(table);
