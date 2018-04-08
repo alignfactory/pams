@@ -24,34 +24,35 @@
 <!-- 		<property name="poolQuietMode" value="false"/>				-->
 		 	
 		<!-- **max connection 이 늘어나면 속도가 빨라질까? --> 
-		<!-- oracle -->   
+		<!-- Oracle		-->
 			<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
 			<property name="url" value="jdbc:oracle:thin:@211.221.173.228:15210:XE" />
 			<property name="username" value="pams" />
 			<property name="password" value="pams" />
 			<property name="defaultAutoCommit" value="false" />
 
+
 		<!-- Tibero (티베로)
 			<property name="driver" value="com.tmax.tibero.jdbc.TbDriver" />
 			<property name="url" value="jdbc:tibero:thin:@127.0.0.1:8629:tibero" />
-			<property name="username" value="pams" />
-			<property name="password" value="pams" />
-		--> 			
-			
+			<property name="username" value="hdidms" />
+			<property name="password" value="hdidms" />
+		-->
+
 		<!-- Sybase (싸이베이스)
 			<property name="driver" value="com.sybase.jdbc2.jdbc.SybDriver" />
 			<property name="url" value="jdbc:sybase:Tds:localhost:5001/DBNAME" />
 			<property name="username" value="pams" />
 			<property name="password" value="pams" />
-		--> 			
-			
+		-->
+
 		<!-- MySQL
-			<property name="driver" value="com.mysql.jdbc.Driver" />
-			<property name="url" value="jdbc:mysql://211.221.173.228:3306/DBNAME" />
-			<property name="username" value="pams" />
-			<property name="password" value="pams" />
-		--> 			
-			
+		<property name="driver" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://211.221.173.228:3306/DBNAME" />
+		<property name="username" value="pams" />
+		<property name="password" value="pams" />
+		-->
+
 		</dataSource>
 	</environment>
 </environments>
